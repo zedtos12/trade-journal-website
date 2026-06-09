@@ -10,6 +10,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <nav className="flex items-center gap-4 text-sm text-slate-300">
             <Link href="/dashboard" className="hover:text-white">Dashboard</Link>
             <Link href="/trades" className="hover:text-white">Trades</Link>
+            <Link href="/analytics" className="hover:text-white">Analytics</Link>
             <Link href="/settings" className="hover:text-white">Settings</Link>
             <LogoutButton />
           </nav>

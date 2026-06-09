@@ -84,6 +84,7 @@ Done:
 - Best/worst pair
 - Best/worst setup
 - Monthly performance summary
+- Analytics page with gross profit/loss, profit factor, performance by pair/setup/timeframe/session
 - Trade CRUD API endpoints
 - Add trade form
 - Trade history with search/filter/sort
@@ -93,6 +94,5 @@ Done:
 
 Next:
 
-- Analytics page
 - Settings profile updates
 - UX polish and edge-case QA
