@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildTradeWhere, buildTradeOrderBy } from "@/lib/trades/query";
+import { buildTradeWhere, buildTradeOrderBy, buildTradePagination } from "@/lib/trades/query";
 
 describe("trade query helpers", () => {
   it("always scopes trade list queries to the logged-in user", () => {
@@ -14,10 +14,24 @@ describe("trade query helpers", () => {
     ]);
   });
 
+  it("builds an inclusive date range filter", () => {
+    const where = buildTradeWhere("user_123", { dateFrom: "2026-06-01", dateTo: "2026-06-10" });
+
+    expect(where.openDate).toMatchObject({
+      gte: new Date("2026-06-01"),
+      lte: new Date("2026-06-10T23:59:59.999Z"),
+    });
+  });
+
   it("maps PRD sort options to safe Prisma order clauses", () => {
     expect(buildTradeOrderBy("oldest")).toEqual({ openDate: "asc" });
     expect(buildTradeOrderBy("highest-profit")).toEqual({ profitLossAmount: "desc" });
     expect(buildTradeOrderBy("biggest-loss")).toEqual({ profitLossAmount: "asc" });
     expect(buildTradeOrderBy(undefined)).toEqual({ openDate: "desc" });
+  });
+
+  it("creates safe limit pagination values", () => {
+    expect(buildTradePagination(3)).toEqual({ page: 3, take: 10, skip: 20 });
+    expect(buildTradePagination(0)).toEqual({ page: 1, take: 10, skip: 0 });
   });
 });

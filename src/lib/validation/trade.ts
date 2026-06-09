@@ -2,6 +2,10 @@ import { z } from "zod";
 
 const optionalText = z.preprocess((value) => (value === "" ? undefined : value), z.string().trim().optional());
 const optionalDate = z.preprocess((value) => (value === "" ? undefined : value), z.string().optional());
+const pageNumber = z.preprocess((value) => {
+  const page = Number(value ?? 1);
+  return Number.isFinite(page) && page > 0 ? Math.floor(page) : 1;
+}, z.number().int().positive().default(1));
 const optionalNumber = z.preprocess((value) => {
   if (value === "" || value === null || typeof value === "undefined") return undefined;
   if (typeof value === "string") return Number(value);
@@ -51,6 +55,7 @@ export const tradeQuerySchema = z.object({
   timeframe: z.preprocess((value) => (value === "" ? undefined : value), z.enum(["M1", "M5", "M15", "M30", "H1", "H4", "D1", "W1"]).optional()),
   dateFrom: optionalDate,
   dateTo: optionalDate,
+  page: pageNumber,
   sort: z.enum(["newest", "oldest", "highest-profit", "biggest-loss"]).optional().default("newest"),
 });
 

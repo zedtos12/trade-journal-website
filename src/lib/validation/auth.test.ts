@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { registerSchema, loginSchema } from "@/lib/validation/auth";
+import { registerSchema, loginSchema, profileSettingsSchema } from "@/lib/validation/auth";
 
 describe("auth validation", () => {
   it("accepts valid register payload", () => {
@@ -26,5 +26,30 @@ describe("auth validation", () => {
 
   it("rejects invalid login email", () => {
     expect(() => loginSchema.parse({ email: "not-email", password: "strongpass123" })).toThrow();
+  });
+
+  it("accepts profile settings without password change", () => {
+    const parsed = profileSettingsSchema.parse({
+      name: "Boni Trader",
+      preferredCurrency: "IDR",
+      currentPassword: "",
+      newPassword: "",
+      confirmNewPassword: "",
+    });
+
+    expect(parsed).toMatchObject({ name: "Boni Trader", preferredCurrency: "IDR" });
+    expect(parsed.newPassword).toBeUndefined();
+  });
+
+  it("requires current password when changing password", () => {
+    expect(() =>
+      profileSettingsSchema.parse({
+        name: "Boni Trader",
+        preferredCurrency: "USD",
+        currentPassword: "",
+        newPassword: "newstrongpass123",
+        confirmNewPassword: "newstrongpass123",
+      }),
+    ).toThrow();
   });
 });

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { buildTradeOrderBy, buildTradeWhere } from "@/lib/trades/query";
+import { buildTradeOrderBy, buildTradePagination, buildTradeWhere } from "@/lib/trades/query";
 import { serializeTrade } from "@/lib/trades/serialize";
 import { tradeInputToPrismaData } from "@/lib/trades/map";
 import { tradeQuerySchema, tradeSchema } from "@/lib/validation/trade";
@@ -12,13 +12,19 @@ export async function GET(request: Request) {
 
   const url = new URL(request.url);
   const query = tradeQuerySchema.parse(Object.fromEntries(url.searchParams.entries()));
-  const trades = await prisma.trade.findMany({
-    where: buildTradeWhere(user.id, query),
-    orderBy: buildTradeOrderBy(query.sort),
-    take: 100,
-  });
+  const pagination = buildTradePagination(query.page);
+  const where = buildTradeWhere(user.id, query);
+  const [trades, totalTrades] = await Promise.all([
+    prisma.trade.findMany({
+      where,
+      orderBy: buildTradeOrderBy(query.sort),
+      take: pagination.take,
+      skip: pagination.skip,
+    }),
+    prisma.trade.count({ where }),
+  ]);
 
-  return NextResponse.json({ trades: trades.map(serializeTrade) });
+  return NextResponse.json({ trades: trades.map(serializeTrade), pagination: { ...pagination, totalTrades } });
 }
 
 export async function POST(request: Request) {
