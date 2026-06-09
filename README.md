@@ -79,6 +79,11 @@ Done:
 - Protected dashboard foundation
 - Settings foundation
 - Basic analytics calculation foundation
+- Dashboard expanded metrics and recent trades
+- Equity curve
+- Best/worst pair
+- Best/worst setup
+- Monthly performance summary
 - Trade CRUD API endpoints
 - Add trade form
 - Trade history with search/filter/sort
@@ -88,7 +93,6 @@ Done:
 
 Next:
 
-- Dashboard expanded analytics cards and equity curve
 - Analytics page
 - Settings profile updates
 - UX polish and edge-case QA
