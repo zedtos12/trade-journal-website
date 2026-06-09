@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Currency {
+  USD
+  IDR
+}
+
+enum TradeDirection {
+  buy
+  sell
+}
+
+enum TradeStatus {
+  open
+  closed
+}
+
+enum TradeResult {
+  win
+  loss
+  breakeven
+  open
+}
+
+enum Timeframe {
+  M1
+  M5
+  M15
+  M30
+  H1
+  H4
+  D1
+  W1
+}
+
+enum TradingSession {
+  Asia
+  London
+  NewYork
+}
+
+model User {
+  id                String   @id @default(cuid())
+  name              String
+  email             String   @unique
+  passwordHash      String   @map("password_hash")
+  preferredCurrency Currency @default(USD) @map("preferred_currency")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  sessions Session[]
+  trades   Trade[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model Trade {
+  id                   String          @id @default(cuid())
+  userId               String          @map("user_id")
+  pair                 String
+  direction            TradeDirection
+  status               TradeStatus     @default(closed)
+  result               TradeResult
+  openDate             DateTime        @map("open_date")
+  closeDate            DateTime?       @map("close_date")
+  entryPrice           Decimal?        @map("entry_price") @db.Decimal(18, 8)
+  exitPrice            Decimal?        @map("exit_price") @db.Decimal(18, 8)
+  lotSize              Decimal?        @map("lot_size") @db.Decimal(18, 4)
+  stopLoss             Decimal?        @map("stop_loss") @db.Decimal(18, 8)
+  takeProfit           Decimal?        @map("take_profit") @db.Decimal(18, 8)
+  profitLossAmount     Decimal?        @map("profit_loss_amount") @db.Decimal(18, 2)
+  profitLossPercentage Decimal?        @map("profit_loss_percentage") @db.Decimal(10, 4)
+  riskRewardRatio      Decimal?        @map("risk_reward_ratio") @db.Decimal(10, 4)
+  setupName            String?         @map("setup_name")
+  timeframe            Timeframe?
+  session              TradingSession?
+  emotionBefore        String?         @map("emotion_before")
+  emotionAfter         String?         @map("emotion_after")
+  entryReason          String?         @map("entry_reason")
+  exitReason           String?         @map("exit_reason")
+  lessonLearned        String?         @map("lesson_learned")
+  notes                String?
+  createdAt            DateTime        @default(now()) @map("created_at")
+  updatedAt            DateTime        @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([userId, openDate])
+  @@index([userId, pair])
+  @@index([userId, result])
+  @@map("trades")
+}

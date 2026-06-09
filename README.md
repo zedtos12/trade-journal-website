@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Trade Journal Website
 
-## Getting Started
+Premium dark-mode Forex Trade Journal SaaS MVP based on Boni's PRD.
 
-First, run the development server:
+## Tech Stack
+
+- Next.js App Router
+- TypeScript
+- Tailwind CSS
+- PostgreSQL
+- Prisma ORM
+- Vitest
+
+## Database
+
+This project uses PostgreSQL via Prisma. SQLite has been removed.
+
+Create `.env` from `.env.example`:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+For Boni's current VPS PostgreSQL container exposed on host port `15432`, use this shape:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+DATABASE_URL="postgresql://boni:YOUR_PASSWORD@localhost:15432/tradingjournal?schema=public"
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+If the Next.js app later runs inside the same Docker Compose network as PostgreSQL, use the service/container hostname instead:
 
-## Learn More
+```env
+DATABASE_URL="postgresql://boni:YOUR_PASSWORD@postgres:5432/tradingjournal?schema=public"
+```
 
-To learn more about Next.js, take a look at the following resources:
+Never commit `.env`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm install
+npm run db:generate
+npm run db:migrate
+npm run dev -- --hostname 0.0.0.0
+```
 
-## Deploy on Vercel
+Open:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```text
+http://localhost:3000
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+If the app runs on a VPS and you preview from a laptop, use SSH tunneling:
+
+```bash
+ssh -L 3000:localhost:3000 ubuntu@YOUR_VPS_IP
+```
+
+Then open `http://localhost:3000` on the laptop.
+
+## Scripts
+
+```bash
+npm test          # run unit tests
+npm run lint      # run ESLint
+npm run build     # production build
+npm run db:generate
+npm run db:migrate
+npm run db:dev
+```
+
+## Current PRD Status
+
+Done:
+
+- Landing page
+- Register/login/logout foundation
+- PostgreSQL schema and initial migration
+- Protected dashboard foundation
+- Settings foundation
+- Basic analytics calculation foundation
+
+Next:
+
+- Trade CRUD
+- Trade history/search/filter
+- Trade detail/review page
+- Dashboard real metrics from trades
+- Analytics page

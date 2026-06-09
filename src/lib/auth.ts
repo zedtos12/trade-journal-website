@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { randomUUID } from "node:crypto";
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/db";
 
 export type User = {
   id: string;
@@ -16,59 +16,70 @@ export type User = {
 const SESSION_COOKIE = "tj_session";
 const SESSION_DAYS = 14;
 
-const nowIso = () => new Date().toISOString();
-
-export function findUserByEmail(email: string): (User & { password_hash: string }) | undefined {
-  return db.prepare("SELECT * FROM users WHERE email = ?").get(email) as (User & { password_hash: string }) | undefined;
+function toPublicUser(user: {
+  id: string;
+  name: string;
+  email: string;
+  preferredCurrency: string;
+  createdAt: Date;
+  updatedAt: Date;
+}): User {
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    preferred_currency: user.preferredCurrency,
+    created_at: user.createdAt.toISOString(),
+    updated_at: user.updatedAt.toISOString(),
+  };
 }
 
-export function findUserById(id: string): User | undefined {
-  return db
-    .prepare("SELECT id, name, email, preferred_currency, created_at, updated_at FROM users WHERE id = ?")
-    .get(id) as User | undefined;
+export async function findUserByEmail(email: string) {
+  return prisma.user.findUnique({ where: { email } });
+}
+
+export async function findUserById(id: string): Promise<User | undefined> {
+  const user = await prisma.user.findUnique({ where: { id } });
+  return user ? toPublicUser(user) : undefined;
 }
 
 export async function createUser(input: { name: string; email: string; password: string }) {
-  if (findUserByEmail(input.email)) {
+  const existingUser = await findUserByEmail(input.email);
+  if (existingUser) {
     throw new Error("EMAIL_TAKEN");
   }
 
-  const timestamp = nowIso();
-  const user = {
-    id: randomUUID(),
-    name: input.name,
-    email: input.email,
-    password_hash: await bcrypt.hash(input.password, 12),
-    preferred_currency: "USD",
-    created_at: timestamp,
-    updated_at: timestamp,
-  };
+  const user = await prisma.user.create({
+    data: {
+      name: input.name,
+      email: input.email,
+      passwordHash: await bcrypt.hash(input.password, 12),
+      preferredCurrency: "USD",
+    },
+  });
 
-  db.prepare(
-    `INSERT INTO users (id, name, email, password_hash, preferred_currency, created_at, updated_at)
-     VALUES (@id, @name, @email, @password_hash, @preferred_currency, @created_at, @updated_at)`,
-  ).run(user);
-
-  return findUserById(user.id)!;
+  return toPublicUser(user);
 }
 
 export async function verifyLogin(email: string, password: string) {
-  const user = findUserByEmail(email);
+  const user = await findUserByEmail(email);
   if (!user) return null;
-  const valid = await bcrypt.compare(password, user.password_hash);
+  const valid = await bcrypt.compare(password, user.passwordHash);
   if (!valid) return null;
-  return findUserById(user.id)!;
+  return toPublicUser(user);
 }
 
 export async function createSession(userId: string) {
   const id = randomUUID();
   const expires = new Date(Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000);
-  db.prepare("INSERT INTO sessions (id, user_id, expires_at, created_at) VALUES (?, ?, ?, ?)").run(
-    id,
-    userId,
-    expires.toISOString(),
-    nowIso(),
-  );
+
+  await prisma.session.create({
+    data: {
+      id,
+      userId,
+      expiresAt: expires,
+    },
+  });
 
   const cookieStore = await cookies();
   cookieStore.set(SESSION_COOKIE, id, {
@@ -85,12 +96,13 @@ export async function getCurrentUser() {
   const sessionId = cookieStore.get(SESSION_COOKIE)?.value;
   if (!sessionId) return null;
 
-  const session = db
-    .prepare("SELECT user_id, expires_at FROM sessions WHERE id = ?")
-    .get(sessionId) as { user_id: string; expires_at: string } | undefined;
+  const session = await prisma.session.findUnique({
+    where: { id: sessionId },
+    include: { user: true },
+  });
 
-  if (!session || new Date(session.expires_at) < new Date()) return null;
-  return findUserById(session.user_id) ?? null;
+  if (!session || session.expiresAt < new Date()) return null;
+  return toPublicUser(session.user);
 }
 
 export async function requireUser() {
@@ -102,6 +114,6 @@ export async function requireUser() {
 export async function destroySession() {
   const cookieStore = await cookies();
   const sessionId = cookieStore.get(SESSION_COOKIE)?.value;
-  if (sessionId) db.prepare("DELETE FROM sessions WHERE id = ?").run(sessionId);
+  if (sessionId) await prisma.session.deleteMany({ where: { id: sessionId } });
   cookieStore.delete(SESSION_COOKIE);
 }
