@@ -79,11 +79,16 @@ Done:
 - Protected dashboard foundation
 - Settings foundation
 - Basic analytics calculation foundation
+- Trade CRUD API endpoints
+- Add trade form
+- Trade history with search/filter/sort
+- Trade detail/review page
+- Edit/delete trade
+- User ownership checks for trade reads/updates/deletes
 
 Next:
 
-- Trade CRUD
-- Trade history/search/filter
-- Trade detail/review page
-- Dashboard real metrics from trades
+- Dashboard expanded analytics cards and equity curve
 - Analytics page
+- Settings profile updates
+- UX polish and edge-case QA
