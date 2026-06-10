@@ -5,11 +5,13 @@ import { calculateDashboardMetrics } from "@/lib/analytics/metrics";
 import { buildEquityCurve, buildMonthlyPerformance, summarizePerformanceByKey } from "@/lib/analytics/dashboard-insights";
 import { prisma } from "@/lib/db";
 
-function MetricCard({ label, value, tone = "neutral" }: { label: string; value: string | number; tone?: "neutral" | "profit" | "loss" }) {
+function MetricCard({ label, value, tone = "neutral", delay = 0 }: { label: string; value: string | number; tone?: "neutral" | "profit" | "loss"; delay?: number }) {
   const toneClass = tone === "profit" ? "text-emerald-300" : tone === "loss" ? "text-rose-300" : "text-white";
+  const accentClass = tone === "profit" ? "from-emerald-400/20" : tone === "loss" ? "from-rose-400/20" : "from-gold/15";
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-5">
-      <p className="text-sm text-slate-400">{label}</p>
+    <div data-testid="dashboard-metric-card" className={`premium-card interactive-card animate-fade-up relative overflow-hidden rounded-3xl p-5 ${accentClass}`} style={{ animationDelay: `${delay}ms` }}>
+      <div className={`pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b ${accentClass} to-transparent`} />
+      <p className="relative text-sm text-slate-400">{label}</p>
       <p className={`mt-3 text-2xl font-semibold ${toneClass}`}>{value}</p>
     </div>
   );
@@ -17,7 +19,7 @@ function MetricCard({ label, value, tone = "neutral" }: { label: string; value: 
 
 function InsightCard({ title, row }: { title: string; row: { label: string; totalPnL: number; trades: number } | null }) {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-5">
+    <div className="premium-card interactive-card animate-fade-up rounded-3xl p-5">
       <p className="text-sm text-slate-400">{title}</p>
       {row ? (
         <div className="mt-3">
@@ -33,7 +35,7 @@ function InsightCard({ title, row }: { title: string; row: { label: string; tota
 
 function EquityCurve({ points }: { points: { label: string; value: number }[] }) {
   if (points.length === 0) {
-    return <div className="flex h-56 items-center justify-center rounded-2xl border border-dashed border-white/10 text-slate-500">Belum ada data equity curve</div>;
+    return <div className="flex h-56 items-center justify-center rounded-2xl border border-dashed border-gold/20 bg-slate-950/40 text-slate-500">Belum ada data equity curve</div>;
   }
 
   const min = Math.min(...points.map((point) => point.value), 0);
@@ -41,13 +43,13 @@ function EquityCurve({ points }: { points: { label: string; value: number }[] })
   const range = max - min || 1;
 
   return (
-    <div className="h-56 rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+    <div className="h-56 rounded-2xl border border-white/10 bg-slate-950/60 p-4 shadow-inner shadow-black/30">
       <div className="flex h-full items-end gap-2">
         {points.map((point, index) => {
           const height = Math.max(8, ((point.value - min) / range) * 100);
           return (
             <div key={`${point.label}-${index}`} className="flex flex-1 flex-col items-center gap-2">
-              <div className="w-full rounded-t-lg bg-gold/80" style={{ height: `${height}%` }} title={`${point.label}: ${point.value}`} />
+              <div className="w-full rounded-t-lg bg-gradient-to-t from-gold/70 to-goldLight shadow-lg shadow-gold/10 transition duration-300 hover:brightness-125" style={{ height: `${height}%` }} title={`${point.label}: ${point.value}`} />
               <span className="hidden text-[10px] text-slate-500 md:block">{point.label}</span>
             </div>
           );
@@ -83,28 +85,28 @@ export default async function DashboardPage() {
 
   return (
     <AppShell>
-      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+      <div className="animate-fade-up flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
           <p className="text-gold">Good to see you, {user.name}</p>
-          <h1 className="mt-2 text-4xl font-semibold">Dashboard</h1>
+          <h1 className="mt-2 text-4xl font-semibold tracking-tight">Dashboard</h1>
           <p className="mt-2 text-slate-400">Insight utama dari trade journal kamu: performa, equity curve, pair, setup, dan monthly summary.</p>
         </div>
-        <Link href="/trades/new" className="rounded-full bg-gold px-5 py-3 text-center font-semibold text-slate-950 hover:bg-goldLight">Add Trade</Link>
+        <Link href="/trades/new" className="premium-button rounded-full bg-gold px-5 py-3 text-center font-semibold text-slate-950 hover:bg-goldLight">Add Trade</Link>
       </div>
 
       <div className="mt-8 grid gap-4 md:grid-cols-4">
-        <MetricCard label="Total trades" value={metrics.totalTrades} />
-        <MetricCard label="Win rate" value={`${metrics.winRate}%`} />
-        <MetricCard label="Total P/L" value={`${user.preferred_currency} ${metrics.totalPnL}`} tone={totalTone} />
-        <MetricCard label="Average win" value={metrics.averageWin} tone="profit" />
-        <MetricCard label="Average loss" value={metrics.averageLoss} tone="loss" />
-        <MetricCard label="Profit factor" value={metrics.profitFactor} />
-        <MetricCard label="Average R:R" value={metrics.averageRiskReward} />
-        <MetricCard label="Closed trades" value={metricTrades.filter((trade) => trade.status === "closed").length} />
+        <MetricCard label="Total trades" value={metrics.totalTrades} delay={0} />
+        <MetricCard label="Win rate" value={`${metrics.winRate}%`} delay={60} />
+        <MetricCard label="Total P/L" value={`${user.preferred_currency} ${metrics.totalPnL}`} tone={totalTone} delay={120} />
+        <MetricCard label="Average win" value={metrics.averageWin} tone="profit" delay={180} />
+        <MetricCard label="Average loss" value={metrics.averageLoss} tone="loss" delay={240} />
+        <MetricCard label="Profit factor" value={metrics.profitFactor} delay={300} />
+        <MetricCard label="Average R:R" value={metrics.averageRiskReward} delay={360} />
+        <MetricCard label="Closed trades" value={metricTrades.filter((trade) => trade.status === "closed").length} delay={420} />
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[1.4fr_0.6fr]">
-        <section className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+        <section data-testid="dashboard-equity-section" className="premium-card interactive-card animate-fade-up rounded-3xl p-6" style={{ animationDelay: "120ms" }}>
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-2xl font-semibold">Equity curve</h2>
@@ -115,11 +117,11 @@ export default async function DashboardPage() {
           <div className="mt-6"><EquityCurve points={equityCurve} /></div>
         </section>
 
-        <section className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+        <section className="premium-card interactive-card animate-fade-up rounded-3xl p-6" style={{ animationDelay: "180ms" }}>
           <h2 className="text-2xl font-semibold">Monthly summary</h2>
           <div className="mt-5 space-y-3">
             {monthlyPerformance.length === 0 ? <p className="text-slate-500">Not enough data</p> : monthlyPerformance.map((month) => (
-              <div key={month.label} className="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+              <div key={month.label} className="interactive-card flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/50 p-4">
                 <div><p className="font-semibold">{month.label}</p><p className="text-sm text-slate-500">{month.trades} trades</p></div>
                 <p className={month.totalPnL >= 0 ? "text-emerald-300" : "text-rose-300"}>{month.totalPnL}</p>
               </div>
@@ -135,20 +137,24 @@ export default async function DashboardPage() {
         <InsightCard title="Worst setup" row={setupSummary.worst} />
       </div>
 
-      <div className="mt-8 rounded-3xl border border-white/10 bg-white/[0.04] p-8">
+      <div data-testid="dashboard-recent-trades" className="premium-card animate-fade-up mt-8 rounded-3xl p-8" style={{ animationDelay: "240ms" }}>
         <div className="flex items-center justify-between gap-4">
           <div>
             <h2 className="text-2xl font-semibold">Recent trades</h2>
             <p className="mt-2 text-slate-400">Trade terbaru yang sudah kamu catat.</p>
           </div>
-          <Link href="/trades" className="text-sm text-gold">View all</Link>
+          <Link href="/trades" className="rounded-full border border-gold/20 px-4 py-2 text-sm text-gold transition hover:border-gold/50 hover:bg-gold/10">View all</Link>
         </div>
         {recentTrades.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-white/10 p-6 text-center text-slate-400">Belum ada trade. Klik Add Trade untuk mulai journaling.</div>
+          <div data-testid="dashboard-empty-state" className="mt-6 rounded-2xl border border-dashed border-gold/20 bg-gold/[0.04] p-8 text-center text-slate-400">
+            <p className="text-lg font-semibold text-white">Catat trade pertama kamu</p>
+            <p className="mx-auto mt-2 max-w-xl">Mulai journaling agar dashboard ini bisa menampilkan win rate, P/L, equity curve, dan insight pair/setup terbaik.</p>
+            <Link href="/trades/new" className="premium-button mt-5 inline-flex rounded-full bg-gold px-5 py-3 font-semibold text-slate-950 hover:bg-goldLight">Add Trade</Link>
+          </div>
         ) : (
           <div className="mt-6 space-y-3">
             {recentTrades.map((trade) => (
-              <Link key={trade.id} href={`/trades/${trade.id}`} className="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/50 p-4 hover:bg-white/[0.06]">
+              <Link key={trade.id} href={`/trades/${trade.id}`} className="interactive-card flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/50 p-4 hover:bg-white/[0.06]">
                 <span className="font-semibold">{trade.pair}</span>
                 <span className="capitalize text-slate-300">{trade.result}</span>
                 <span>{trade.profitLossAmount?.toString() ?? "—"}</span>
