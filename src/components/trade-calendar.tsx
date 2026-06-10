@@ -5,8 +5,6 @@ import { useMemo, useState } from "react";
 type CalendarTrade = {
   id: string;
   openDate: string;
-  pair: string;
-  result: string;
   profitLossAmount: number | null;
 };
 
@@ -114,7 +112,7 @@ export function TradeCalendar({ trades }: { trades: CalendarTrade[] }) {
               {summary && (
                 <div className="mt-3 space-y-1">
                   <p className={summary.totalPnL >= 0 ? "text-xs font-semibold text-emerald-300" : "text-xs font-semibold text-rose-300"}>{summary.totalPnL}</p>
-                  <p className="truncate text-[11px] text-slate-400">{summary.trades.slice(0, 2).map((trade) => trade.pair).join(", ")}</p>
+                  <p className="text-[11px] text-slate-400">{summary.trades.length} {summary.trades.length === 1 ? "trade" : "trades"}</p>
                 </div>
               )}
             </div>

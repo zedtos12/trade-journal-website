@@ -20,6 +20,12 @@ describe("analytics calendar replacement", () => {
     expect(analyticsSource).toContain("Trading calendar");
   });
 
+  it("puts the calendar full-width above monthly performance", () => {
+    expect(analyticsSource).toContain('data-testid="analytics-calendar-section" className="premium-card interactive-card animate-fade-up mt-8 rounded-3xl p-6"');
+    expect(analyticsSource).toContain('data-testid="analytics-monthly-section" className="premium-card interactive-card animate-fade-up mt-6 rounded-3xl p-6"');
+    expect(analyticsSource).not.toContain("mt-8 grid gap-6 lg:grid-cols-2");
+  });
+
   it("calendar supports month and year navigation controls", () => {
     expect(calendarSource).toContain('data-testid="trade-calendar"');
     expect(calendarSource).toContain('data-testid="calendar-prev-month"');
@@ -27,5 +33,12 @@ describe("analytics calendar replacement", () => {
     expect(calendarSource).toContain('data-testid="calendar-month-select"');
     expect(calendarSource).toContain('data-testid="calendar-year-select"');
     expect(calendarSource).toContain("useState");
+  });
+
+  it("shows only trade counts inside calendar days, not pair names", () => {
+    expect(calendarSource).toContain("summary.trades.length === 1");
+    expect(calendarSource).toContain('"trade" : "trades"');
+    expect(calendarSource).not.toContain("trade.pair");
+    expect(calendarSource).not.toContain("join(\", \")");
   });
 });

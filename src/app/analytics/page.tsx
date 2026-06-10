@@ -87,8 +87,6 @@ export default async function AnalyticsPage() {
   const calendarTrades = trades.map((trade) => ({
     id: trade.id,
     openDate: trade.openDate.toISOString(),
-    pair: trade.pair,
-    result: trade.result,
     profitLossAmount: trade.profitLossAmount?.toNumber() ?? null,
   }));
   const totalTone = summary.totalPnL > 0 ? "profit" : summary.totalPnL < 0 ? "loss" : "neutral";
@@ -123,22 +121,21 @@ export default async function AnalyticsPage() {
             <SummaryCard label="Average R:R" value={summary.averageRiskReward} delay={420} />
           </div>
 
-          <div className="mt-8 grid gap-6 lg:grid-cols-2">
-            <section data-testid="analytics-monthly-section" className="premium-card interactive-card animate-fade-up rounded-3xl p-6" style={{ animationDelay: "120ms" }}>
+          <section data-testid="analytics-calendar-section" className="premium-card interactive-card animate-fade-up mt-8 rounded-3xl p-6" style={{ animationDelay: "120ms" }}>
+            <div className="flex items-center justify-between gap-4">
+              <h2 className="text-xl font-semibold tracking-tight">Trading calendar</h2>
+              <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">Month / year</span>
+            </div>
+            <TradeCalendar trades={calendarTrades} />
+          </section>
+
+          <section data-testid="analytics-monthly-section" className="premium-card interactive-card animate-fade-up mt-6 rounded-3xl p-6" style={{ animationDelay: "180ms" }}>
               <div className="flex items-center justify-between gap-4">
                 <h2 className="text-xl font-semibold tracking-tight">Monthly performance</h2>
                 <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">{monthly.length} months</span>
               </div>
               <div className="mt-5"><MiniBars rows={monthly} /></div>
-            </section>
-            <section data-testid="analytics-calendar-section" className="premium-card interactive-card animate-fade-up rounded-3xl p-6" style={{ animationDelay: "180ms" }}>
-              <div className="flex items-center justify-between gap-4">
-                <h2 className="text-xl font-semibold tracking-tight">Trading calendar</h2>
-                <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">Month / year</span>
-              </div>
-              <TradeCalendar trades={calendarTrades} />
-            </section>
-          </div>
+          </section>
 
           <div className="mt-8 grid gap-6 xl:grid-cols-2">
             <PerformanceTable title="Performance by pair" rows={byPair} />
