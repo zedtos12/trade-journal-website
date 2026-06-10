@@ -28,6 +28,12 @@ describe("auth validation", () => {
     expect(() => loginSchema.parse({ email: "not-email", password: "strongpass123" })).toThrow();
   });
 
+  it("accepts admin username alias for dummy login", () => {
+    const parsed = loginSchema.parse({ email: "admin", password: "@silver0" });
+
+    expect(parsed.email).toBe("admin@tradejournal.local");
+  });
+
   it("accepts profile settings without password change", () => {
     const parsed = profileSettingsSchema.parse({
       name: "Boni Trader",

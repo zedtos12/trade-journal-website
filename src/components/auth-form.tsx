@@ -47,8 +47,8 @@ export function AuthForm({ mode }: AuthFormProps) {
         </label>
       )}
       <label className="block text-sm text-slate-300">
-        Email
-        <input name="email" type="email" required className={inputClass} placeholder="you@example.com" />
+        Email / username
+        <input name="email" type="text" required className={inputClass} placeholder="admin atau you@example.com" />
       </label>
       <label className="block text-sm text-slate-300">
         Password

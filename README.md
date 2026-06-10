@@ -67,7 +67,18 @@ npm run build     # production build
 npm run db:generate
 npm run db:migrate
 npm run db:dev
+npm run db:seed
 ```
+
+Seed dummy preview account:
+
+```text
+Username: admin
+Email: admin@tradejournal.local
+Password: @silver0
+```
+
+The login form accepts either `admin` or `admin@tradejournal.local` for this seeded account.
 
 ## Current PRD Status
 

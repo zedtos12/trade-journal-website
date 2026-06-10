@@ -12,8 +12,15 @@ export const registerSchema = z
     path: ["confirmPassword"],
   });
 
+const loginIdentifierSchema = z.preprocess((value) => {
+  if (typeof value !== "string") return value;
+  const normalized = value.trim().toLowerCase();
+  if (normalized === "admin") return "admin@tradejournal.local";
+  return normalized;
+}, z.string().email("Email tidak valid"));
+
 export const loginSchema = z.object({
-  email: z.string().trim().toLowerCase().email("Email tidak valid"),
+  email: loginIdentifierSchema,
   password: z.string().min(8, "Password minimal 8 karakter"),
 });
 
