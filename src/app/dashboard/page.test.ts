@@ -26,4 +26,11 @@ describe("dashboard premium interaction polish", () => {
     expect(dashboardSource).toContain("<circle");
     expect(dashboardSource).not.toContain("bg-gradient-to-t from-gold/70 to-goldLight");
   });
+
+  it("shows equity value tooltip when hovering chart points", () => {
+    expect(dashboardSource).toContain('data-testid="dashboard-equity-tooltip"');
+    expect(dashboardSource).toContain("group-hover:opacity-100");
+    expect(dashboardSource).toContain("point.value");
+    expect(dashboardSource).toContain("P/L");
+  });
 });
