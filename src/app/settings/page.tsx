@@ -7,9 +7,9 @@ export default async function SettingsPage() {
 
   return (
     <AppShell>
-      <div>
+      <div data-testid="settings-page-header" className="animate-fade-up">
         <p className="text-gold">Settings</p>
-        <h1 className="mt-2 text-4xl font-semibold">Profile & security</h1>
+        <h1 className="mt-2 text-4xl font-semibold tracking-tight">Profile & security</h1>
         <p className="mt-2 text-slate-400">Update nama, preferred currency, dan password akun.</p>
       </div>
       <div className="mt-8"><SettingsForms user={user} /></div>

@@ -8,6 +8,8 @@ type AuthFormProps = {
   mode: "login" | "register";
 };
 
+const inputClass = "mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40";
+
 export function AuthForm({ mode }: AuthFormProps) {
   const router = useRouter();
   const [error, setError] = useState("");
@@ -37,34 +39,34 @@ export function AuthForm({ mode }: AuthFormProps) {
   const isRegister = mode === "register";
 
   return (
-    <form action={onSubmit} className="space-y-4 rounded-3xl border border-white/10 bg-white/[0.04] p-6 shadow-2xl shadow-black/30 backdrop-blur">
+    <form data-testid="auth-form-card" action={onSubmit} className="premium-card animate-fade-up space-y-4 rounded-3xl p-6">
       {isRegister && (
         <label className="block text-sm text-slate-300">
           Name
-          <input name="name" required className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none ring-gold/40 focus:ring-2" placeholder="Boni Trader" />
+          <input name="name" required className={inputClass} placeholder="Boni Trader" />
         </label>
       )}
       <label className="block text-sm text-slate-300">
         Email
-        <input name="email" type="email" required className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none ring-gold/40 focus:ring-2" placeholder="you@example.com" />
+        <input name="email" type="email" required className={inputClass} placeholder="you@example.com" />
       </label>
       <label className="block text-sm text-slate-300">
         Password
-        <input name="password" type="password" required minLength={8} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none ring-gold/40 focus:ring-2" placeholder="Minimal 8 karakter" />
+        <input name="password" type="password" required minLength={8} className={inputClass} placeholder="Minimal 8 karakter" />
       </label>
       {isRegister && (
         <label className="block text-sm text-slate-300">
           Confirm password
-          <input name="confirmPassword" type="password" required minLength={8} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none ring-gold/40 focus:ring-2" placeholder="Ulangi password" />
+          <input name="confirmPassword" type="password" required minLength={8} className={inputClass} placeholder="Ulangi password" />
         </label>
       )}
       {error && <p className="rounded-2xl border border-rose-400/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">{error}</p>}
-      <button disabled={loading} className="w-full rounded-2xl bg-gold px-5 py-3 font-semibold text-slate-950 transition hover:bg-goldLight disabled:opacity-60">
+      <button disabled={loading} className="premium-button w-full rounded-2xl bg-gold px-5 py-3 font-semibold text-slate-950 transition hover:bg-goldLight disabled:opacity-60">
         {loading ? "Processing..." : isRegister ? "Create Account" : "Login"}
       </button>
       <p className="text-center text-sm text-slate-400">
         {isRegister ? "Sudah punya akun? " : "Belum punya akun? "}
-        <Link className="text-gold hover:text-goldLight" href={isRegister ? "/login" : "/register"}>
+        <Link className="text-gold transition hover:text-goldLight" href={isRegister ? "/login" : "/register"}>
           {isRegister ? "Login" : "Register"}
         </Link>
       </p>
