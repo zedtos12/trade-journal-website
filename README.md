@@ -88,11 +88,15 @@ Done:
 - Trade CRUD API endpoints
 - Add trade form
 - Trade history with search/filter/sort
+- Trade history date range filter, pagination, and mobile card layout
 - Trade detail/review page
 - Edit/delete trade
 - User ownership checks for trade reads/updates/deletes
+- Settings profile updates for name and preferred currency
+- Settings password change
+- UX/QA polish with labels, accessible actions, and edge-case validation tests
 
 Next:
 
-- Settings profile updates
-- UX polish and edge-case QA
+- Optional production deploy polish
+- Optional export/report features later if needed
