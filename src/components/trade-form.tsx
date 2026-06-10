@@ -9,8 +9,9 @@ type TradeFormProps = {
   trade?: SerializedTrade;
 };
 
-const inputClass = "mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none ring-gold/40 focus:ring-2";
+const inputClass = "mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40";
 const labelClass = "block text-sm text-slate-300";
+const sectionClass = "premium-card animate-fade-up rounded-3xl p-6";
 
 function valueOrEmpty(value: unknown) {
   return value === null || typeof value === "undefined" ? "" : String(value);
@@ -47,11 +48,11 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
   }
 
   return (
-    <form action={onSubmit} className="space-y-6">
+    <form action={onSubmit} className="animate-fade-up space-y-6">
       {error && <p className="rounded-2xl border border-rose-400/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">{error}</p>}
 
-      <section className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
-        <h2 className="text-xl font-semibold">Trade Basics</h2>
+      <section data-testid="trade-form-section" className={sectionClass}>
+        <h2 className="text-xl font-semibold tracking-tight">Trade Basics</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           <label className={labelClass}>Pair<input name="pair" required defaultValue={trade?.pair ?? ""} placeholder="EURUSD" className={inputClass} /></label>
           <label className={labelClass}>Direction<select name="direction" defaultValue={trade?.direction ?? "buy"} className={inputClass}><option value="buy">Buy</option><option value="sell">Sell</option></select></label>
@@ -62,8 +63,8 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
         </div>
       </section>
 
-      <section className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
-        <h2 className="text-xl font-semibold">Risk & Result</h2>
+      <section data-testid="trade-form-section" className={sectionClass}>
+        <h2 className="text-xl font-semibold tracking-tight">Risk & Result</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-3">
           {[['entryPrice','Entry price'],['exitPrice','Exit price'],['lotSize','Lot size'],['stopLoss','Stop loss'],['takeProfit','Take profit'],['profitLossAmount','P/L amount'],['profitLossPercentage','P/L %'],['riskRewardRatio','Risk/reward ratio']].map(([name,label]) => (
             <label key={name} className={labelClass}>{label}<input name={name} type="number" step="any" defaultValue={valueOrEmpty(trade?.[name as keyof SerializedTrade])} className={inputClass} /></label>
@@ -71,8 +72,8 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
         </div>
       </section>
 
-      <section className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
-        <h2 className="text-xl font-semibold">Strategy & Psychology</h2>
+      <section data-testid="trade-form-section" className={sectionClass}>
+        <h2 className="text-xl font-semibold tracking-tight">Strategy & Psychology</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           <label className={labelClass}>Setup / strategy<input name="setupName" defaultValue={trade?.setupName ?? ""} className={inputClass} placeholder="London breakout" /></label>
           <label className={labelClass}>Timeframe<select name="timeframe" defaultValue={trade?.timeframe ?? ""} className={inputClass}><option value="">Select</option>{["M1","M5","M15","M30","H1","H4","D1","W1"].map((item) => <option key={item} value={item}>{item}</option>)}</select></label>
@@ -82,8 +83,8 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
         </div>
       </section>
 
-      <section className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
-        <h2 className="text-xl font-semibold">Notes</h2>
+      <section data-testid="trade-form-section" className={sectionClass}>
+        <h2 className="text-xl font-semibold tracking-tight">Notes</h2>
         <div className="mt-5 grid gap-4">
           <label className={labelClass}>Entry reason<textarea name="entryReason" defaultValue={trade?.entryReason ?? ""} className={inputClass} rows={3} /></label>
           <label className={labelClass}>Exit reason<textarea name="exitReason" defaultValue={trade?.exitReason ?? ""} className={inputClass} rows={3} /></label>
@@ -92,7 +93,7 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
         </div>
       </section>
 
-      <button disabled={loading} className="rounded-full bg-gold px-6 py-3 font-semibold text-slate-950 hover:bg-goldLight disabled:opacity-60">
+      <button disabled={loading} className="premium-button rounded-full bg-gold px-6 py-3 font-semibold text-slate-950 hover:bg-goldLight disabled:opacity-60">
         {loading ? "Saving..." : mode === "create" ? "Save Trade" : "Update Trade"}
       </button>
     </form>

@@ -33,38 +33,38 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
 
   return (
     <AppShell>
-      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+      <div className="animate-fade-up flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
           <p className="text-gold">Trade History</p>
-          <h1 className="mt-2 text-4xl font-semibold">Your trades</h1>
+          <h1 className="mt-2 text-4xl font-semibold tracking-tight">Your trades</h1>
           <p className="mt-2 text-slate-400">Search, filter, sort, edit, delete, dan review semua trade milik kamu.</p>
         </div>
-        <Link href="/trades/new" className="rounded-full bg-gold px-5 py-3 text-center font-semibold text-slate-950 hover:bg-goldLight">Add Trade</Link>
+        <Link href="/trades/new" className="premium-button rounded-full bg-gold px-5 py-3 text-center font-semibold text-slate-950 hover:bg-goldLight">Add Trade</Link>
       </div>
 
-      <form className="mt-8 grid gap-3 rounded-3xl border border-white/10 bg-white/[0.04] p-4 md:grid-cols-6" aria-label="Trade filters">
+      <form data-testid="trade-filter-panel" className="premium-card interactive-card animate-fade-up mt-8 grid gap-3 rounded-3xl p-4 md:grid-cols-6" aria-label="Trade filters">
         <label className="text-sm text-slate-300 md:col-span-2">Search
-          <input name="search" defaultValue={query.search ?? ""} placeholder="Search pair/setup" className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white" />
+          <input name="search" defaultValue={query.search ?? ""} placeholder="Search pair/setup" className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40" />
         </label>
         <label className="text-sm text-slate-300">Result
-          <select name="result" defaultValue={query.result ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"><option value="">All result</option><option value="win">Win</option><option value="loss">Loss</option><option value="breakeven">Breakeven</option><option value="open">Open</option></select>
+          <select name="result" defaultValue={query.result ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40"><option value="">All result</option><option value="win">Win</option><option value="loss">Loss</option><option value="breakeven">Breakeven</option><option value="open">Open</option></select>
         </label>
         <label className="text-sm text-slate-300">Direction
-          <select name="direction" defaultValue={query.direction ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"><option value="">All direction</option><option value="buy">Buy</option><option value="sell">Sell</option></select>
+          <select name="direction" defaultValue={query.direction ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40"><option value="">All direction</option><option value="buy">Buy</option><option value="sell">Sell</option></select>
         </label>
         <label className="text-sm text-slate-300">Timeframe
-          <select name="timeframe" defaultValue={query.timeframe ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"><option value="">All TF</option>{["M1","M5","M15","M30","H1","H4","D1","W1"].map((tf) => <option key={tf} value={tf}>{tf}</option>)}</select>
+          <select name="timeframe" defaultValue={query.timeframe ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40"><option value="">All TF</option>{["M1","M5","M15","M30","H1","H4","D1","W1"].map((tf) => <option key={tf} value={tf}>{tf}</option>)}</select>
         </label>
         <label className="text-sm text-slate-300">Sort
-          <select name="sort" defaultValue={query.sort} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white"><option value="newest">Newest</option><option value="oldest">Oldest</option><option value="highest-profit">Highest profit</option><option value="biggest-loss">Biggest loss</option></select>
+          <select name="sort" defaultValue={query.sort} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40"><option value="newest">Newest</option><option value="oldest">Oldest</option><option value="highest-profit">Highest profit</option><option value="biggest-loss">Biggest loss</option></select>
         </label>
         <label className="text-sm text-slate-300 md:col-span-2">Date from
-          <input aria-label="Filter date from" name="dateFrom" type="date" defaultValue={query.dateFrom ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white" />
+          <input aria-label="Filter date from" name="dateFrom" type="date" defaultValue={query.dateFrom ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40" />
         </label>
         <label className="text-sm text-slate-300 md:col-span-2">Date to
-          <input aria-label="Filter date to" name="dateTo" type="date" defaultValue={query.dateTo ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white" />
+          <input aria-label="Filter date to" name="dateTo" type="date" defaultValue={query.dateTo ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40" />
         </label>
-        <button className="rounded-2xl bg-white px-4 py-3 font-semibold text-slate-950 md:col-span-2 md:self-end">Apply filters</button>
+        <button className="premium-button rounded-2xl bg-white px-4 py-3 font-semibold text-slate-950 md:col-span-2 md:self-end">Apply filters</button>
       </form>
 
       <div className="mt-4 flex flex-col gap-2 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
@@ -73,19 +73,19 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
       </div>
 
       {trades.length === 0 ? (
-        <div className="mt-8 rounded-3xl border border-white/10 bg-white/[0.04] p-8 text-center">
+        <div data-testid="trade-history-empty-state" className="premium-card animate-fade-up mt-8 rounded-3xl p-8 text-center">
           <h2 className="text-2xl font-semibold">Belum ada trade</h2>
           <p className="mt-3 text-slate-400">Mulai catat trade pertama kamu agar dashboard dan analytics bisa membaca performa.</p>
-          <Link href="/trades/new" className="mt-6 inline-flex rounded-full bg-gold px-5 py-3 font-semibold text-slate-950">Add Trade</Link>
+          <Link href="/trades/new" className="premium-button mt-6 inline-flex rounded-full bg-gold px-5 py-3 font-semibold text-slate-950 hover:bg-goldLight">Add Trade</Link>
         </div>
       ) : (
-        <div className="mt-8 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04]">
+        <div data-testid="trade-history-table" className="premium-card animate-fade-up mt-8 overflow-hidden rounded-3xl">
           <div className="hidden grid-cols-9 border-b border-white/10 px-5 py-3 text-sm text-slate-400 md:grid">
             <span>Date</span><span>Pair</span><span>Direction</span><span>Setup</span><span>TF</span><span>Result</span><span>P/L</span><span>R:R</span><span>Actions</span>
           </div>
           <div className="md:hidden">
             {trades.map((trade) => (
-              <article key={trade.id} className="border-b border-white/5 p-5 last:border-0" aria-label={`${trade.pair} trade on ${trade.openDate.toISOString().slice(0, 10)}`}>
+              <article key={trade.id} className="interactive-card border-b border-white/5 p-5 last:border-0" aria-label={`${trade.pair} trade on ${trade.openDate.toISOString().slice(0, 10)}`}>
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <p className="text-xs text-slate-400">{trade.openDate.toISOString().slice(0, 10)} · {trade.timeframe ?? "No TF"}</p>
@@ -105,7 +105,7 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
           </div>
           <div className="hidden md:block">
             {trades.map((trade) => (
-              <div key={trade.id} className="grid gap-3 border-b border-white/5 px-5 py-4 text-sm last:border-0 md:grid-cols-9 md:items-center">
+              <div key={trade.id} className="interactive-card grid gap-3 border-b border-white/5 px-5 py-4 text-sm last:border-0 md:grid-cols-9 md:items-center">
                 <span>{trade.openDate.toISOString().slice(0, 10)}</span>
                 <span className="font-semibold">{trade.pair}</span>
                 <span className="capitalize">{trade.direction}</span>

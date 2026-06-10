@@ -16,7 +16,7 @@ export function DeleteTradeButton({ id }: { id: string }) {
   }
 
   return (
-    <button onClick={deleteTrade} disabled={loading} className="rounded-full border border-rose-400/30 px-4 py-2 text-sm text-rose-200 hover:bg-rose-500/10 disabled:opacity-60">
+    <button onClick={deleteTrade} disabled={loading} className="premium-button rounded-full border border-rose-400/30 px-4 py-2 text-sm text-rose-200 hover:bg-rose-500/10 disabled:opacity-60">
       {loading ? "Deleting..." : "Delete"}
     </button>
   );
