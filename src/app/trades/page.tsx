@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
+import { PremiumSelect } from "@/components/ui/premium-select";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { buildTradeOrderBy, buildTradePagination, buildTradeWhere } from "@/lib/trades/query";
@@ -47,16 +48,16 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
           <input name="search" defaultValue={query.search ?? ""} placeholder="Search pair/setup" className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40" />
         </label>
         <label className="text-sm text-slate-300">Result
-          <select name="result" defaultValue={query.result ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40"><option value="">All result</option><option value="win">Win</option><option value="loss">Loss</option><option value="breakeven">Breakeven</option><option value="open">Open</option></select>
+          <PremiumSelect name="result" defaultValue={query.result ?? ""} options={[{ value: "", label: "All result" }, { value: "win", label: "Win" }, { value: "loss", label: "Loss" }, { value: "breakeven", label: "Breakeven" }, { value: "open", label: "Open" }]} />
         </label>
         <label className="text-sm text-slate-300">Direction
-          <select name="direction" defaultValue={query.direction ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40"><option value="">All direction</option><option value="buy">Buy</option><option value="sell">Sell</option></select>
+          <PremiumSelect name="direction" defaultValue={query.direction ?? ""} options={[{ value: "", label: "All direction" }, { value: "buy", label: "Buy" }, { value: "sell", label: "Sell" }]} />
         </label>
         <label className="text-sm text-slate-300">Timeframe
-          <select name="timeframe" defaultValue={query.timeframe ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40"><option value="">All TF</option>{["M1","M5","M15","M30","H1","H4","D1","W1"].map((tf) => <option key={tf} value={tf}>{tf}</option>)}</select>
+          <PremiumSelect name="timeframe" defaultValue={query.timeframe ?? ""} options={[{ value: "", label: "All TF" }, ...["M1","M5","M15","M30","H1","H4","D1","W1"].map((tf) => ({ value: tf, label: tf }))]} />
         </label>
         <label className="text-sm text-slate-300">Sort
-          <select name="sort" defaultValue={query.sort} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40"><option value="newest">Newest</option><option value="oldest">Oldest</option><option value="highest-profit">Highest profit</option><option value="biggest-loss">Biggest loss</option></select>
+          <PremiumSelect name="sort" defaultValue={query.sort} options={[{ value: "newest", label: "Newest" }, { value: "oldest", label: "Oldest" }, { value: "highest-profit", label: "Highest profit" }, { value: "biggest-loss", label: "Biggest loss" }]} />
         </label>
         <label className="text-sm text-slate-300 md:col-span-2">Date from
           <input aria-label="Filter date from" name="dateFrom" type="date" defaultValue={query.dateFrom ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40" />

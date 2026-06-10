@@ -30,8 +30,8 @@ describe("analytics calendar replacement", () => {
     expect(calendarSource).toContain('data-testid="trade-calendar"');
     expect(calendarSource).toContain('data-testid="calendar-prev-month"');
     expect(calendarSource).toContain('data-testid="calendar-next-month"');
-    expect(calendarSource).toContain('data-testid="calendar-month-select"');
-    expect(calendarSource).toContain('data-testid="calendar-year-select"');
+    expect(calendarSource).toContain('dataTestId="calendar-month-select"');
+    expect(calendarSource).toContain('dataTestId="calendar-year-select"');
     expect(calendarSource).toContain("useState");
   });
 

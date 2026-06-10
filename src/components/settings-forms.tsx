@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { PremiumSelect } from "@/components/ui/premium-select";
 
 const inputClass = "mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40 disabled:opacity-60";
 const cardClass = "premium-card interactive-card animate-fade-up rounded-3xl p-6";
@@ -40,7 +41,7 @@ export function SettingsForms({ user }: { user: { name: string; email: string; p
         <div className="mt-5 space-y-4">
           <label className="block text-sm text-slate-300">Name<input name="name" required defaultValue={user.name} className={inputClass} /></label>
           <label className="block text-sm text-slate-300">Email<input disabled value={user.email} className={inputClass} /></label>
-          <label className="block text-sm text-slate-300">Preferred currency<select name="preferredCurrency" defaultValue={user.preferred_currency} className={inputClass}><option value="USD">USD</option><option value="IDR">IDR</option></select></label>
+          <label className="block text-sm text-slate-300">Preferred currency<PremiumSelect name="preferredCurrency" defaultValue={user.preferred_currency} options={[{ value: "USD", label: "USD" }, { value: "IDR", label: "IDR" }]} /></label>
           {profileMessage && <p className="rounded-2xl border border-gold/20 bg-gold/[0.05] px-4 py-3 text-sm text-goldLight">{profileMessage}</p>}
           <button className="premium-button rounded-full bg-gold px-5 py-3 font-semibold text-slate-950 hover:bg-goldLight">Save profile</button>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { PremiumSelect } from "@/components/ui/premium-select";
 
 type CalendarTrade = {
   id: string;
@@ -86,12 +87,8 @@ export function TradeCalendar({ trades }: { trades: CalendarTrade[] }) {
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <button data-testid="calendar-prev-month" type="button" onClick={() => goToMonth(-1)} className="rounded-full border border-white/10 px-3 py-2 text-sm text-slate-200 transition hover:border-gold/40 hover:bg-gold/10">←</button>
-          <select data-testid="calendar-month-select" value={visibleMonth} onChange={(event) => setVisibleMonth(Number(event.target.value))} className="rounded-full border border-white/10 bg-slate-950 px-3 py-2 text-sm text-slate-200 outline-none transition hover:border-gold/40 focus:border-gold/60">
-            {monthNames.map((month, index) => <option key={month} value={index}>{month}</option>)}
-          </select>
-          <select data-testid="calendar-year-select" value={visibleYear} onChange={(event) => setVisibleYear(Number(event.target.value))} className="rounded-full border border-white/10 bg-slate-950 px-3 py-2 text-sm text-slate-200 outline-none transition hover:border-gold/40 focus:border-gold/60">
-            {years.map((year) => <option key={year} value={year}>{year}</option>)}
-          </select>
+          <PremiumSelect dataTestId="calendar-month-select" value={visibleMonth} onValueChange={(nextValue) => setVisibleMonth(Number(nextValue))} options={monthNames.map((month, index) => ({ value: String(index), label: month }))} className="mt-0 min-w-32" />
+          <PremiumSelect dataTestId="calendar-year-select" value={visibleYear} onValueChange={(nextValue) => setVisibleYear(Number(nextValue))} options={years.map((year) => ({ value: String(year), label: String(year) }))} className="mt-0 min-w-28" />
           <button data-testid="calendar-next-month" type="button" onClick={() => goToMonth(1)} className="rounded-full border border-white/10 px-3 py-2 text-sm text-slate-200 transition hover:border-gold/40 hover:bg-gold/10">→</button>
         </div>
       </div>

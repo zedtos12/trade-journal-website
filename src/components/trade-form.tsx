@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { PremiumSelect } from "@/components/ui/premium-select";
 import type { SerializedTrade } from "@/lib/trades/serialize";
 
 type TradeFormProps = {
@@ -55,9 +56,9 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
         <h2 className="text-xl font-semibold tracking-tight">Trade Basics</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           <label className={labelClass}>Pair<input name="pair" required defaultValue={trade?.pair ?? ""} placeholder="EURUSD" className={inputClass} /></label>
-          <label className={labelClass}>Direction<select name="direction" defaultValue={trade?.direction ?? "buy"} className={inputClass}><option value="buy">Buy</option><option value="sell">Sell</option></select></label>
-          <label className={labelClass}>Status<select name="status" defaultValue={trade?.status ?? "closed"} className={inputClass}><option value="closed">Closed</option><option value="open">Open</option></select></label>
-          <label className={labelClass}>Result<select name="result" defaultValue={trade?.result ?? "win"} className={inputClass}><option value="win">Win</option><option value="loss">Loss</option><option value="breakeven">Breakeven</option><option value="open">Open</option></select></label>
+          <label className={labelClass}>Direction<PremiumSelect name="direction" defaultValue={trade?.direction ?? "buy"} options={[{ value: "buy", label: "Buy" }, { value: "sell", label: "Sell" }]} /></label>
+          <label className={labelClass}>Status<PremiumSelect name="status" defaultValue={trade?.status ?? "closed"} options={[{ value: "closed", label: "Closed" }, { value: "open", label: "Open" }]} /></label>
+          <label className={labelClass}>Result<PremiumSelect name="result" defaultValue={trade?.result ?? "win"} options={[{ value: "win", label: "Win" }, { value: "loss", label: "Loss" }, { value: "breakeven", label: "Breakeven" }, { value: "open", label: "Open" }]} /></label>
           <label className={labelClass}>Open date<input name="openDate" required type="date" defaultValue={dateValue(trade?.openDate)} className={inputClass} /></label>
           <label className={labelClass}>Close date<input name="closeDate" type="date" defaultValue={dateValue(trade?.closeDate)} className={inputClass} /></label>
         </div>
@@ -76,8 +77,8 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
         <h2 className="text-xl font-semibold tracking-tight">Strategy & Psychology</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           <label className={labelClass}>Setup / strategy<input name="setupName" defaultValue={trade?.setupName ?? ""} className={inputClass} placeholder="London breakout" /></label>
-          <label className={labelClass}>Timeframe<select name="timeframe" defaultValue={trade?.timeframe ?? ""} className={inputClass}><option value="">Select</option>{["M1","M5","M15","M30","H1","H4","D1","W1"].map((item) => <option key={item} value={item}>{item}</option>)}</select></label>
-          <label className={labelClass}>Session<select name="session" defaultValue={trade?.session ?? ""} className={inputClass}><option value="">Select</option><option value="Asia">Asia</option><option value="London">London</option><option value="NewYork">New York</option></select></label>
+          <label className={labelClass}>Timeframe<PremiumSelect name="timeframe" defaultValue={trade?.timeframe ?? ""} options={[{ value: "", label: "Select" }, ...["M1","M5","M15","M30","H1","H4","D1","W1"].map((item) => ({ value: item, label: item }))]} /></label>
+          <label className={labelClass}>Session<PremiumSelect name="session" defaultValue={trade?.session ?? ""} options={[{ value: "", label: "Select" }, { value: "Asia", label: "Asia" }, { value: "London", label: "London" }, { value: "NewYork", label: "New York" }]} /></label>
           <label className={labelClass}>Emotion before<input name="emotionBefore" defaultValue={trade?.emotionBefore ?? ""} className={inputClass} /></label>
           <label className={labelClass}>Emotion after<input name="emotionAfter" defaultValue={trade?.emotionAfter ?? ""} className={inputClass} /></label>
         </div>
