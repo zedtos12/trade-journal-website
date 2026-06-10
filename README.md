@@ -95,6 +95,17 @@ Done:
 - Settings profile updates for name and preferred currency
 - Settings password change
 - UX/QA polish with labels, accessible actions, and edge-case validation tests
+- Premium UI animation foundation with reduced-motion support
+- Landing page modernization with animated hero, floating dashboard preview, and interactive feature cards
+- Dashboard, analytics, trade history, forms, auth, settings, loading, and error-state visual polish
+
+Final UI polish verification:
+
+```bash
+npm test
+npm run lint
+npm run build
+```
 
 Next:
 
