@@ -9,7 +9,7 @@ describe("analytics premium visual polish", () => {
     expect(analyticsSource).toContain("data-testid=\"analytics-summary-card\"");
     expect(analyticsSource).toContain("premium-card interactive-card animate-fade-up");
     expect(analyticsSource).toContain("data-testid=\"analytics-monthly-section\"");
-    expect(analyticsSource).toContain("data-testid=\"analytics-equity-section\"");
+    expect(analyticsSource).toContain("data-testid=\"analytics-calendar-section\"");
     expect(analyticsSource).toContain("data-testid=\"analytics-breakdown-section\"");
   });
 

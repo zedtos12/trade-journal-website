@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
+import { TradeCalendar } from "@/components/trade-calendar";
 import { requireUser } from "@/lib/auth";
-import { buildEquityCurve, buildMonthlyPerformance } from "@/lib/analytics/dashboard-insights";
+import { buildMonthlyPerformance } from "@/lib/analytics/dashboard-insights";
 import { buildAnalyticsSummary, groupPerformanceByKey } from "@/lib/analytics/performance";
 import { prisma } from "@/lib/db";
 
@@ -83,7 +84,13 @@ export default async function AnalyticsPage() {
   const byTimeframe = groupPerformanceByKey(analyticsTrades, "timeframe");
   const bySession = groupPerformanceByKey(analyticsTrades, "session");
   const monthly = buildMonthlyPerformance(insightTrades);
-  const equity = buildEquityCurve(insightTrades);
+  const calendarTrades = trades.map((trade) => ({
+    id: trade.id,
+    openDate: trade.openDate.toISOString(),
+    pair: trade.pair,
+    result: trade.result,
+    profitLossAmount: trade.profitLossAmount?.toNumber() ?? null,
+  }));
   const totalTone = summary.totalPnL > 0 ? "profit" : summary.totalPnL < 0 ? "loss" : "neutral";
 
   return (
@@ -92,7 +99,7 @@ export default async function AnalyticsPage() {
         <div>
           <p className="text-gold">Analytics MVP</p>
           <h1 className="mt-2 text-4xl font-semibold tracking-tight">Performance analytics</h1>
-          <p className="mt-2 text-slate-400">Breakdown performa trading berdasarkan PRD: pair, setup, timeframe, session, monthly performance, dan equity curve.</p>
+          <p className="mt-2 text-slate-400">Breakdown performa trading berdasarkan PRD: pair, setup, timeframe, session, monthly performance, dan kalender trading.</p>
         </div>
         <Link href="/trades/new" className="premium-button rounded-full bg-gold px-5 py-3 text-center font-semibold text-slate-950 hover:bg-goldLight">Add Trade</Link>
       </div>
@@ -124,12 +131,12 @@ export default async function AnalyticsPage() {
               </div>
               <div className="mt-5"><MiniBars rows={monthly} /></div>
             </section>
-            <section data-testid="analytics-equity-section" className="premium-card interactive-card animate-fade-up rounded-3xl p-6" style={{ animationDelay: "180ms" }}>
+            <section data-testid="analytics-calendar-section" className="premium-card interactive-card animate-fade-up rounded-3xl p-6" style={{ animationDelay: "180ms" }}>
               <div className="flex items-center justify-between gap-4">
-                <h2 className="text-xl font-semibold tracking-tight">Equity curve checkpoints</h2>
-                <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">{equity.length} points</span>
+                <h2 className="text-xl font-semibold tracking-tight">Trading calendar</h2>
+                <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">Month / year</span>
               </div>
-              <div className="mt-5"><MiniBars rows={equity.map((point) => ({ label: point.label, totalPnL: point.value, trades: 1 }))} /></div>
+              <TradeCalendar trades={calendarTrades} />
             </section>
           </div>
 
