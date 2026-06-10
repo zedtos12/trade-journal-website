@@ -38,23 +38,36 @@ function EquityCurve({ points }: { points: { label: string; value: number }[] })
     return <div className="flex h-56 items-center justify-center rounded-2xl border border-dashed border-gold/20 bg-slate-950/40 text-slate-500">Belum ada data equity curve</div>;
   }
 
+  const width = 720;
+  const height = 240;
+  const paddingX = 36;
+  const paddingY = 30;
   const min = Math.min(...points.map((point) => point.value), 0);
   const max = Math.max(...points.map((point) => point.value), 1);
   const range = max - min || 1;
+  const chartWidth = width - paddingX * 2;
+  const chartHeight = height - paddingY * 2;
+  const coordinates = points.map((point, index) => {
+    const x = points.length === 1 ? width / 2 : paddingX + (index / (points.length - 1)) * chartWidth;
+    const y = paddingY + chartHeight - ((point.value - min) / range) * chartHeight;
+    return { ...point, x, y };
+  });
+  const linePoints = coordinates.map((point) => `${point.x},${point.y}`).join(" ");
+  const areaPoints = `${paddingX},${height - paddingY} ${linePoints} ${width - paddingX},${height - paddingY}`;
 
   return (
-    <div className="h-56 rounded-2xl border border-white/10 bg-slate-950/60 p-4 shadow-inner shadow-black/30">
-      <div className="flex h-full items-end gap-2">
-        {points.map((point, index) => {
-          const height = Math.max(8, ((point.value - min) / range) * 100);
-          return (
-            <div key={`${point.label}-${index}`} className="flex flex-1 flex-col items-center gap-2">
-              <div className="w-full rounded-t-lg bg-gradient-to-t from-gold/70 to-goldLight shadow-lg shadow-gold/10 transition duration-300 hover:brightness-125" style={{ height: `${height}%` }} title={`${point.label}: ${point.value}`} />
-              <span className="hidden text-[10px] text-slate-500 md:block">{point.label}</span>
-            </div>
-          );
-        })}
-      </div>
+    <div data-testid="dashboard-equity-chart" className="relative h-64 overflow-hidden rounded-2xl border border-gold/15 bg-slate-950/70 p-3 shadow-inner shadow-black/30">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(217,180,94,0.16),transparent_32%),linear-gradient(rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px)] bg-[size:100%_100%,64px_64px,64px_64px]" />
+      <svg viewBox={`0 0 ${width} ${height}`} className="relative h-full w-full" role="img" aria-label="Visible equity curve line chart">
+        <polygon points={areaPoints} className="fill-gold/15" />
+        <polyline points={linePoints} className="fill-none stroke-goldLight" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+        {coordinates.map((point, index) => (
+          <g key={`${point.label}-${index}`}>
+            <circle cx={point.x} cy={point.y} r="7" className="fill-goldLight stroke-slate-950" strokeWidth="3" />
+            <text x={point.x} y={height - 8} textAnchor="middle" className="fill-slate-400 text-[11px]">{point.label}</text>
+          </g>
+        ))}
+      </svg>
     </div>
   );
 }

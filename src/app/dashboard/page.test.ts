@@ -18,4 +18,12 @@ describe("dashboard premium interaction polish", () => {
     expect(dashboardSource).toContain("Catat trade pertama");
     expect(dashboardSource).toContain("Add Trade");
   });
+
+  it("renders equity curve as a high-contrast visible SVG chart", () => {
+    expect(dashboardSource).toContain('data-testid="dashboard-equity-chart"');
+    expect(dashboardSource).toContain("<svg");
+    expect(dashboardSource).toContain("stroke-goldLight");
+    expect(dashboardSource).toContain("<circle");
+    expect(dashboardSource).not.toContain("bg-gradient-to-t from-gold/70 to-goldLight");
+  });
 });
