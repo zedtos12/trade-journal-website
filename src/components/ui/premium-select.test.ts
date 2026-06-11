@@ -9,6 +9,7 @@ const tradesPage = readFileSync(join(process.cwd(), "src/app/trades/page.tsx"), 
 const tradeForm = readFileSync(join(process.cwd(), "src/components/trade-form.tsx"), "utf8");
 const settingsForms = readFileSync(join(process.cwd(), "src/components/settings-forms.tsx"), "utf8");
 const calendar = readFileSync(join(process.cwd(), "src/components/trade-calendar.tsx"), "utf8");
+const globals = readFileSync(join(process.cwd(), "src/app/globals.css"), "utf8");
 
 describe("premium select dropdown system", () => {
   it("provides a custom dropdown instead of relying on native select popup styling", () => {
@@ -24,5 +25,13 @@ describe("premium select dropdown system", () => {
       expect(source).toContain("PremiumSelect");
       expect(source).not.toContain("<select");
     }
+  });
+
+  it("keeps dropdown menus above surrounding cards and uses themed scrollbars", () => {
+    expect(selectSource).toContain("z-[90]");
+    expect(selectSource).toContain("z-[9999]");
+    expect(selectSource).toContain("premium-select-scrollbar");
+    expect(globals).toContain(".premium-select-scrollbar::-webkit-scrollbar");
+    expect(globals).toContain("scrollbar-color: rgba(215, 181, 109, 0.7) rgba(15, 23, 42, 0.72)");
   });
 });

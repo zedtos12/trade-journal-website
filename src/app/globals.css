@@ -204,6 +204,30 @@ textarea {
   box-shadow: 0 0 0 1px rgba(215, 181, 109, 0.18), 0 0 44px rgba(215, 181, 109, 0.13);
 }
 
+.premium-select-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(215, 181, 109, 0.7) rgba(15, 23, 42, 0.72);
+}
+
+.premium-select-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.premium-select-scrollbar::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.72);
+}
+
+.premium-select-scrollbar::-webkit-scrollbar-thumb {
+  border: 2px solid rgba(15, 23, 42, 0.72);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(244, 213, 141, 0.9), rgba(215, 181, 109, 0.55));
+}
+
+.premium-select-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(255, 237, 183, 0.98), rgba(215, 181, 109, 0.78));
+}
+
 .bg-grid-luxury {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
