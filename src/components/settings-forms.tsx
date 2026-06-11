@@ -5,7 +5,7 @@ import { useState } from "react";
 import { PremiumSelect } from "@/components/ui/premium-select";
 
 const inputClass = "mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40 disabled:opacity-60";
-const cardClass = "premium-card interactive-card animate-fade-up rounded-3xl p-6";
+const cardClass = "dropdown-layer premium-card interactive-card animate-fade-up rounded-3xl p-6";
 
 export function SettingsForms({ user }: { user: { name: string; email: string; preferred_currency: string } }) {
   const router = useRouter();

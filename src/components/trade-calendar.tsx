@@ -79,7 +79,7 @@ export function TradeCalendar({ trades }: { trades: CalendarTrade[] }) {
   }
 
   return (
-    <div data-testid="trade-calendar" className="mt-5 rounded-3xl border border-white/10 bg-slate-950/45 p-4">
+    <div data-testid="trade-calendar" className="dropdown-layer mt-5 rounded-3xl border border-white/10 bg-slate-950/45 p-4">
       <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center">
         <div>
           <p className="text-sm text-slate-400">{monthTrades.length} trades this month</p>

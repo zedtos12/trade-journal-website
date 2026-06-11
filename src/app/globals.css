@@ -236,6 +236,16 @@ section:has([data-premium-select-open="true"]) {
   overflow: visible;
 }
 
+.dropdown-layer {
+  position: relative;
+  z-index: 30;
+  overflow: visible;
+}
+
+.dropdown-layer:has([data-premium-select-open="true"]) {
+  z-index: 120;
+}
+
 .bg-grid-luxury {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),

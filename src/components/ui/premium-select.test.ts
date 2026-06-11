@@ -39,4 +39,14 @@ describe("premium select dropdown system", () => {
     expect(globals).toContain(".premium-select-scrollbar::-webkit-scrollbar");
     expect(globals).toContain("scrollbar-color: rgba(215, 181, 109, 0.7) rgba(15, 23, 42, 0.72)");
   });
+
+  it("adds explicit dropdown layer classes to containers that sit above other content", () => {
+    expect(globals).toContain(".dropdown-layer");
+    expect(globals).toContain('.dropdown-layer:has([data-premium-select-open="true"])');
+    expect(tradesPage).toContain('data-testid="trade-filter-panel" className="dropdown-layer premium-card');
+    expect(tradesPage).toContain('data-testid="trade-history-table" className="premium-card relative z-0');
+    expect(tradeForm).toContain('const sectionClass = "dropdown-layer premium-card');
+    expect(settingsForms).toContain('const cardClass = "dropdown-layer premium-card');
+    expect(calendar).toContain('className="dropdown-layer mt-5');
+  });
 });

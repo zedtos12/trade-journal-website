@@ -12,7 +12,7 @@ type TradeFormProps = {
 
 const inputClass = "mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40";
 const labelClass = "block text-sm text-slate-300";
-const sectionClass = "premium-card animate-fade-up rounded-3xl p-6";
+const sectionClass = "dropdown-layer premium-card animate-fade-up rounded-3xl p-6";
 
 function valueOrEmpty(value: unknown) {
   return value === null || typeof value === "undefined" ? "" : String(value);

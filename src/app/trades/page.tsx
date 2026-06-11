@@ -43,7 +43,7 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
         <Link href="/trades/new" className="premium-button rounded-full bg-gold px-5 py-3 text-center font-semibold text-slate-950 hover:bg-goldLight">Add Trade</Link>
       </div>
 
-      <form data-testid="trade-filter-panel" className="premium-card interactive-card animate-fade-up mt-8 grid gap-3 rounded-3xl p-4 md:grid-cols-6" aria-label="Trade filters">
+      <form data-testid="trade-filter-panel" className="dropdown-layer premium-card interactive-card animate-fade-up mt-8 grid gap-3 rounded-3xl p-4 md:grid-cols-6" aria-label="Trade filters">
         <label className="text-sm text-slate-300 md:col-span-2">Search
           <input name="search" defaultValue={query.search ?? ""} placeholder="Search pair/setup" className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40" />
         </label>
@@ -80,7 +80,7 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
           <Link href="/trades/new" className="premium-button mt-6 inline-flex rounded-full bg-gold px-5 py-3 font-semibold text-slate-950 hover:bg-goldLight">Add Trade</Link>
         </div>
       ) : (
-        <div data-testid="trade-history-table" className="premium-card animate-fade-up mt-8 overflow-hidden rounded-3xl">
+        <div data-testid="trade-history-table" className="premium-card relative z-0 animate-fade-up mt-8 overflow-hidden rounded-3xl">
           <div className="hidden grid-cols-9 border-b border-white/10 px-5 py-3 text-sm text-slate-400 md:grid">
             <span>Date</span><span>Pair</span><span>Direction</span><span>Setup</span><span>TF</span><span>Result</span><span>P/L</span><span>R:R</span><span>Actions</span>
           </div>
