@@ -228,6 +228,14 @@ textarea {
   background: linear-gradient(180deg, rgba(255, 237, 183, 0.98), rgba(215, 181, 109, 0.78));
 }
 
+.premium-card:has([data-premium-select-open="true"]),
+form:has([data-premium-select-open="true"]),
+section:has([data-premium-select-open="true"]) {
+  position: relative;
+  z-index: 80;
+  overflow: visible;
+}
+
 .bg-grid-luxury {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),

@@ -30,6 +30,11 @@ describe("premium select dropdown system", () => {
   it("keeps dropdown menus above surrounding cards and uses themed scrollbars", () => {
     expect(selectSource).toContain("z-[90]");
     expect(selectSource).toContain("z-[9999]");
+    expect(selectSource).toContain("absolute left-0 top-full");
+    expect(selectSource).not.toContain("fixed z-[9999]");
+    expect(selectSource).not.toContain("menuPosition");
+    expect(selectSource).toContain('data-premium-select-open={open ? "true" : undefined}');
+    expect(globals).toContain(':has([data-premium-select-open="true"])');
     expect(selectSource).toContain("premium-select-scrollbar");
     expect(globals).toContain(".premium-select-scrollbar::-webkit-scrollbar");
     expect(globals).toContain("scrollbar-color: rgba(215, 181, 109, 0.7) rgba(15, 23, 42, 0.72)");

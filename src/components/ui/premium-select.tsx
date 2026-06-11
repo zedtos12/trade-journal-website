@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { useId, useState } from "react";
 
 export type PremiumSelectOption = {
   value: string;
@@ -19,17 +19,10 @@ type PremiumSelectProps = {
 
 export function PremiumSelect({ name, value, defaultValue = "", options, onValueChange, dataTestId, className = "" }: PremiumSelectProps) {
   const id = useId();
-  const buttonRef = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
-  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0, width: 0 });
   const [internalValue, setInternalValue] = useState(String(defaultValue));
   const selectedValue = typeof value === "undefined" ? internalValue : String(value);
   const selected = options.find((option) => option.value === selectedValue) ?? options[0];
-
-  function updateMenuPosition() {
-    const rect = buttonRef.current?.getBoundingClientRect();
-    if (rect) setMenuPosition({ top: rect.bottom + 8, left: rect.left, width: rect.width });
-  }
 
   function choose(nextValue: string) {
     setInternalValue(nextValue);
@@ -37,25 +30,15 @@ export function PremiumSelect({ name, value, defaultValue = "", options, onValue
     setOpen(false);
   }
 
-  useLayoutEffect(() => {
-    if (open) updateMenuPosition();
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    window.addEventListener("scroll", updateMenuPosition, true);
-    window.addEventListener("resize", updateMenuPosition);
-    return () => {
-      window.removeEventListener("scroll", updateMenuPosition, true);
-      window.removeEventListener("resize", updateMenuPosition);
-    };
-  }, [open]);
-
   return (
-    <div data-testid={dataTestId ?? "premium-select"} className={`relative mt-2 ${open ? "z-[90]" : "z-0"} ${className}`} onBlur={() => window.setTimeout(() => setOpen(false), 120)}>
+    <div
+      data-testid={dataTestId ?? "premium-select"}
+      data-premium-select-open={open ? "true" : undefined}
+      className={`relative mt-2 ${open ? "z-[90]" : "z-0"} ${className}`}
+      onBlur={() => window.setTimeout(() => setOpen(false), 120)}
+    >
       {name && <input name={name} value={selectedValue} readOnly className="hidden appearance-none" />}
       <button
-        ref={buttonRef}
         id={id}
         type="button"
         aria-haspopup="listbox"
@@ -67,7 +50,7 @@ export function PremiumSelect({ name, value, defaultValue = "", options, onValue
         <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-gold transition ${open ? "rotate-180 border-gold/30" : "group-hover:border-gold/30"}`}>⌄</span>
       </button>
       {open && (
-        <div data-testid="premium-select-menu" role="listbox" aria-labelledby={id} style={{ top: menuPosition.top, left: menuPosition.left, width: menuPosition.width }} className="premium-select-scrollbar fixed z-[9999] max-h-72 overflow-auto rounded-2xl border border-gold/20 bg-slate-950/95 p-1.5 shadow-2xl shadow-black/50 backdrop-blur-xl">
+        <div data-testid="premium-select-menu" role="listbox" aria-labelledby={id} className="premium-select-scrollbar absolute left-0 top-full z-[9999] mt-2 max-h-72 w-full overflow-auto rounded-2xl border border-gold/20 bg-slate-950/95 p-1.5 shadow-2xl shadow-black/50 backdrop-blur-xl">
           {options.map((option) => {
             const active = option.value === selectedValue;
             return (
