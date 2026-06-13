@@ -3,6 +3,8 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const tradesPage = readFileSync(join(process.cwd(), "src/app/trades/page.tsx"), "utf8");
+const newTradePage = readFileSync(join(process.cwd(), "src/app/trades/new/page.tsx"), "utf8");
+const editTradePage = readFileSync(join(process.cwd(), "src/app/trades/[id]/edit/page.tsx"), "utf8");
 const tradeForm = readFileSync(join(process.cwd(), "src/components/trade-form.tsx"), "utf8");
 const tradeDetail = readFileSync(join(process.cwd(), "src/app/trades/[id]/page.tsx"), "utf8");
 const deleteButton = readFileSync(join(process.cwd(), "src/components/delete-trade-button.tsx"), "utf8");
@@ -21,6 +23,14 @@ describe("trade history and forms premium polish", () => {
     expect(tradeForm).toContain("premium-card animate-fade-up");
     expect(tradeForm).toContain("premium-button");
     expect(tradeForm).toContain("focus:border-gold/50");
+  });
+
+  it("centers add and edit trade form pages within the app shell", () => {
+    for (const source of [newTradePage, editTradePage]) {
+      expect(source).toContain('data-testid="trade-form-layout"');
+      expect(source).toContain("mx-auto max-w-5xl");
+      expect(source).toContain("<TradeForm");
+    }
   });
 
   it("uses premium cards and action buttons on trade detail", () => {
