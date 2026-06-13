@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
+import { PremiumDateInput } from "@/components/ui/premium-date-input";
 import { PremiumSelect } from "@/components/ui/premium-select";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
@@ -60,10 +61,10 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
           <PremiumSelect name="sort" defaultValue={query.sort} options={[{ value: "newest", label: "Newest" }, { value: "oldest", label: "Oldest" }, { value: "highest-profit", label: "Highest profit" }, { value: "biggest-loss", label: "Biggest loss" }]} />
         </label>
         <label className="text-sm text-slate-300 md:col-span-2">Date from
-          <input aria-label="Filter date from" name="dateFrom" type="date" defaultValue={query.dateFrom ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40" />
+          <PremiumDateInput ariaLabel="Filter date from" name="dateFrom" defaultValue={query.dateFrom ?? ""} />
         </label>
         <label className="text-sm text-slate-300 md:col-span-2">Date to
-          <input aria-label="Filter date to" name="dateTo" type="date" defaultValue={query.dateTo ?? ""} className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40" />
+          <PremiumDateInput ariaLabel="Filter date to" name="dateTo" defaultValue={query.dateTo ?? ""} />
         </label>
         <button className="premium-button rounded-2xl bg-white px-4 py-3 font-semibold text-slate-950 md:col-span-2 md:self-end">Apply filters</button>
       </form>

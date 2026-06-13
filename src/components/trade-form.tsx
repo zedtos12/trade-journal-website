@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { PremiumDateInput } from "@/components/ui/premium-date-input";
 import { PremiumSelect } from "@/components/ui/premium-select";
 import type { SerializedTrade } from "@/lib/trades/serialize";
 
@@ -59,8 +60,8 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
           <label className={labelClass}>Direction<PremiumSelect name="direction" defaultValue={trade?.direction ?? "buy"} options={[{ value: "buy", label: "Buy" }, { value: "sell", label: "Sell" }]} /></label>
           <label className={labelClass}>Status<PremiumSelect name="status" defaultValue={trade?.status ?? "closed"} options={[{ value: "closed", label: "Closed" }, { value: "open", label: "Open" }]} /></label>
           <label className={labelClass}>Result<PremiumSelect name="result" defaultValue={trade?.result ?? "win"} options={[{ value: "win", label: "Win" }, { value: "loss", label: "Loss" }, { value: "breakeven", label: "Breakeven" }, { value: "open", label: "Open" }]} /></label>
-          <label className={labelClass}>Open date<input name="openDate" required type="date" defaultValue={dateValue(trade?.openDate)} className={inputClass} /></label>
-          <label className={labelClass}>Close date<input name="closeDate" type="date" defaultValue={dateValue(trade?.closeDate)} className={inputClass} /></label>
+          <label className={labelClass}>Open date<PremiumDateInput name="openDate" required defaultValue={dateValue(trade?.openDate)} ariaLabel="Open date" /></label>
+          <label className={labelClass}>Close date<PremiumDateInput name="closeDate" defaultValue={dateValue(trade?.closeDate)} ariaLabel="Close date" /></label>
         </div>
       </section>
 

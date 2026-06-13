@@ -25,6 +25,13 @@ describe("trade history and forms premium polish", () => {
     expect(tradeForm).toContain("focus:border-gold/50");
   });
 
+  it("replaces native date inputs with the premium date picker everywhere", () => {
+    for (const source of [tradeForm, tradesPage]) {
+      expect(source).toContain("PremiumDateInput");
+      expect(source).not.toContain('type="date"');
+    }
+  });
+
   it("centers add and edit trade form pages within the app shell", () => {
     for (const source of [newTradePage, editTradePage]) {
       expect(source).toContain('data-testid="trade-form-layout"');
