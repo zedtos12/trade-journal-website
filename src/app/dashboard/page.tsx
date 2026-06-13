@@ -179,29 +179,48 @@ export default async function DashboardPage() {
         <InsightCard title="Worst setup" row={setupSummary.worst} />
       </div>
 
-      <div data-testid="dashboard-recent-trades" className="premium-card animate-fade-up mt-8 rounded-3xl p-8" style={{ animationDelay: "240ms" }}>
-        <div className="flex items-center justify-between gap-4">
+      <div data-testid="dashboard-recent-trades" className="premium-card animate-fade-up relative mt-8 overflow-hidden rounded-[2rem] p-6 sm:p-8" style={{ animationDelay: "240ms" }}>
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_8%_0%,rgba(244,213,141,0.13),transparent_30%),radial-gradient(circle_at_92%_20%,rgba(45,212,191,0.10),transparent_28%)]" />
+        <div className="relative flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <h2 className="text-2xl font-semibold">Recent trades</h2>
-            <p className="mt-2 text-slate-400">Trade terbaru yang sudah kamu catat.</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-goldLight">Latest execution flow</p>
+            <h2 className="mt-2 text-2xl font-semibold">Recent trades</h2>
+            <p className="mt-2 max-w-2xl text-slate-400">Snapshot trade terbaru untuk cepat cek pair, bias, hasil, dan P/L tanpa harus buka full history.</p>
           </div>
-          <Link href="/trades" className="rounded-full border border-gold/20 px-4 py-2 text-sm text-gold transition hover:border-gold/50 hover:bg-gold/10">View all</Link>
+          <Link href="/trades" className="rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-center text-sm font-semibold text-gold transition hover:border-gold/50 hover:bg-gold/15">View all</Link>
         </div>
         {recentTrades.length === 0 ? (
-          <div data-testid="dashboard-empty-state" className="mt-6 rounded-2xl border border-dashed border-gold/20 bg-gold/[0.04] p-8 text-center text-slate-400">
+          <div data-testid="dashboard-empty-state" className="relative mt-6 rounded-3xl border border-dashed border-gold/20 bg-gold/[0.04] p-8 text-center text-slate-400">
             <p className="text-lg font-semibold text-white">Catat trade pertama kamu</p>
             <p className="mx-auto mt-2 max-w-xl">Mulai journaling agar dashboard ini bisa menampilkan win rate, P/L, equity curve, dan insight pair/setup terbaik.</p>
             <Link href="/trades/new" className="premium-button mt-5 inline-flex rounded-full bg-gold px-5 py-3 font-semibold text-slate-950 hover:bg-goldLight">Add Trade</Link>
           </div>
         ) : (
-          <div className="mt-6 space-y-3">
-            {recentTrades.map((trade) => (
-              <Link key={trade.id} href={`/trades/${trade.id}`} className="interactive-card flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/50 p-4 hover:bg-white/[0.06]">
-                <span className="font-semibold">{trade.pair}</span>
-                <span className="capitalize text-slate-300">{trade.result}</span>
-                <span>{trade.profitLossAmount?.toString() ?? "—"}</span>
-              </Link>
-            ))}
+          <div className="relative mt-6 grid gap-4 lg:grid-cols-5">
+            {recentTrades.map((trade) => {
+              const pnl = trade.profitLossAmount?.toNumber() ?? null;
+              const pnlTone = pnl === null ? "text-slate-300" : pnl > 0 ? "text-emerald-300" : pnl < 0 ? "text-rose-300" : "text-slate-200";
+              const resultTone = trade.result === "win" ? "border-emerald-400/20 bg-emerald-400/10 text-emerald-300" : trade.result === "loss" ? "border-rose-400/20 bg-rose-400/10 text-rose-300" : "border-white/10 bg-white/10 text-slate-300";
+              return (
+                <Link key={trade.id} href={`/trades/${trade.id}`} data-testid="dashboard-recent-trade-card" className="interactive-card group rounded-3xl border border-white/10 bg-slate-950/55 p-4 transition hover:-translate-y-1 hover:border-gold/30 hover:bg-white/[0.06]">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-xs text-slate-500">{trade.openDate.toISOString().slice(0, 10)} · {trade.timeframe ?? "No TF"}</p>
+                      <h3 className="mt-1 text-lg font-semibold text-white">{trade.pair}</h3>
+                    </div>
+                    <span data-testid="dashboard-recent-trade-result" className={`rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${resultTone}`}>{trade.result}</span>
+                  </div>
+                  <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
+                    <div className="rounded-2xl bg-white/[0.04] p-3"><p className="text-xs text-slate-500">Direction</p><p className="mt-1 capitalize text-slate-200">{trade.direction}</p></div>
+                    <div className="rounded-2xl bg-white/[0.04] p-3"><p className="text-xs text-slate-500">P/L</p><p data-testid="dashboard-recent-trade-pnl" className={`mt-1 font-semibold tabular-nums ${pnlTone}`}>{pnl ?? "—"}</p></div>
+                  </div>
+                  <div className="mt-4 flex items-center justify-between text-xs text-slate-500">
+                    <span className="truncate">{trade.setupName ?? "No setup"}</span>
+                    <span className="text-goldLight opacity-0 transition group-hover:opacity-100">Review trade →</span>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         )}
       </div>

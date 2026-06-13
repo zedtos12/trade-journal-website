@@ -30,7 +30,7 @@ function PerformanceTable({ title, rows }: { title: string; rows: { label: strin
       ) : (
         <div className="mt-5 space-y-3">
           {rows.map((row) => (
-            <div key={row.label} className="interactive-card grid grid-cols-2 items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/55 p-4 text-sm md:grid-cols-4">
+            <div key={row.label} data-testid="analytics-performance-row" className="interactive-card grid grid-cols-2 items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/55 p-4 text-sm md:grid-cols-4">
               <span className="font-semibold">{row.label}</span>
               <span className="text-slate-400">{row.trades} trades</span>
               <span className={row.totalPnL >= 0 ? "text-emerald-300" : "text-rose-300"}>{row.totalPnL}</span>
@@ -90,17 +90,23 @@ export default async function AnalyticsPage() {
     profitLossAmount: trade.profitLossAmount?.toNumber() ?? null,
   }));
   const totalTone = summary.totalPnL > 0 ? "profit" : summary.totalPnL < 0 ? "loss" : "neutral";
+  const bestPair = byPair[0];
+  const bestSetup = bySetup[0];
+  const bestSession = bySession[0];
 
   return (
     <AppShell>
-      <div className="animate-fade-up flex flex-col justify-between gap-4 md:flex-row md:items-end">
-        <div>
-          <p className="text-gold">Analytics MVP</p>
-          <h1 className="mt-2 text-4xl font-semibold tracking-tight">Performance analytics</h1>
-          <p className="mt-2 text-slate-400">Breakdown performa trading berdasarkan PRD: pair, setup, timeframe, session, monthly performance, dan kalender trading.</p>
+      <section data-testid="analytics-command-center" className="premium-card animate-fade-up relative overflow-hidden rounded-[2rem] p-6 sm:p-8">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_0%,rgba(244,213,141,0.18),transparent_30%),radial-gradient(circle_at_88%_10%,rgba(45,212,191,0.12),transparent_28%)]" />
+        <div className="relative flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <div>
+            <p className="inline-flex rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-goldLight">Pattern lab</p>
+            <h1 className="mt-5 text-4xl font-semibold tracking-tight sm:text-5xl">Performance analytics</h1>
+            <p className="mt-3 max-w-2xl text-slate-300">Baca pola performa berdasarkan pair, setup, timeframe, session, monthly performance, dan kalender trading dalam workspace analytics yang lebih rapi.</p>
+          </div>
+          <Link href="/trades/new" className="premium-button rounded-full bg-gold px-5 py-3 text-center font-semibold text-slate-950 hover:bg-goldLight">Add Trade</Link>
         </div>
-        <Link href="/trades/new" className="premium-button rounded-full bg-gold px-5 py-3 text-center font-semibold text-slate-950 hover:bg-goldLight">Add Trade</Link>
-      </div>
+      </section>
 
       {trades.length === 0 ? (
         <div data-testid="analytics-empty-state" className="premium-card animate-fade-up mt-8 rounded-3xl p-8 text-center">
@@ -121,6 +127,21 @@ export default async function AnalyticsPage() {
             <SummaryCard label="Average R:R" value={summary.averageRiskReward} delay={420} />
           </div>
 
+          <section data-testid="analytics-insight-rail" className="premium-card interactive-card animate-fade-up mt-6 rounded-3xl p-6" style={{ animationDelay: "90ms" }}>
+            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.22em] text-goldLight">Best signal snapshot</p>
+                <h2 className="mt-2 text-2xl font-semibold">Top-performing patterns</h2>
+              </div>
+              <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">Based on filtered journal data</span>
+            </div>
+            <div className="mt-5 grid gap-3 md:grid-cols-3">
+              <div className="rounded-2xl border border-white/10 bg-slate-950/55 p-4"><p className="text-xs text-slate-400">Best pair</p><p className="mt-2 text-xl font-semibold text-white">{bestPair?.label ?? "—"}</p><p className="mt-1 text-sm text-emerald-300 tabular-nums">{bestPair ? `${bestPair.totalPnL} P/L · ${bestPair.winRate}% WR` : "Not enough data"}</p></div>
+              <div className="rounded-2xl border border-white/10 bg-slate-950/55 p-4"><p className="text-xs text-slate-400">Best setup</p><p className="mt-2 text-xl font-semibold text-white">{bestSetup?.label ?? "—"}</p><p className="mt-1 text-sm text-emerald-300 tabular-nums">{bestSetup ? `${bestSetup.totalPnL} P/L · ${bestSetup.winRate}% WR` : "Not enough data"}</p></div>
+              <div className="rounded-2xl border border-white/10 bg-slate-950/55 p-4"><p className="text-xs text-slate-400">Best session</p><p className="mt-2 text-xl font-semibold text-white">{bestSession?.label ?? "—"}</p><p className="mt-1 text-sm text-emerald-300 tabular-nums">{bestSession ? `${bestSession.totalPnL} P/L · ${bestSession.winRate}% WR` : "Not enough data"}</p></div>
+            </div>
+          </section>
+
           <section data-testid="analytics-calendar-section" className="premium-card interactive-card animate-fade-up mt-8 rounded-3xl p-6" style={{ animationDelay: "120ms" }}>
             <div className="flex items-center justify-between gap-4">
               <h2 className="text-xl font-semibold tracking-tight">Trading calendar</h2>
@@ -137,7 +158,7 @@ export default async function AnalyticsPage() {
               <div className="mt-5"><MiniBars rows={monthly} /></div>
           </section>
 
-          <div className="mt-8 grid gap-6 xl:grid-cols-2">
+          <div data-testid="analytics-breakdown-grid" className="mt-8 grid gap-6 xl:grid-cols-2">
             <PerformanceTable title="Performance by pair" rows={byPair} />
             <PerformanceTable title="Performance by setup" rows={bySetup} />
             <PerformanceTable title="Performance by timeframe" rows={byTimeframe} />
