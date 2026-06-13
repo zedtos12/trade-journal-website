@@ -8,26 +8,31 @@ import { prisma } from "@/lib/db";
 function MetricCard({ label, value, tone = "neutral", delay = 0 }: { label: string; value: string | number; tone?: "neutral" | "profit" | "loss"; delay?: number }) {
   const toneClass = tone === "profit" ? "text-emerald-300" : tone === "loss" ? "text-rose-300" : "text-white";
   const accentClass = tone === "profit" ? "from-emerald-400/20" : tone === "loss" ? "from-rose-400/20" : "from-gold/15";
+  const borderTone = tone === "profit" ? "border-emerald-500/30" : tone === "loss" ? "border-rose-500/30" : "border-gold/20";
   return (
-    <div data-testid="dashboard-metric-card" className={`premium-card interactive-card animate-fade-up relative overflow-hidden rounded-3xl p-5 ${accentClass}`} style={{ animationDelay: `${delay}ms` }}>
+    <div data-testid="dashboard-metric-card" className={`premium-card interactive-card animate-fade-up relative overflow-hidden rounded-3xl border-b-4 ${borderTone} p-5 ${accentClass}`} style={{ animationDelay: `${delay}ms` }}>
       <div className={`pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b ${accentClass} to-transparent`} />
       <p className="relative text-sm text-slate-400">{label}</p>
-      <p className={`mt-3 text-2xl font-semibold ${toneClass}`}>{value}</p>
+      <p className={`mt-3 text-2xl font-semibold tabular-nums ${toneClass}`}>{value}</p>
     </div>
   );
 }
 
 function InsightCard({ title, row }: { title: string; row: { label: string; totalPnL: number; trades: number } | null }) {
   return (
-    <div className="premium-card interactive-card animate-fade-up rounded-3xl p-5">
-      <p className="text-sm text-slate-400">{title}</p>
+    <div className="premium-card interactive-card animate-fade-up relative overflow-hidden rounded-3xl p-5">
+      <div className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-gold/5 blur-2xl" />
+      <p className="relative text-sm text-slate-400">{title}</p>
       {row ? (
-        <div className="mt-3">
-          <p className="text-xl font-semibold">{row.label}</p>
-          <p className={row.totalPnL >= 0 ? "mt-1 text-emerald-300" : "mt-1 text-rose-300"}>{row.totalPnL} P/L • {row.trades} trades</p>
+        <div className="relative mt-3">
+          <p className="text-xl font-semibold text-white">{row.label}</p>
+          <div className="mt-1 flex items-center justify-between text-sm">
+            <p className={row.totalPnL >= 0 ? "text-emerald-300 font-semibold tabular-nums" : "text-rose-300 font-semibold tabular-nums"}>{row.totalPnL} P/L</p>
+            <p className="text-slate-500">{row.trades} trades</p>
+          </div>
         </div>
       ) : (
-        <p className="mt-3 text-slate-500">Not enough data</p>
+        <p className="relative mt-3 text-slate-500">Not enough data</p>
       )}
     </div>
   );
@@ -216,7 +221,12 @@ export default async function DashboardPage() {
                   </div>
                   <div className="mt-4 flex items-center justify-between text-xs text-slate-500">
                     <span className="truncate">{trade.setupName ?? "No setup"}</span>
-                    <span className="text-goldLight opacity-0 transition group-hover:opacity-100">Review trade →</span>
+                    <span className="flex items-center gap-1 font-semibold text-goldLight opacity-0 transition group-hover:opacity-100">
+                      Review
+                      <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
+                        <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                      </svg>
+                    </span>
                   </div>
                 </Link>
               );
