@@ -27,6 +27,15 @@ describe("dashboard premium interaction polish", () => {
     expect(dashboardSource).not.toContain("bg-gradient-to-t from-gold/70 to-goldLight");
   });
 
+  it("uses a premium command-center hero with contextual KPIs and accessible progress", () => {
+    expect(dashboardSource).toContain('data-testid="dashboard-command-center"');
+    expect(dashboardSource).toContain('data-testid="dashboard-kpi-strip"');
+    expect(dashboardSource).toContain('data-testid="dashboard-winrate-progress"');
+    expect(dashboardSource).toContain('aria-label={`Win rate ${metrics.winRate}%`}');
+    expect(dashboardSource).toContain("tabular-nums");
+    expect(dashboardSource).toContain("Review history");
+  });
+
   it("shows equity value tooltip when hovering chart points", () => {
     expect(dashboardSource).toContain('data-testid="dashboard-equity-tooltip"');
     expect(dashboardSource).toContain("group-hover:opacity-100");
