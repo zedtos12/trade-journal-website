@@ -13,7 +13,9 @@ describe("Prisma PostgreSQL database setup", () => {
     expect(schema).toContain("model User");
     expect(schema).toContain("model Session");
     expect(schema).toContain("model Trade");
-    expect(schema).toContain("@@index([userId, openDate])");
+    expect(schema).toContain("@@index([userId, openDate(sort: Desc)])");
+    expect(schema).toContain("@@index([userId, status])");
+    expect(schema).toContain("@@index([userId, setupName])");
   });
 
   it("documents DATABASE_URL without committing real credentials", () => {

@@ -105,8 +105,10 @@ model Trade {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
-  @@index([userId, openDate])
+  @@index([userId, openDate(sort: Desc)])
   @@index([userId, pair])
   @@index([userId, result])
+  @@index([userId, status])
+  @@index([userId, setupName])
   @@map("trades")
 }

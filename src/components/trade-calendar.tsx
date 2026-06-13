@@ -86,10 +86,10 @@ export function TradeCalendar({ trades }: { trades: CalendarTrade[] }) {
           <p className={monthPnL >= 0 ? "mt-1 text-2xl font-semibold text-emerald-300" : "mt-1 text-2xl font-semibold text-rose-300"}>{monthPnL} P/L</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <button data-testid="calendar-prev-month" type="button" onClick={() => goToMonth(-1)} className="rounded-full border border-white/10 px-3 py-2 text-sm text-slate-200 transition hover:border-gold/40 hover:bg-gold/10">←</button>
+          <button data-testid="calendar-prev-month" aria-label="Previous month" type="button" onClick={() => goToMonth(-1)} className="rounded-full border border-white/10 px-3 py-2 text-sm text-slate-200 transition hover:border-gold/40 hover:bg-gold/10">←</button>
           <PremiumSelect dataTestId="calendar-month-select" value={visibleMonth} onValueChange={(nextValue) => setVisibleMonth(Number(nextValue))} options={monthNames.map((month, index) => ({ value: String(index), label: month }))} className="mt-0 min-w-32" />
           <PremiumSelect dataTestId="calendar-year-select" value={visibleYear} onValueChange={(nextValue) => setVisibleYear(Number(nextValue))} options={years.map((year) => ({ value: String(year), label: String(year) }))} className="mt-0 min-w-28" />
-          <button data-testid="calendar-next-month" type="button" onClick={() => goToMonth(1)} className="rounded-full border border-white/10 px-3 py-2 text-sm text-slate-200 transition hover:border-gold/40 hover:bg-gold/10">→</button>
+          <button data-testid="calendar-next-month" aria-label="Next month" type="button" onClick={() => goToMonth(1)} className="rounded-full border border-white/10 px-3 py-2 text-sm text-slate-200 transition hover:border-gold/40 hover:bg-gold/10">→</button>
         </div>
       </div>
 

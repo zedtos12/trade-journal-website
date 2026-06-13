@@ -107,9 +107,9 @@ export function PremiumDateInput({ name, defaultValue = "", required = false, ar
       {open && (
         <div role="dialog" aria-label={`${ariaLabel ?? name} calendar`} className="absolute left-0 top-full z-[9999] mt-2 w-full min-w-72 rounded-3xl border border-gold/20 bg-slate-950/95 p-3 shadow-2xl shadow-black/50 backdrop-blur-xl">
           <div className="flex items-center justify-between gap-2">
-            <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => moveMonth(-1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-slate-200 transition hover:border-gold/40 hover:text-gold">‹</button>
+            <button type="button" aria-label="Previous month" onMouseDown={(event) => event.preventDefault()} onClick={() => moveMonth(-1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-slate-200 transition hover:border-gold/40 hover:text-gold">‹</button>
             <p className="text-sm font-semibold text-white">{monthFormatter.format(visibleMonth)}</p>
-            <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => moveMonth(1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-slate-200 transition hover:border-gold/40 hover:text-gold">›</button>
+            <button type="button" aria-label="Next month" onMouseDown={(event) => event.preventDefault()} onClick={() => moveMonth(1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-slate-200 transition hover:border-gold/40 hover:text-gold">›</button>
           </div>
 
           <div className="mt-3 grid grid-cols-7 gap-1 text-center text-[11px] uppercase tracking-wide text-slate-500">
