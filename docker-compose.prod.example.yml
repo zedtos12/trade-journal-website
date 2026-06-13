@@ -1,0 +1,42 @@
+services:
+  trade-journal-web:
+    build:
+      context: .
+      target: runner
+    image: trade-journal-website:prod
+    container_name: trade-journal-web
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
+      PORT: "3000"
+      HOSTNAME: "0.0.0.0"
+    ports:
+      # Bind only to localhost. Expose publicly through Nginx/Caddy HTTPS reverse proxy.
+      - "127.0.0.1:3000:3000"
+    extra_hosts:
+      # Lets the app container reach a PostgreSQL container exposed on the VPS host, e.g. localhost:15432.
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/api/health | grep -q '\"status\":\"ok\"'"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  trade-journal-migrate:
+    build:
+      context: .
+      target: builder
+    image: trade-journal-website:migrate
+    container_name: trade-journal-migrate
+    profiles: ["migrate"]
+    env_file:
+      - .env.production
+    environment:
+      NODE_ENV: production
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: ["npx", "prisma", "migrate", "deploy"]

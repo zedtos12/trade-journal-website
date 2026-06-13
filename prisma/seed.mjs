@@ -5,7 +5,11 @@ const prisma = new PrismaClient();
 
 const ADMIN_EMAIL = "admin@tradejournal.local";
 const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "@silver0";
+const ADMIN_PASSWORD = process.env.SEED_ADMIN_PASSWORD ?? "@silver0";
+
+if (process.env.NODE_ENV === "production" && process.env.ALLOW_DUMMY_SEED !== "true") {
+  throw new Error("Refusing to run dummy seed in production without ALLOW_DUMMY_SEED=true");
+}
 
 const trades = [
   {
@@ -310,7 +314,7 @@ async function main() {
 
   console.log(`Seeded ${trades.length} realistic dummy trades for ${ADMIN_USERNAME} (${ADMIN_EMAIL}).`);
   console.log("Login username: admin");
-  console.log("Login password: @silver0");
+  console.log(process.env.SEED_ADMIN_PASSWORD ? "Login password: from SEED_ADMIN_PASSWORD" : "Login password: default local dummy password");
 }
 
 main()

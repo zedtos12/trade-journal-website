@@ -12,7 +12,8 @@ describe("dummy seed script", () => {
 
   it("creates the requested admin dummy user and realistic trades", () => {
     expect(seedScript).toContain("admin@tradejournal.local");
-    expect(seedScript).toContain("@silver0");
+    expect(seedScript).toContain("SEED_ADMIN_PASSWORD");
+    expect(seedScript).toContain("ALLOW_DUMMY_SEED");
     expect(seedScript).toContain("createMany");
     expect(seedScript).toContain("London breakout");
     expect(seedScript).toContain("New York continuation");

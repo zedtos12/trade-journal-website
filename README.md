@@ -70,15 +70,27 @@ npm run db:dev
 npm run db:seed
 ```
 
-Seed dummy preview account:
+## Production deploy
+
+Production hosting is designed for a separate Docker container on the VPS, not inside the Hermes container. See `docs/production-deploy.md` for the full checklist.
+
+Important production rules:
+
+- Copy `.env.production.example` to `.env.production` on the VPS host only.
+- Never commit `.env.production` or real database credentials.
+- Keep the app bound to `127.0.0.1:3000` and expose it through HTTPS reverse proxy.
+- Run `docker compose -f docker-compose.prod.example.yml --profile migrate run --rm trade-journal-migrate` before starting the app after schema changes.
+- Do not run `npm run db:seed` in production.
+
+Seed dummy preview account for local/dev only:
 
 ```text
 Username: admin
 Email: admin@tradejournal.local
-Password: @silver0
+Password: see prisma/seed.mjs default or set SEED_ADMIN_PASSWORD before running seed
 ```
 
-The login form accepts either `admin` or `admin@tradejournal.local` for this seeded account.
+The login form accepts either `admin` or `admin@tradejournal.local` for this seeded account. Do not run the seed script in production; the script refuses production seeding unless `ALLOW_DUMMY_SEED=true` is explicitly set.
 
 ## Current PRD Status
 

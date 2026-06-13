@@ -5,6 +5,7 @@ build/
 dist/
 .env*
 !.env.example
+!.env.production.example
 *.local
 data/*.sqlite
 data/*.sqlite-*
