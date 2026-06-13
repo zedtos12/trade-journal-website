@@ -1,0 +1,58 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npm run db:generate
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm test
+
+      - name: Production build
+        run: npm run build
+        env:
+          DATABASE_URL: "postgresql://user:password@localhost:5432/tradingjournal?schema=public"
+          NODE_ENV: production
+          NEXT_TELEMETRY_DISABLED: "1"
+
+# To enable this workflow, copy this file to:
+# .github/workflows/ci.yml
+# Push it using a GitHub token/user with the `workflow` scope.
+# Hermes could not push this file directly because the current OAuth credential lacks `workflow` scope.
+
+# Optional deployment job idea for later:
+# Use SSH deploy keys/secrets and run scripts/deploy.sh on the VPS after verify passes.
+# Keep production .env and database passwords only on the VPS, never in GitHub Actions logs.
+
+# deploy:
+#   needs: verify
+#   runs-on: ubuntu-latest
+#   if: github.ref == 'refs/heads/main'
+#   steps:
+#     - name: Deploy via SSH
+#       run: |
+#         ssh user@your-vps 'cd /path/to/trade-journal-website && ./scripts/deploy.sh'
+#       env:
+#         SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
