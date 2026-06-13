@@ -11,7 +11,7 @@ export function LogoutButton() {
   }
 
   return (
-    <button onClick={logout} className="rounded-full border border-white/10 px-4 py-2 text-sm text-slate-300 transition hover:border-rose-400/40 hover:text-rose-200">
+    <button data-testid="navbar-logout" onClick={logout} className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-slate-300 transition hover:border-rose-400/40 hover:bg-rose-500/10 hover:text-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-400/30">
       Logout
     </button>
   );
