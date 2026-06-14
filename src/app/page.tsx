@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { BarChart3, BookOpenCheck, Brain, LineChart, ShieldCheck, Sparkles, TrendingUp } from "lucide-react";
 
@@ -24,7 +25,7 @@ export default function LandingPage() {
 
       <nav className="animate-fade-in relative z-10 mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
         <Link href="/" className="group flex items-center gap-3 font-semibold tracking-tight">
-          <span className="gold-glow flex h-10 w-10 items-center justify-center rounded-2xl bg-gold text-slate-950 transition duration-200 group-hover:scale-105">TJ</span>
+          <Image src="/logo.svg" alt="Logo" width={40} height={40} className="h-10 w-10 transition duration-200 group-hover:scale-105" />
           <span className="text-sm uppercase tracking-[0.28em] text-slate-200">Trade Journal</span>
         </Link>
         <div className="flex items-center gap-3 text-sm">

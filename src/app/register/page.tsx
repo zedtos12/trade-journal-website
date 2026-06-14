@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { AuthForm } from "@/components/auth-form";
 
@@ -18,7 +19,7 @@ export default function RegisterPage() {
 
         {/* Brand mark */}
         <div className="mb-8 flex items-center gap-3">
-          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-gold to-goldLight text-base font-black text-slate-950 shadow-lg shadow-gold/30">TJ</span>
+          <Image src="/logo.svg" alt="Logo" width={44} height={44} className="h-11 w-11 shadow-lg shadow-gold/30" />
           <div>
             <span className="block text-sm font-semibold text-white">Trade Journal</span>
             <span className="block text-[11px] uppercase tracking-[0.22em] text-gold/70">Performance OS</span>
