@@ -11,9 +11,9 @@ type TradeFormProps = {
   trade?: SerializedTrade;
 };
 
-const inputClass = "mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/40";
-const labelClass = "block text-sm text-slate-300";
-const sectionClass = "dropdown-layer premium-card animate-fade-up rounded-3xl p-6";
+const inputClass = "mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/20";
+const labelClass = "block text-sm text-slate-400 font-medium";
+const sectionClass = "dropdown-layer premium-card animate-fade-up relative overflow-hidden rounded-3xl p-6";
 
 function valueOrEmpty(value: unknown) {
   return value === null || typeof value === "undefined" ? "" : String(value);
@@ -95,8 +95,23 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
         </div>
       </section>
 
-      <button disabled={loading} className="premium-button rounded-full bg-gold px-6 py-3 font-semibold text-slate-950 hover:bg-goldLight disabled:opacity-60">
-        {loading ? "Saving..." : mode === "create" ? "Save Trade" : "Update Trade"}
+      <button disabled={loading} className="premium-button inline-flex items-center justify-center gap-2 rounded-full bg-gold px-8 py-3.5 font-semibold text-slate-950 hover:bg-goldLight disabled:opacity-60 transition-all shadow-[0_4px_20px_rgba(217,180,94,0.15)]">
+        {loading ? (
+          <>
+            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-950" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+            </svg>
+            Saving...
+          </>
+        ) : (
+          <>
+            <svg viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
+              <path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clipRule="evenodd" />
+            </svg>
+            {mode === "create" ? "Save Trade" : "Update Trade"}
+          </>
+        )}
       </button>
     </form>
   );
