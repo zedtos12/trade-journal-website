@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LogoutButton } from "@/components/logout-button";
 import { MobileNavbarMenu } from "@/components/mobile-navbar-menu";
+import { NavbarLinks } from "@/components/navbar-links";
 
 const navLinks = [
   { href: "/dashboard", label: "Dashboard" },
@@ -27,16 +28,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="hidden lg:flex lg:items-center lg:gap-3">
-            <nav data-testid="navbar-links" aria-label="Primary navigation" className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] p-1.5 text-sm text-slate-300 shadow-inner shadow-white/[0.03]">
-              {navLinks.map((link) => (
-                <Link key={link.href} href={link.href} className="rounded-full px-4 py-2 transition hover:bg-white/[0.08] hover:text-white focus:outline-none focus:ring-2 focus:ring-gold/30">
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
+            <div data-testid="navbar-links">
+              <NavbarLinks links={navLinks} />
+            </div>
 
             <div className="flex items-center gap-2">
-              <Link href="/trades/new" className="premium-button rounded-full bg-gold px-4 py-2 text-sm font-semibold text-slate-950 shadow-lg shadow-gold/20 transition hover:bg-goldLight">Add Trade</Link>
+              <Link href="/trades/new" className="premium-button rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-gold/20 transition hover:bg-goldLight">Add Trade</Link>
               <LogoutButton />
             </div>
           </div>
