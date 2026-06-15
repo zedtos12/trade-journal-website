@@ -1,10 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PremiumDateInput } from "@/components/ui/premium-date-input";
 import { PremiumSelect } from "@/components/ui/premium-select";
 import type { SerializedTrade } from "@/lib/trades/serialize";
+
+type Playbook = { id: string; name: string };
 
 type TradeFormProps = {
   mode: "create" | "edit";
@@ -27,6 +29,14 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [playbooks, setPlaybooks] = useState<Playbook[]>([]);
+
+  useEffect(() => {
+    fetch("/api/playbooks")
+      .then((res) => res.json())
+      .then((data) => setPlaybooks(data.playbooks || []))
+      .catch(() => {});
+  }, []);
 
   async function onSubmit(formData: FormData) {
     setLoading(true);
@@ -54,8 +64,17 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
       {error && <p className="rounded-2xl border border-rose-400/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">{error}</p>}
 
       <section data-testid="trade-form-section" className={sectionClass}>
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(244,213,141,0.08),transparent_40%)]" />
         <h2 className="text-xl font-semibold tracking-tight">Trade Basics</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
+          <label className={labelClass}>
+            Playbook / Session
+            <PremiumSelect
+              name="playbookId"
+              defaultValue={trade?.playbookId ?? ""}
+              options={[{ value: "", label: "General Journal" }, ...playbooks.map((p) => ({ value: p.id, label: p.name }))]}
+            />
+          </label>
           <label className={labelClass}>Pair<input name="pair" required defaultValue={trade?.pair ?? ""} placeholder="EURUSD" className={inputClass} /></label>
           <label className={labelClass}>Direction<PremiumSelect name="direction" defaultValue={trade?.direction ?? "buy"} options={[{ value: "buy", label: "Buy" }, { value: "sell", label: "Sell" }]} /></label>
           <label className={labelClass}>Status<PremiumSelect name="status" defaultValue={trade?.status ?? "closed"} options={[{ value: "closed", label: "Closed" }, { value: "open", label: "Open" }]} /></label>
