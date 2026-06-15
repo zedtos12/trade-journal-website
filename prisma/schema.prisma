@@ -57,6 +57,7 @@ model User {
 
   sessions Session[]
   trades   Trade[]
+  playbooks Playbook[]
 
   @@map("users")
 }
@@ -73,9 +74,26 @@ model Session {
   @@map("sessions")
 }
 
+model Playbook {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  name        String
+  description String?
+  color       String   @default("#D9B45E")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  trades Trade[]
+
+  @@index([userId])
+  @@map("playbooks")
+}
+
 model Trade {
   id                   String          @id @default(cuid())
   userId               String          @map("user_id")
+  playbookId           String?          @map("playbook_id")
   pair                 String
   direction            TradeDirection
   status               TradeStatus     @default(closed)
@@ -102,9 +120,11 @@ model Trade {
   createdAt            DateTime        @default(now()) @map("created_at")
   updatedAt            DateTime        @updatedAt @map("updated_at")
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  playbook Playbook? @relation(fields: [playbookId], references: [id], onDelete: SetNull)
 
   @@index([userId])
+  @@index([userId, playbookId])
   @@index([userId, openDate(sort: Desc)])
   @@index([userId, pair])
   @@index([userId, result])
