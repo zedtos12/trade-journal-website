@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import { LogoutButton } from "@/components/logout-button";
 import { MobileNavbarMenu } from "@/components/mobile-navbar-menu";
 import { NavbarLinks } from "@/components/navbar-links";
+import { PlaybookSwitcher } from "@/components/playbook-switcher";
 
 const navLinks = [
   { href: "/dashboard", label: "Dashboard" },
@@ -34,6 +36,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </div>
 
             <div className="flex items-center gap-2">
+              <Suspense fallback={<div className="h-9 w-24 animate-pulse rounded-full bg-white/5" />}>
+                <PlaybookSwitcher />
+              </Suspense>
               <Link href="/trades/new" className="premium-button rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-gold/20 transition hover:bg-goldLight">Add Trade</Link>
               <LogoutButton />
             </div>

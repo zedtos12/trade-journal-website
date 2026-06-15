@@ -20,6 +20,7 @@ export function tradeInputToPrismaData(input: TradeInput) {
     profitLossPercentage: decimalOrNull(input.profitLossPercentage),
     riskRewardRatio: decimalOrNull(input.riskRewardRatio),
     setupName: input.setupName ?? null,
+    playbookId: input.playbookId ?? null,
     timeframe: input.timeframe ?? null,
     session: input.session ?? null,
     emotionBefore: input.emotionBefore ?? null,
@@ -28,5 +29,5 @@ export function tradeInputToPrismaData(input: TradeInput) {
     exitReason: input.exitReason ?? null,
     lessonLearned: input.lessonLearned ?? null,
     notes: input.notes ?? null,
-  } satisfies Prisma.TradeUpdateInput;
+  } satisfies Prisma.TradeUncheckedUpdateInput;
 }

@@ -13,6 +13,7 @@ export function buildTradeWhere(userId: string, query: Partial<TradeQuery>): Pri
 
   if (query.result) where.result = query.result;
   if (query.direction) where.direction = query.direction;
+  if (query.playbookId) where.playbookId = query.playbookId;
   if (query.timeframe) where.timeframe = query.timeframe;
   if (query.setup) where.setupName = { contains: query.setup, mode: "insensitive" };
 

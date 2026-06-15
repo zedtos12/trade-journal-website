@@ -75,9 +75,15 @@ function MiniBars({ rows }: { rows: { label: string; totalPnL: number; trades: n
   );
 }
 
-export default async function AnalyticsPage() {
+export default async function AnalyticsPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const user = await requireUser();
-  const trades = await prisma.trade.findMany({ where: { userId: user.id }, orderBy: { openDate: "asc" } });
+  const params = await searchParams;
+  const playbookId = typeof params.playbookId === "string" ? params.playbookId : undefined;
+
+  const trades = await prisma.trade.findMany({ 
+    where: { userId: user.id, ...(playbookId && { playbookId }) }, 
+    orderBy: { openDate: "asc" } 
+  });
   const analyticsTrades = trades.map((trade) => ({
     status: trade.status,
     result: trade.result,

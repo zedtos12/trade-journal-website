@@ -84,9 +84,15 @@ function EquityCurve({ points }: { points: { label: string; value: number }[] })
   );
 }
 
-export default async function DashboardPage() {
+export default async function DashboardPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const user = await requireUser();
-  const allTrades = await prisma.trade.findMany({ where: { userId: user.id }, orderBy: { openDate: "desc" } });
+  const params = await searchParams;
+  const playbookId = typeof params.playbookId === "string" ? params.playbookId : undefined;
+  
+  const allTrades = await prisma.trade.findMany({ 
+    where: { userId: user.id, ...(playbookId && { playbookId }) }, 
+    orderBy: { openDate: "desc" } 
+  });
   const recentTrades = allTrades.slice(0, 5);
   const metricTrades = allTrades.map((trade) => ({
     status: trade.status,

@@ -14,7 +14,7 @@ git pull
 
 # 2. Run database migration if schema changes
 echo "🗄️ Running database migrations..."
-docker compose -f docker-compose.prod.example.yml --profile migrate run --rm trade-journal-migrate
+docker compose -f docker-compose.prod.example.yml --profile migrate run --rm --build trade-journal-migrate
 
 # 3. Build & restart container
 echo "🏗️ Building and restarting container..."
