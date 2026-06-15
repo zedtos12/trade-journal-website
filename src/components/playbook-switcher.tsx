@@ -22,10 +22,22 @@ export function PlaybookSwitcher() {
 
   useEffect(() => {
     setMounted(true);
+    fetchPlaybooks();
+  }, []);
+
+  function fetchPlaybooks() {
     fetch("/api/playbooks")
       .then((r) => r.json())
       .then((d) => setPlaybooks(d.playbooks || []))
       .catch(() => {});
+  }
+
+  useEffect(() => {
+    function handler() {
+      fetchPlaybooks();
+    }
+    window.addEventListener("playbooks-changed", handler);
+    return () => window.removeEventListener("playbooks-changed", handler);
   }, []);
 
   function selectPlaybook(id: string) {

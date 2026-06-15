@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Plus, Pencil, Trash2, X, Check } from "lucide-react";
 
 type Playbook = {
@@ -13,7 +12,6 @@ type Playbook = {
 };
 
 export function PlaybooksClient({ initialPlaybooks }: { initialPlaybooks: Playbook[] }) {
-  const router = useRouter();
   const [playbooks, setPlaybooks] = useState(initialPlaybooks);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPlaybook, setEditingPlaybook] = useState<Playbook | null>(null);
@@ -62,7 +60,7 @@ export function PlaybooksClient({ initialPlaybooks }: { initialPlaybooks: Playbo
           setPlaybooks([data.playbook, ...playbooks]);
         }
         setIsModalOpen(false);
-        router.refresh();
+        window.dispatchEvent(new Event("playbooks-changed"));
       }
     } catch (err) {
       console.error(err);
@@ -78,7 +76,10 @@ export function PlaybooksClient({ initialPlaybooks }: { initialPlaybooks: Playbo
       const res = await fetch(`/api/playbooks/${id}`, { method: "DELETE" });
       if (res.ok) {
         setPlaybooks(playbooks.filter((p) => p.id !== id));
-        router.refresh();
+        window.dispatchEvent(new Event("playbooks-changed"));
+      } else {
+        const data = await res.json().catch(() => null);
+        alert(data?.message || "Failed to delete playbook.");
       }
     } catch (err) {
       console.error(err);
