@@ -105,11 +105,11 @@ export function PlaybooksClient({ initialPlaybooks }: { initialPlaybooks: Playbo
             className="premium-card group relative overflow-hidden rounded-3xl border border-white/10 bg-slate-950/40 p-6 transition hover:border-gold/30"
           >
             <div
-              className="absolute -right-4 -top-4 h-24 w-24 rounded-full opacity-10 blur-2xl transition group-hover:opacity-20"
+              className="pointer-events-none absolute -right-4 -top-4 h-24 w-24 rounded-full opacity-10 blur-2xl transition group-hover:opacity-20"
               style={{ backgroundColor: p.color }}
             />
             
-            <div className="flex items-start justify-between">
+            <div className="relative z-10 flex items-start justify-between">
               <div className="flex items-center gap-3">
                 <div className="h-3 w-3 rounded-full shadow-[0_0_10px_rgba(0,0,0,0.5)]" style={{ backgroundColor: p.color }} />
                 <h3 className="text-xl font-bold text-white">{p.name}</h3>
