@@ -14,7 +14,7 @@ export function NavbarLinks({ links }: { links: { href: string; label: string }[
           <Link
             key={link.href}
             href={link.href}
-            className={`rounded-full px-5 py-2 transition-all ${
+            className={`rounded-full px-4 py-2 transition-all ${
               isActive
                 ? "bg-white/10 text-white shadow-sm ring-1 ring-white/10"
                 : "text-slate-400 hover:bg-white/[0.06] hover:text-white"

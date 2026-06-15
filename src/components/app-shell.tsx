@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/dashboard", label: "Dashboard" },
   { href: "/trades", label: "Trades" },
   { href: "/analytics", label: "Analytics" },
+  { href: "/playbooks", label: "Sessions" },
   { href: "/settings", label: "Settings" },
 ];
 
