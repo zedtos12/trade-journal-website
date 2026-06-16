@@ -5,9 +5,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    // Basic DB check
     await prisma.$queryRaw`SELECT 1`;
-    
     return NextResponse.json(
       { 
         status: "ok", 
