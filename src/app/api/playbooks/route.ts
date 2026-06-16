@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 
+import { serializePlaybook } from "@/lib/playbooks/serialize";
+
 export async function GET() {
   try {
     const user = await requireUser();
@@ -9,7 +11,7 @@ export async function GET() {
       where: { userId: user.id },
       orderBy: { createdAt: "desc" },
     });
-    return NextResponse.json({ playbooks });
+    return NextResponse.json({ playbooks: playbooks.map(serializePlaybook) });
   } catch (error) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
@@ -33,7 +35,7 @@ export async function POST(req: Request) {
       },
     });
 
-    return NextResponse.json({ playbook }, { status: 201 });
+    return NextResponse.json({ playbook: serializePlaybook(playbook) }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ message: "Error creating playbook" }, { status: 500 });
   }

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
+import { serializePlaybook } from "@/lib/playbooks/serialize";
 
 type PageProps = { params: Promise<{ id: string }> };
 
@@ -20,7 +21,7 @@ export async function PATCH(req: Request, { params }: PageProps) {
       data: { ...(name && { name }), ...(description !== undefined && { description }), ...(color && { color }) },
     });
 
-    return NextResponse.json({ playbook: updated });
+    return NextResponse.json({ playbook: serializePlaybook(updated) });
   } catch (error) {
     return NextResponse.json({ message: "Error updating playbook" }, { status: 500 });
   }

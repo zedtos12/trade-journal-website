@@ -9,7 +9,21 @@ const toNumber = (value: Decimalish) => {
 
 export function serializeTrade(trade: Trade) {
   return {
-    ...trade,
+    id: trade.id,
+    pair: trade.pair,
+    direction: trade.direction,
+    status: trade.status,
+    result: trade.result,
+    playbookId: trade.playbookId,
+    setupName: trade.setupName,
+    timeframe: trade.timeframe,
+    session: trade.session,
+    emotionBefore: trade.emotionBefore,
+    emotionAfter: trade.emotionAfter,
+    entryReason: trade.entryReason,
+    exitReason: trade.exitReason,
+    lessonLearned: trade.lessonLearned,
+    notes: trade.notes,
     openDate: trade.openDate.toISOString(),
     closeDate: trade.closeDate?.toISOString() ?? null,
     entryPrice: toNumber(trade.entryPrice),
