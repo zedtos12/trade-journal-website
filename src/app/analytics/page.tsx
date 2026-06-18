@@ -27,7 +27,7 @@ function PerformanceTable({ title, rows }: { title: string; rows: { label: strin
         <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">{rows.length} groups</span>
       </div>
       {rows.length === 0 ? (
-        <p className="mt-5 rounded-xl border border-dashed border-gold/20 bg-gold/[0.03] p-8 text-center text-slate-500">Not enough data</p>
+        <p className="mt-5 rounded-xl border border-dashed border-gold/20 bg-gold/[0.03] p-8 text-center text-slate-400">Not enough data</p>
       ) : (
         <div className="mt-5 space-y-2">
           {rows.map((row) => {
@@ -50,7 +50,7 @@ function PerformanceTable({ title, rows }: { title: string; rows: { label: strin
 }
 
 function MiniBars({ rows }: { rows: { label: string; totalPnL: number; trades: number }[] }) {
-  if (rows.length === 0) return <div className="flex h-44 items-center justify-center rounded-xl border border-dashed border-gold/20 bg-gold/[0.03] text-slate-500">Not enough data</div>;
+  if (rows.length === 0) return <div className="flex h-44 items-center justify-center rounded-xl border border-dashed border-gold/20 bg-gold/[0.03] text-slate-400">Not enough data</div>;
   const max = Math.max(...rows.map((row) => Math.abs(row.totalPnL)), 1);
   return (
     <div className="space-y-3">

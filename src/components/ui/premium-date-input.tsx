@@ -90,7 +90,7 @@ export function PremiumDateInput({ name, defaultValue = "", required = false, ar
             const nextDate = parseDateValue(nextValue);
             if (nextDate) setVisibleMonth(nextDate);
           }}
-          className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-slate-500"
+          className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-slate-400"
         />
         <button
           type="button"
@@ -112,7 +112,7 @@ export function PremiumDateInput({ name, defaultValue = "", required = false, ar
             <button type="button" aria-label="Next month" onMouseDown={(event) => event.preventDefault()} onClick={() => moveMonth(1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-slate-200 transition hover:border-gold/40 hover:text-gold">›</button>
           </div>
 
-          <div className="mt-3 grid grid-cols-7 gap-1 text-center text-[11px] uppercase tracking-wide text-slate-500">
+          <div className="mt-3 grid grid-cols-7 gap-1 text-center text-[11px] uppercase tracking-wide text-slate-400">
             {weekdays.map((date) => <span key={date.toISOString()}>{dayFormatter.format(date).slice(0, 2)}</span>)}
           </div>
 

@@ -93,7 +93,7 @@ export function TradeCalendar({ trades }: { trades: CalendarTrade[] }) {
         </div>
       </div>
 
-      <div className="mt-5 grid grid-cols-7 gap-2 text-center text-[11px] uppercase tracking-wider text-slate-500">
+      <div className="mt-5 grid grid-cols-7 gap-2 text-center text-[11px] uppercase tracking-wider text-slate-400">
         {weekdays.map((day) => <div key={day}>{day}</div>)}
       </div>
       <div className="mt-2 grid grid-cols-7 gap-2">

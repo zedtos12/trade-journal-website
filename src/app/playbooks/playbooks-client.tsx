@@ -129,7 +129,7 @@ export function PlaybooksClient({ initialPlaybooks }: { initialPlaybooks: Playbo
             </p>
 
             <div className="mt-6 flex items-center justify-between border-t border-white/5 pt-4">
-              <span className="text-xs font-medium uppercase tracking-wider text-slate-500">Active Session</span>
+              <span className="text-xs font-medium uppercase tracking-wider text-slate-400">Active Session</span>
               <Link href={`/trades?playbookId=${p.id}`} className="text-xs font-semibold text-gold hover:underline">
                 View Trades →
               </Link>
@@ -139,11 +139,11 @@ export function PlaybooksClient({ initialPlaybooks }: { initialPlaybooks: Playbo
 
         {playbooks.length === 0 && (
           <div className="col-span-full flex flex-col items-center justify-center rounded-[2rem] border border-dashed border-white/10 py-20 text-center">
-            <div className="grid h-16 w-16 place-items-center rounded-xl bg-white/5 text-slate-500">
+            <div className="grid h-16 w-16 place-items-center rounded-xl bg-white/5 text-slate-400">
               <Plus size={32} />
             </div>
             <h3 className="mt-4 text-lg font-medium text-white">No playbooks yet</h3>
-            <p className="mt-1 text-slate-500">Create your first playbook to start organizing your trades.</p>
+            <p className="mt-1 text-slate-400">Create your first playbook to start organizing your trades.</p>
           </div>
         )}
       </div>

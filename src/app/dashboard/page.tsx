@@ -28,11 +28,11 @@ function InsightCard({ title, row }: { title: string; row: { label: string; tota
           <p className="text-xl font-semibold text-white">{row.label}</p>
           <div className="mt-1 flex items-center justify-between text-sm">
             <p className={row.totalPnL >= 0 ? "text-emerald-300 font-semibold tabular-nums" : "text-rose-300 font-semibold tabular-nums"}>{row.totalPnL} P/L</p>
-            <p className="text-slate-500">{row.trades} trades</p>
+            <p className="text-slate-400">{row.trades} trades</p>
           </div>
         </div>
       ) : (
-        <p className="relative mt-3 text-slate-500">Not enough data</p>
+        <p className="relative mt-3 text-slate-400">Not enough data</p>
       )}
     </div>
   );
@@ -40,7 +40,7 @@ function InsightCard({ title, row }: { title: string; row: { label: string; tota
 
 function EquityCurve({ points }: { points: { label: string; value: number }[] }) {
   if (points.length === 0) {
-    return <div className="flex h-56 items-center justify-center rounded-xl border border-dashed border-gold/20 bg-slate-950/40 text-slate-500">Belum ada data equity curve</div>;
+    return <div className="flex h-56 items-center justify-center rounded-xl border border-dashed border-gold/20 bg-slate-950/40 text-slate-400">Belum ada data equity curve</div>;
   }
 
   const width = 720;
@@ -173,9 +173,9 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         <section className="premium-card interactive-card animate-fade-up rounded-3xl p-6" style={{ animationDelay: "180ms" }}>
           <h2 className="text-2xl font-semibold">Monthly summary</h2>
           <div className="mt-5 space-y-3">
-            {monthlyPerformance.length === 0 ? <p className="text-slate-500">Not enough data</p> : monthlyPerformance.map((month) => (
+            {monthlyPerformance.length === 0 ? <p className="text-slate-400">Not enough data</p> : monthlyPerformance.map((month) => (
               <div key={month.label} className="interactive-card flex items-center justify-between rounded-xl border border-white/10 bg-slate-950/50 p-4">
-                <div><p className="font-semibold">{month.label}</p><p className="text-sm text-slate-500">{month.trades} trades</p></div>
+                <div><p className="font-semibold">{month.label}</p><p className="text-sm text-slate-400">{month.trades} trades</p></div>
                 <p className={month.totalPnL >= 0 ? "text-emerald-300" : "text-rose-300"}>{month.totalPnL}</p>
               </div>
             ))}
@@ -216,16 +216,16 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
                 <Link key={trade.id} href={`/trades/${trade.id}`} data-testid="dashboard-recent-trade-card" className="interactive-card group rounded-3xl border border-white/10 bg-slate-950/55 p-4 transition hover:-translate-y-1 hover:border-gold/30 hover:bg-white/[0.06]">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <p className="text-xs text-slate-500">{trade.openDate.toISOString().slice(0, 10)} · {trade.timeframe ?? "No TF"}</p>
+                      <p className="text-xs text-slate-400">{trade.openDate.toISOString().slice(0, 10)} · {trade.timeframe ?? "No TF"}</p>
                       <h3 className="mt-1 text-lg font-semibold text-white">{trade.pair}</h3>
                     </div>
                     <span data-testid="dashboard-recent-trade-result" className={`rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${resultTone}`}>{trade.result}</span>
                   </div>
                   <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
-                    <div className="rounded-xl bg-white/[0.04] p-3"><p className="text-xs text-slate-500">Direction</p><p className="mt-1 capitalize text-slate-200">{trade.direction}</p></div>
-                    <div className="rounded-xl bg-white/[0.04] p-3"><p className="text-xs text-slate-500">P/L</p><p data-testid="dashboard-recent-trade-pnl" className={`mt-1 font-semibold tabular-nums ${pnlTone}`}>{pnl ?? "—"}</p></div>
+                    <div className="rounded-xl bg-white/[0.04] p-3"><p className="text-xs text-slate-400">Direction</p><p className="mt-1 capitalize text-slate-200">{trade.direction}</p></div>
+                    <div className="rounded-xl bg-white/[0.04] p-3"><p className="text-xs text-slate-400">P/L</p><p data-testid="dashboard-recent-trade-pnl" className={`mt-1 font-semibold tabular-nums ${pnlTone}`}>{pnl ?? "—"}</p></div>
                   </div>
-                  <div className="mt-4 flex items-center justify-between text-xs text-slate-500">
+                  <div className="mt-4 flex items-center justify-between text-xs text-slate-400">
                     <span className="truncate">{trade.setupName ?? "No setup"}</span>
                     <span className="flex items-center gap-1 font-semibold text-goldLight opacity-0 transition group-hover:opacity-100">
                       Review

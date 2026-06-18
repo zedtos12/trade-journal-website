@@ -116,7 +116,7 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
       </form>
 
       {/* ── Pagination meta ── */}
-      <div className="mt-4 flex flex-col gap-2 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-4 flex flex-col gap-2 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
         <p>Showing <span className="font-semibold tabular-nums text-slate-300">{trades.length}</span> of <span className="font-semibold tabular-nums text-slate-300">{totalTrades}</span> trades · Page {pagination.page} / {totalPages}</p>
         {totalTrades > 0 && <p>{pagination.take} trades per page</p>}
       </div>
@@ -185,19 +185,19 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
                   {/* ── Card Details ── */}
                   <dl className="mt-5 grid grid-cols-2 gap-3 text-sm md:grid-cols-4">
                     <div className="rounded-xl bg-white/[0.04] p-3">
-                      <dt className="text-xs text-slate-500">Setup</dt>
+                      <dt className="text-xs text-slate-400">Setup</dt>
                       <dd className="mt-1 truncate font-medium text-slate-200">{trade.setupName ?? "—"}</dd>
                     </div>
                     <div className="rounded-xl bg-white/[0.04] p-3">
-                      <dt className="text-xs text-slate-500">Session</dt>
+                      <dt className="text-xs text-slate-400">Session</dt>
                       <dd className="mt-1 font-medium text-slate-200">{trade.session ?? "—"}</dd>
                     </div>
                     <div className="rounded-xl bg-white/[0.04] p-3">
-                      <dt className="text-xs text-slate-500">R:R</dt>
+                      <dt className="text-xs text-slate-400">R:R</dt>
                       <dd className="mt-1 font-medium tabular-nums text-slate-200">{trade.riskRewardRatio?.toString() ?? "—"}</dd>
                     </div>
                     <div className="rounded-xl bg-white/[0.04] p-3">
-                      <dt className="text-xs text-slate-500">Close date</dt>
+                      <dt className="text-xs text-slate-400">Close date</dt>
                       <dd className="mt-1 font-medium text-slate-200">{trade.closeDate?.toISOString().slice(0, 10) ?? <span className="text-goldLight">Open</span>}</dd>
                     </div>
                   </dl>
@@ -214,7 +214,7 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
                       <Link href={`/trades/${trade.id}/edit`} className="rounded-full border border-white/10 px-4 py-2 font-semibold text-slate-300 transition hover:border-white/25 hover:text-white" aria-label={`Edit ${trade.pair} trade`}>Edit</Link>
                     </div>
                     {trade.notes && (
-                      <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-500" title={trade.notes}>Has notes</span>
+                      <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400" title={trade.notes}>Has notes</span>
                     )}
                   </div>
                 </article>

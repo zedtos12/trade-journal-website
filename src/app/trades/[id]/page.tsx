@@ -12,7 +12,7 @@ function Field({ label, value, tone = "neutral" }: { label: string; value?: stri
   const toneClass = tone === "profit" ? "border-emerald-500/20 bg-emerald-500/5" : tone === "loss" ? "border-rose-500/20 bg-rose-500/5" : tone === "gold" ? "border-gold/20 bg-gold/[0.04]" : "border-white/10 bg-slate-950/50";
   return (
     <div className={`interactive-card rounded-2xl border p-4 transition hover:-translate-y-0.5 hover:border-gold/30 ${toneClass}`}>
-      <p className="text-xs uppercase tracking-wider text-slate-500">{label}</p>
+      <p className="text-xs uppercase tracking-wider text-slate-400">{label}</p>
       <p className="mt-2 font-medium text-slate-100">{value === null || typeof value === "undefined" || value === "" ? "—" : value}</p>
     </div>
   );
@@ -64,7 +64,7 @@ export default async function TradeDetailPage({ params }: PageProps) {
               </div>
               <p className="mt-3 text-sm text-slate-400">Opened {trade.openDate.slice(0,10)}{trade.closeDate ? ` · Closed ${trade.closeDate.slice(0,10)}` : " · Still open"}</p>
               <p className={`mt-5 text-4xl font-semibold tabular-nums ${pnlClass}`}>{pnl === null ? "—" : pnl >= 0 ? `+${pnl}` : pnl}</p>
-              <p className="mt-1 text-xs uppercase tracking-[0.2em] text-slate-500">Profit / Loss</p>
+              <p className="mt-1 text-xs uppercase tracking-[0.2em] text-slate-400">Profit / Loss</p>
             </div>
           </div>
           <div className="flex gap-3">
