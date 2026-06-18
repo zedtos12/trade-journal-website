@@ -224,8 +224,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className={`font-semibold tabular-nums ${trade.profitLossAmount?.toNumber()! >= 0 ? "text-emerald-300" : "text-rose-300"}`}>
-                        {trade.profitLossAmount?.toNumber() ? `${trade.profitLossAmount.toNumber() >= 0 ? "+" : ""}${trade.profitLossAmount.toNumber()}` : "—"}
+                      <p className={`font-semibold tabular-nums ${pnl !== null && pnl > 0 ? "text-emerald-300" : pnl !== null && pnl < 0 ? "text-rose-300" : "text-slate-300"}`}>
+                        {pnl !== null ? `${pnl >= 0 ? "+" : ""}${pnl.toFixed(2)}` : "—"}
                       </p>
                     </div>
                   </div>
