@@ -1,6 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { PremiumButton } from "@/components/ui/premium-button";
+import { PremiumInput, PremiumTextarea } from "@/components/ui/premium-input";
 import { useEffect, useState } from "react";
 import { PremiumDateInput } from "@/components/ui/premium-date-input";
 import { PremiumSelect } from "@/components/ui/premium-select";
@@ -13,7 +15,6 @@ type TradeFormProps = {
   trade?: SerializedTrade;
 };
 
-const inputClass = "mt-2 w-full rounded-xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/20";
 const labelClass = "block text-sm text-slate-400 font-medium";
 const sectionClass = "dropdown-layer premium-card animate-fade-up relative overflow-hidden rounded-3xl p-6";
 
@@ -75,7 +76,7 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
               options={[{ value: "", label: "General Journal" }, ...playbooks.map((p) => ({ value: p.id, label: p.name }))]}
             />
           </label>
-          <label className={labelClass}>Pair<input name="pair" required defaultValue={trade?.pair ?? ""} placeholder="EURUSD" className={inputClass} /></label>
+          <label className={labelClass}>Pair<PremiumInput name="pair" required defaultValue={trade?.pair ?? ""} placeholder="EURUSD" className="mt-2" /></label>
           <label className={labelClass}>Direction<PremiumSelect name="direction" defaultValue={trade?.direction ?? "buy"} options={[{ value: "buy", label: "Buy" }, { value: "sell", label: "Sell" }]} /></label>
           <label className={labelClass}>Status<PremiumSelect name="status" defaultValue={trade?.status ?? "closed"} options={[{ value: "closed", label: "Closed" }, { value: "open", label: "Open" }]} /></label>
           <label className={labelClass}>Result<PremiumSelect name="result" defaultValue={trade?.result ?? "win"} options={[{ value: "win", label: "Win" }, { value: "loss", label: "Loss" }, { value: "breakeven", label: "Breakeven" }, { value: "open", label: "Open" }]} /></label>
@@ -88,7 +89,7 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
         <h2 className="text-xl font-semibold tracking-tight">Risk & Result</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-3">
           {[['entryPrice','Entry price'],['exitPrice','Exit price'],['lotSize','Lot size'],['stopLoss','Stop loss'],['takeProfit','Take profit'],['profitLossAmount','P/L amount'],['profitLossPercentage','P/L %'],['riskRewardRatio','Risk/reward ratio']].map(([name,label]) => (
-            <label key={name} className={labelClass}>{label}<input name={name} type="number" step="any" defaultValue={valueOrEmpty(trade?.[name as keyof SerializedTrade])} className={inputClass} /></label>
+            <label key={name} className={labelClass}>{label}<PremiumInput name={name} type="number" step="any" defaultValue={valueOrEmpty(trade?.[name as keyof SerializedTrade])} className="mt-2" /></label>
           ))}
         </div>
       </section>
@@ -96,25 +97,25 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
       <section data-testid="trade-form-section" className={sectionClass}>
         <h2 className="text-xl font-semibold tracking-tight">Strategy & Psychology</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
-          <label className={labelClass}>Setup / strategy<input name="setupName" defaultValue={trade?.setupName ?? ""} className={inputClass} placeholder="London breakout" /></label>
+          <label className={labelClass}>Setup / strategy<PremiumInput name="setupName" defaultValue={trade?.setupName ?? ""} className="mt-2" placeholder="London breakout" /></label>
           <label className={labelClass}>Timeframe<PremiumSelect name="timeframe" defaultValue={trade?.timeframe ?? ""} options={[{ value: "", label: "Select" }, ...["M1","M5","M15","M30","H1","H4","D1","W1"].map((item) => ({ value: item, label: item }))]} /></label>
           <label className={labelClass}>Session<PremiumSelect name="session" defaultValue={trade?.session ?? ""} options={[{ value: "", label: "Select" }, { value: "Asia", label: "Asia" }, { value: "London", label: "London" }, { value: "NewYork", label: "New York" }]} /></label>
-          <label className={labelClass}>Emotion before<input name="emotionBefore" defaultValue={trade?.emotionBefore ?? ""} className={inputClass} /></label>
-          <label className={labelClass}>Emotion after<input name="emotionAfter" defaultValue={trade?.emotionAfter ?? ""} className={inputClass} /></label>
+          <label className={labelClass}>Emotion before<PremiumInput name="emotionBefore" defaultValue={trade?.emotionBefore ?? ""} className="mt-2" /></label>
+          <label className={labelClass}>Emotion after<PremiumInput name="emotionAfter" defaultValue={trade?.emotionAfter ?? ""} className="mt-2" /></label>
         </div>
       </section>
 
       <section data-testid="trade-form-section" className={sectionClass}>
         <h2 className="text-xl font-semibold tracking-tight">Notes</h2>
         <div className="mt-5 grid gap-4">
-          <label className={labelClass}>Entry reason<textarea name="entryReason" defaultValue={trade?.entryReason ?? ""} className={inputClass} rows={3} /></label>
-          <label className={labelClass}>Exit reason<textarea name="exitReason" defaultValue={trade?.exitReason ?? ""} className={inputClass} rows={3} /></label>
-          <label className={labelClass}>Mistake / lesson learned<textarea name="lessonLearned" defaultValue={trade?.lessonLearned ?? ""} className={inputClass} rows={3} /></label>
-          <label className={labelClass}>General notes<textarea name="notes" defaultValue={trade?.notes ?? ""} className={inputClass} rows={4} /></label>
+          <label className={labelClass}>Entry reason<PremiumTextarea name="entryReason" defaultValue={trade?.entryReason ?? ""} className="mt-2" rows={3} /></label>
+          <label className={labelClass}>Exit reason<PremiumTextarea name="exitReason" defaultValue={trade?.exitReason ?? ""} className="mt-2" rows={3} /></label>
+          <label className={labelClass}>Mistake / lesson learned<PremiumTextarea name="lessonLearned" defaultValue={trade?.lessonLearned ?? ""} className="mt-2" rows={3} /></label>
+          <label className={labelClass}>General notes<PremiumTextarea name="notes" defaultValue={trade?.notes ?? ""} className="mt-2" rows={4} /></label>
         </div>
       </section>
 
-      <button disabled={loading} className="premium-button inline-flex items-center justify-center gap-2 rounded-full bg-gold px-8 py-3.5 font-semibold text-slate-950 hover:bg-goldLight disabled:opacity-60 transition-all shadow-[0_4px_20px_rgba(217,180,94,0.15)]">
+      <PremiumButton disabled={loading} className="premium-button inline-flex items-center justify-center gap-2 rounded-full bg-gold px-8 py-3.5 font-semibold text-slate-950 hover:bg-goldLight disabled:opacity-60 transition-all shadow-[0_4px_20px_rgba(217,180,94,0.15)]">
         {loading ? (
           <>
             <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-slate-950" fill="none" viewBox="0 0 24 24">
@@ -131,7 +132,7 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
             {mode === "create" ? "Save Trade" : "Update Trade"}
           </>
         )}
-      </button>
+      </PremiumButton>
     </form>
   );
 }
