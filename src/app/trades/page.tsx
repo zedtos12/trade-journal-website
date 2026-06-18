@@ -179,7 +179,7 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
                         <span>{trade.direction} · {trade.status}</span>
                       </div>
                     </div>
-                    <PremiumBadge className="shrink-0 px-4 py-3 text-right font-semibold tabular-nums">
+                    <PremiumBadge className={`shrink-0 px-4 py-3 text-right font-semibold tabular-nums ${pnl !== null && pnl > 0 ? "text-emerald-300" : pnl !== null && pnl < 0 ? "text-rose-300" : ""}`}>
                       {pnl !== null ? (pnl >= 0 ? `+${pnl.toFixed(2)}` : pnl.toFixed(2)) : "—"}
                       <span className="block text-[10px] uppercase tracking-widest opacity-60">P/L</span>
                     </PremiumBadge>
