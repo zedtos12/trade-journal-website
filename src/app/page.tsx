@@ -18,10 +18,10 @@ function slugify(value: string) {
 
 export default function LandingPage() {
   return (
-    <main className="bg-grid-luxury relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top,#172554_0%,#050816_42%,#030712_100%)] text-white">
-      <div className="pointer-events-none absolute left-[-8rem] top-24 h-80 w-80 rounded-full bg-gold/20 blur-3xl" />
-      <div className="pointer-events-none absolute right-[-10rem] top-10 h-96 w-96 rounded-full bg-blue-500/20 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-emerald-400/10 blur-3xl" />
+    <main className="bg-grid-luxury relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top,rgba(215,181,109,0.06)_0%,rgba(3,7,18,1)_50%,#030712_100%)] text-white">
+      <div className="pointer-events-none absolute left-[-8rem] top-24 h-80 w-80 rounded-full bg-gold/10 blur-3xl" />
+      <div className="pointer-events-none absolute right-[-10rem] top-10 h-96 w-96 rounded-full bg-gold/10 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-gold/5 blur-3xl" />
 
       <nav className="animate-fade-in relative z-10 mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
         <Link href="/" className="group flex items-center gap-3 font-semibold tracking-tight">
