@@ -84,6 +84,8 @@ function EquityCurve({ points }: { points: { label: string; value: number }[] })
   );
 }
 
+import { PremiumBadge } from "@/components/ui/premium-badge";
+
 export default async function DashboardPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const user = await requireUser();
   const params = await searchParams;
@@ -211,28 +213,21 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             {recentTrades.map((trade) => {
               const pnl = trade.profitLossAmount?.toNumber() ?? null;
               const pnlTone = pnl === null ? "text-slate-300" : pnl > 0 ? "text-emerald-300" : pnl < 0 ? "text-rose-300" : "text-slate-200";
-              const resultTone = trade.result === "win" ? "border-emerald-400/20 bg-emerald-400/10 text-emerald-300" : trade.result === "loss" ? "border-rose-400/20 bg-rose-400/10 text-rose-300" : "border-white/10 bg-white/10 text-slate-300";
               return (
                 <Link key={trade.id} href={`/trades/${trade.id}`} data-testid="dashboard-recent-trade-card" className="interactive-card group rounded-3xl border border-white/10 bg-slate-950/55 p-4 transition hover:-translate-y-1 hover:border-gold/30 hover:bg-white/[0.06]">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="text-xs text-slate-400">{trade.openDate.toISOString().slice(0, 10)} · {trade.timeframe ?? "No TF"}</p>
-                      <h3 className="mt-1 text-lg font-semibold text-white">{trade.pair}</h3>
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <PremiumBadge variant={trade.result as "win" | "loss"}>{trade.result}</PremiumBadge>
+                      <div>
+                        <p className="text-[10px] text-slate-400">{trade.openDate.toISOString().slice(0, 10)} · {trade.timeframe}</p>
+                        <span className="font-semibold text-white">{trade.pair}</span>
+                      </div>
                     </div>
-                    <span data-testid="dashboard-recent-trade-result" className={`rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${resultTone}`}>{trade.result}</span>
-                  </div>
-                  <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
-                    <div className="rounded-xl bg-white/[0.04] p-3"><p className="text-xs text-slate-400">Direction</p><p className="mt-1 capitalize text-slate-200">{trade.direction}</p></div>
-                    <div className="rounded-xl bg-white/[0.04] p-3"><p className="text-xs text-slate-400">P/L</p><p data-testid="dashboard-recent-trade-pnl" className={`mt-1 font-semibold tabular-nums ${pnlTone}`}>{pnl ?? "—"}</p></div>
-                  </div>
-                  <div className="mt-4 flex items-center justify-between text-xs text-slate-400">
-                    <span className="truncate">{trade.setupName ?? "No setup"}</span>
-                    <span className="flex items-center gap-1 font-semibold text-goldLight opacity-0 transition group-hover:opacity-100">
-                      Review
-                      <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
-                        <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
-                      </svg>
-                    </span>
+                    <div className="text-right">
+                      <p className={`font-semibold tabular-nums ${trade.profitLossAmount?.toNumber()! >= 0 ? "text-emerald-300" : "text-rose-300"}`}>
+                        {trade.profitLossAmount?.toNumber() ? `${trade.profitLossAmount.toNumber() >= 0 ? "+" : ""}${trade.profitLossAmount.toNumber()}` : "—"}
+                      </p>
+                    </div>
                   </div>
                 </Link>
               );

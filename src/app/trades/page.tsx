@@ -2,6 +2,9 @@ import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
 import { PremiumDateInput } from "@/components/ui/premium-date-input";
 import { PremiumSelect } from "@/components/ui/premium-select";
+import { PremiumButton } from "@/components/ui/premium-button";
+import { PremiumInput } from "@/components/ui/premium-input";
+import { PremiumBadge } from "@/components/ui/premium-badge";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { buildTradeOrderBy, buildTradePagination, buildTradeWhere } from "@/lib/trades/query";
@@ -81,7 +84,7 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
         <div className="grid gap-3 md:grid-cols-6">
           <label className="text-sm text-slate-300 md:col-span-2">
             Search
-            <input name="search" defaultValue={query.search ?? ""} placeholder="Search pair / setup…" className="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+            <PremiumInput name="search" defaultValue={query.search ?? ""} placeholder="Search pair / setup…" className="mt-2" />
           </label>
           <label className="text-sm text-slate-300">
             Result
@@ -108,9 +111,9 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
             <PremiumDateInput ariaLabel="Filter date to" name="dateTo" defaultValue={query.dateTo ?? ""} />
           </label>
           <div className="flex items-end md:col-span-2">
-            <button type="submit" className="premium-button w-full rounded-xl bg-gold px-4 py-3 font-semibold text-slate-950 hover:bg-goldLight">
+            <PremiumButton type="submit" variant="primary" className="w-full">
               Apply filters
-            </button>
+            </PremiumButton>
           </div>
         </div>
       </form>
@@ -176,10 +179,10 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
                         <span>{trade.direction} · {trade.status}</span>
                       </div>
                     </div>
-                    <span data-testid="trade-history-pnl-badge" className={`shrink-0 rounded-xl border px-4 py-3 text-right font-semibold tabular-nums ${pnlBadge}`}>
+                    <PremiumBadge className="shrink-0 px-4 py-3 text-right font-semibold tabular-nums">
                       {pnl !== null ? (pnl >= 0 ? `+${pnl.toFixed(2)}` : pnl.toFixed(2)) : "—"}
                       <span className="block text-[10px] uppercase tracking-widest opacity-60">P/L</span>
-                    </span>
+                    </PremiumBadge>
                   </div>
 
                   {/* ── Card Details ── */}
