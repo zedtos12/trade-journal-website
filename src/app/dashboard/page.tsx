@@ -40,7 +40,7 @@ function InsightCard({ title, row }: { title: string; row: { label: string; tota
 
 function EquityCurve({ points }: { points: { label: string; value: number }[] }) {
   if (points.length === 0) {
-    return <div className="flex h-56 items-center justify-center rounded-2xl border border-dashed border-gold/20 bg-slate-950/40 text-slate-500">Belum ada data equity curve</div>;
+    return <div className="flex h-56 items-center justify-center rounded-xl border border-dashed border-gold/20 bg-slate-950/40 text-slate-500">Belum ada data equity curve</div>;
   }
 
   const width = 720;
@@ -61,7 +61,7 @@ function EquityCurve({ points }: { points: { label: string; value: number }[] })
   const areaPoints = `${paddingX},${height - paddingY} ${linePoints} ${width - paddingX},${height - paddingY}`;
 
   return (
-    <div data-testid="dashboard-equity-chart" className="relative h-64 overflow-hidden rounded-2xl border border-gold/15 bg-slate-950/70 p-3 shadow-inner shadow-black/30">
+    <div data-testid="dashboard-equity-chart" className="relative h-64 overflow-hidden rounded-xl border border-gold/15 bg-slate-950/70 p-3 shadow-inner shadow-black/30">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(217,180,94,0.16),transparent_32%),linear-gradient(rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px)] bg-[size:100%_100%,64px_64px,64px_64px]" />
       <svg viewBox={`0 0 ${width} ${height}`} className="relative h-full w-full" role="img" aria-label="Visible equity curve line chart">
         <polygon points={areaPoints} className="fill-gold/15" />
@@ -133,9 +133,9 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
           <div data-testid="dashboard-kpi-strip" className="rounded-3xl border border-white/10 bg-slate-950/55 p-4 shadow-inner shadow-black/30">
             <div className="grid grid-cols-3 gap-3 text-center">
-              <div className="rounded-2xl bg-white/[0.04] p-3"><p className="text-xs text-slate-400">Trades</p><p className="mt-1 text-xl font-semibold tabular-nums">{metrics.totalTrades}</p></div>
-              <div className="rounded-2xl bg-white/[0.04] p-3"><p className="text-xs text-slate-400">Closed</p><p className="mt-1 text-xl font-semibold tabular-nums">{closedTrades}</p></div>
-              <div className="rounded-2xl bg-white/[0.04] p-3"><p className="text-xs text-slate-400">P/L</p><p className={totalTone === "profit" ? "mt-1 text-xl font-semibold tabular-nums text-emerald-300" : totalTone === "loss" ? "mt-1 text-xl font-semibold tabular-nums text-rose-300" : "mt-1 text-xl font-semibold tabular-nums text-white"}>{metrics.totalPnL}</p></div>
+              <div className="rounded-xl bg-white/[0.04] p-3"><p className="text-xs text-slate-400">Trades</p><p className="mt-1 text-xl font-semibold tabular-nums">{metrics.totalTrades}</p></div>
+              <div className="rounded-xl bg-white/[0.04] p-3"><p className="text-xs text-slate-400">Closed</p><p className="mt-1 text-xl font-semibold tabular-nums">{closedTrades}</p></div>
+              <div className="rounded-xl bg-white/[0.04] p-3"><p className="text-xs text-slate-400">P/L</p><p className={totalTone === "profit" ? "mt-1 text-xl font-semibold tabular-nums text-emerald-300" : totalTone === "loss" ? "mt-1 text-xl font-semibold tabular-nums text-rose-300" : "mt-1 text-xl font-semibold tabular-nums text-white"}>{metrics.totalPnL}</p></div>
             </div>
             <div className="mt-4">
               <div className="mb-2 flex items-center justify-between text-xs text-slate-400"><span>Win rate</span><span className="font-semibold tabular-nums text-goldLight">{metrics.winRate}%</span></div>
@@ -174,7 +174,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           <h2 className="text-2xl font-semibold">Monthly summary</h2>
           <div className="mt-5 space-y-3">
             {monthlyPerformance.length === 0 ? <p className="text-slate-500">Not enough data</p> : monthlyPerformance.map((month) => (
-              <div key={month.label} className="interactive-card flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+              <div key={month.label} className="interactive-card flex items-center justify-between rounded-xl border border-white/10 bg-slate-950/50 p-4">
                 <div><p className="font-semibold">{month.label}</p><p className="text-sm text-slate-500">{month.trades} trades</p></div>
                 <p className={month.totalPnL >= 0 ? "text-emerald-300" : "text-rose-300"}>{month.totalPnL}</p>
               </div>
@@ -222,8 +222,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
                     <span data-testid="dashboard-recent-trade-result" className={`rounded-full border px-2.5 py-1 text-xs font-semibold capitalize ${resultTone}`}>{trade.result}</span>
                   </div>
                   <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
-                    <div className="rounded-2xl bg-white/[0.04] p-3"><p className="text-xs text-slate-500">Direction</p><p className="mt-1 capitalize text-slate-200">{trade.direction}</p></div>
-                    <div className="rounded-2xl bg-white/[0.04] p-3"><p className="text-xs text-slate-500">P/L</p><p data-testid="dashboard-recent-trade-pnl" className={`mt-1 font-semibold tabular-nums ${pnlTone}`}>{pnl ?? "—"}</p></div>
+                    <div className="rounded-xl bg-white/[0.04] p-3"><p className="text-xs text-slate-500">Direction</p><p className="mt-1 capitalize text-slate-200">{trade.direction}</p></div>
+                    <div className="rounded-xl bg-white/[0.04] p-3"><p className="text-xs text-slate-500">P/L</p><p data-testid="dashboard-recent-trade-pnl" className={`mt-1 font-semibold tabular-nums ${pnlTone}`}>{pnl ?? "—"}</p></div>
                   </div>
                   <div className="mt-4 flex items-center justify-between text-xs text-slate-500">
                     <span className="truncate">{trade.setupName ?? "No setup"}</span>

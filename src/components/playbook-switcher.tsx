@@ -72,7 +72,7 @@ export function PlaybookSwitcher() {
       {open && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-2xl border border-white/10 bg-slate-900 shadow-2xl backdrop-blur-xl">
+          <div className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-xl border border-white/10 bg-slate-900 shadow-2xl backdrop-blur-xl">
             <button
               onClick={() => selectPlaybook("all")}
               className={`flex w-full items-center gap-2 px-4 py-3 text-sm transition hover:bg-white/5 ${

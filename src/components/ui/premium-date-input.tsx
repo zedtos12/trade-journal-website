@@ -74,7 +74,7 @@ export function PremiumDateInput({ name, defaultValue = "", required = false, ar
       className={`relative mt-2 ${open ? "z-[90]" : "z-0"} ${className}`}
       onBlur={() => window.setTimeout(() => setOpen(false), 120)}
     >
-      <div className="group flex w-full items-center gap-2 rounded-2xl border border-white/10 bg-gradient-to-b from-slate-950/95 to-slate-900/90 px-3 py-2.5 shadow-inner shadow-white/[0.03] transition hover:border-gold/35 focus-within:border-gold/60 focus-within:ring-2 focus-within:ring-gold/30">
+      <div className="group flex w-full items-center gap-2 rounded-xl border border-white/10 bg-gradient-to-b from-slate-950/95 to-slate-900/90 px-3 py-2.5 shadow-inner shadow-white/[0.03] transition hover:border-gold/35 focus-within:border-gold/60 focus-within:ring-2 focus-within:ring-gold/30">
         <span aria-hidden="true" className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-sm text-gold transition group-hover:border-gold/30">◷</span>
         <input
           name={name}
@@ -129,8 +129,8 @@ export function PremiumDateInput({ name, defaultValue = "", required = false, ar
                   onMouseDown={(event) => event.preventDefault()}
                   onClick={() => chooseDate(date)}
                   className={isSelected
-                    ? "aspect-square rounded-2xl bg-gold text-sm font-bold text-slate-950 shadow-lg shadow-gold/20"
-                    : `aspect-square rounded-2xl text-sm transition hover:bg-white/[0.08] hover:text-white ${isCurrentMonth ? "text-slate-200" : "text-slate-600"} ${isToday ? "ring-1 ring-gold/50" : ""}`}
+                    ? "aspect-square rounded-xl bg-gold text-sm font-bold text-slate-950 shadow-lg shadow-gold/20"
+                    : `aspect-square rounded-xl text-sm transition hover:bg-white/[0.08] hover:text-white ${isCurrentMonth ? "text-slate-200" : "text-slate-600"} ${isToday ? "ring-1 ring-gold/50" : ""}`}
                 >
                   {date.getDate()}
                 </button>

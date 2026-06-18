@@ -139,7 +139,7 @@ export function PlaybooksClient({ initialPlaybooks }: { initialPlaybooks: Playbo
 
         {playbooks.length === 0 && (
           <div className="col-span-full flex flex-col items-center justify-center rounded-[2rem] border border-dashed border-white/10 py-20 text-center">
-            <div className="grid h-16 w-16 place-items-center rounded-2xl bg-white/5 text-slate-500">
+            <div className="grid h-16 w-16 place-items-center rounded-xl bg-white/5 text-slate-500">
               <Plus size={32} />
             </div>
             <h3 className="mt-4 text-lg font-medium text-white">No playbooks yet</h3>
@@ -169,7 +169,7 @@ export function PlaybooksClient({ initialPlaybooks }: { initialPlaybooks: Playbo
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Scalping Gold"
-                  className="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-gold/50 transition"
+                  className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-gold/50 transition"
                 />
               </div>
 
@@ -180,7 +180,7 @@ export function PlaybooksClient({ initialPlaybooks }: { initialPlaybooks: Playbo
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Strategy details, account info..."
                   rows={3}
-                  className="mt-2 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-gold/50 transition resize-none"
+                  className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-gold/50 transition resize-none"
                 />
               </div>
 
@@ -203,14 +203,14 @@ export function PlaybooksClient({ initialPlaybooks }: { initialPlaybooks: Playbo
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 rounded-2xl border border-white/10 py-3 font-semibold text-white hover:bg-white/5 transition"
+                  className="flex-1 rounded-xl border border-white/10 py-3 font-semibold text-white hover:bg-white/5 transition"
                 >
                   Cancel
                 </button>
                 <button
                   disabled={loading}
                   type="submit"
-                  className="premium-button flex-1 rounded-2xl bg-gold py-3 font-semibold text-slate-950 hover:bg-goldLight disabled:opacity-50 transition"
+                  className="premium-button flex-1 rounded-xl bg-gold py-3 font-semibold text-slate-950 hover:bg-goldLight disabled:opacity-50 transition"
                 >
                   {loading ? "Saving..." : editingPlaybook ? "Update" : "Create"}
                 </button>

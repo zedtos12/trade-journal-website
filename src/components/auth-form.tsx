@@ -8,7 +8,7 @@ type AuthFormProps = {
   mode: "login" | "register";
 };
 
-const inputClass = "mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/20";
+const inputClass = "mt-2 w-full rounded-xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/20";
 
 export function AuthForm({ mode }: AuthFormProps) {
   const router = useRouter();
@@ -60,8 +60,8 @@ export function AuthForm({ mode }: AuthFormProps) {
           <input name="confirmPassword" type="password" required minLength={8} className={inputClass} placeholder="Ulangi password" />
         </label>
       )}
-      {error && <p className="rounded-2xl border border-rose-400/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">{error}</p>}
-      <button disabled={loading} className="premium-button mt-4 w-full rounded-2xl bg-gold px-4 py-3.5 font-semibold text-slate-950 shadow-lg shadow-gold/20 transition-all hover:bg-goldLight disabled:opacity-60">
+      {error && <p className="rounded-xl border border-rose-400/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">{error}</p>}
+      <button disabled={loading} className="premium-button mt-4 w-full rounded-xl bg-gold px-4 py-3.5 font-semibold text-slate-950 shadow-lg shadow-gold/20 transition-all hover:bg-goldLight disabled:opacity-60">
         {loading ? "Processing..." : mode === "login" ? "Masuk ke Dashboard" : "Create Account"}
       </button>
       <p className="text-center text-sm text-slate-400">

@@ -101,7 +101,7 @@ export function TradeCalendar({ trades }: { trades: CalendarTrade[] }) {
           const summary = summaries.get(dateKey(date));
           const tone = !summary ? "border-white/5 bg-white/[0.02]" : summary.totalPnL >= 0 ? "border-emerald-400/30 bg-emerald-400/10" : "border-rose-400/30 bg-rose-400/10";
           return (
-            <div key={date.toISOString()} className={`group min-h-24 rounded-2xl border p-2 text-left transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-white/[0.06] ${tone} ${inMonth ? "opacity-100" : "opacity-35"}`} title={summary ? `${summary.trades.length} trades • ${summary.totalPnL} P/L` : "No trades"}>
+            <div key={date.toISOString()} className={`group min-h-24 rounded-xl border p-2 text-left transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-white/[0.06] ${tone} ${inMonth ? "opacity-100" : "opacity-35"}`} title={summary ? `${summary.trades.length} trades • ${summary.totalPnL} P/L` : "No trades"}>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-semibold text-slate-200">{date.getUTCDate()}</span>
                 {summary && <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] text-slate-300">{summary.trades.length}</span>}

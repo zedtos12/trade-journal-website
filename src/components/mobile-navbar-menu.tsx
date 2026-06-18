@@ -36,7 +36,7 @@ export function MobileNavbarMenu() {
           data-testid="mobile-navigation-menu"
           className="animate-scale-in absolute right-0 top-full z-[70] mt-3 w-[min(20rem,calc(100vw-2rem))] overflow-hidden rounded-3xl border border-white/10 bg-slate-950/95 p-3 shadow-2xl shadow-black/50 backdrop-blur-xl"
         >
-          <div className="mb-3 rounded-2xl border border-gold/15 bg-gold/[0.06] p-3">
+          <div className="mb-3 rounded-xl border border-gold/15 bg-gold/[0.06] p-3">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-goldLight">Menu</p>
             <p className="mt-1 text-sm text-slate-300">Navigate Trade Journal from mobile.</p>
           </div>
@@ -47,7 +47,7 @@ export function MobileNavbarMenu() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="flex min-h-11 items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-gold/35 hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-gold/30"
+                className="flex min-h-11 items-center justify-between rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-slate-100 transition hover:border-gold/35 hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-gold/30"
               >
                 {link.label}
                 <span aria-hidden="true" className="text-goldLight">→</span>
@@ -59,7 +59,7 @@ export function MobileNavbarMenu() {
             <Link
               href="/trades/new"
               onClick={() => setOpen(false)}
-              className="premium-button flex min-h-11 items-center justify-center rounded-2xl bg-gold px-4 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-gold/20 transition hover:bg-goldLight focus:outline-none focus:ring-2 focus:ring-gold/30"
+              className="premium-button flex min-h-11 items-center justify-center rounded-xl bg-gold px-4 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-gold/20 transition hover:bg-goldLight focus:outline-none focus:ring-2 focus:ring-gold/30"
             >
               Add Trade
             </Link>

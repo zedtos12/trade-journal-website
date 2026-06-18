@@ -13,7 +13,7 @@ type TradeFormProps = {
   trade?: SerializedTrade;
 };
 
-const inputClass = "mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/20";
+const inputClass = "mt-2 w-full rounded-xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/20";
 const labelClass = "block text-sm text-slate-400 font-medium";
 const sectionClass = "dropdown-layer premium-card animate-fade-up relative overflow-hidden rounded-3xl p-6";
 
@@ -61,7 +61,7 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
 
   return (
     <form action={onSubmit} className="animate-fade-up space-y-6">
-      {error && <p className="rounded-2xl border border-rose-400/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">{error}</p>}
+      {error && <p className="rounded-xl border border-rose-400/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">{error}</p>}
 
       <section data-testid="trade-form-section" className={sectionClass}>
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(244,213,141,0.08),transparent_40%)]" />

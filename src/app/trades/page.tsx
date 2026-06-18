@@ -56,19 +56,19 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
 
         {/* ── Stats Strip ── */}
         <div data-testid="trade-history-stats-strip" className="relative mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-2xl border border-white/10 bg-slate-950/55 p-4 transition hover:border-white/20">
+          <div className="rounded-xl border border-white/10 bg-slate-950/55 p-4 transition hover:border-white/20">
             <p className="text-xs text-slate-400">Filtered trades</p>
             <p className="mt-1 text-2xl font-semibold tabular-nums">{totalTrades}</p>
           </div>
-          <div className="rounded-2xl border border-emerald-500/20 bg-emerald-400/5 p-4 transition hover:border-emerald-500/35">
+          <div className="rounded-xl border border-emerald-500/20 bg-emerald-400/5 p-4 transition hover:border-emerald-500/35">
             <p className="text-xs text-slate-400">Page wins</p>
             <p className="mt-1 text-2xl font-semibold tabular-nums text-emerald-300">{pageWins}</p>
           </div>
-          <div className={`rounded-2xl border ${pageNetBorder} bg-slate-950/55 p-4 transition hover:border-opacity-60`}>
+          <div className={`rounded-xl border ${pageNetBorder} bg-slate-950/55 p-4 transition hover:border-opacity-60`}>
             <p className="text-xs text-slate-400">Page net P/L</p>
             <p className={`mt-1 text-2xl font-semibold tabular-nums ${pageNetTone}`}>{pageNetPnL.toFixed(2)}</p>
           </div>
-          <div className="rounded-2xl border border-gold/20 bg-gold/5 p-4 transition hover:border-gold/35">
+          <div className="rounded-xl border border-gold/20 bg-gold/5 p-4 transition hover:border-gold/35">
             <p className="text-xs text-slate-400">Open risk</p>
             <p className="mt-1 text-2xl font-semibold tabular-nums text-goldLight">{openTrades}</p>
           </div>
@@ -81,7 +81,7 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
         <div className="grid gap-3 md:grid-cols-6">
           <label className="text-sm text-slate-300 md:col-span-2">
             Search
-            <input name="search" defaultValue={query.search ?? ""} placeholder="Search pair / setup…" className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
+            <input name="search" defaultValue={query.search ?? ""} placeholder="Search pair / setup…" className="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/80 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-gold/50 focus:ring-2 focus:ring-gold/20" />
           </label>
           <label className="text-sm text-slate-300">
             Result
@@ -108,7 +108,7 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
             <PremiumDateInput ariaLabel="Filter date to" name="dateTo" defaultValue={query.dateTo ?? ""} />
           </label>
           <div className="flex items-end md:col-span-2">
-            <button type="submit" className="premium-button w-full rounded-2xl bg-gold px-4 py-3 font-semibold text-slate-950 hover:bg-goldLight">
+            <button type="submit" className="premium-button w-full rounded-xl bg-gold px-4 py-3 font-semibold text-slate-950 hover:bg-goldLight">
               Apply filters
             </button>
           </div>
@@ -176,7 +176,7 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
                         <span>{trade.direction} · {trade.status}</span>
                       </div>
                     </div>
-                    <span data-testid="trade-history-pnl-badge" className={`shrink-0 rounded-2xl border px-4 py-3 text-right font-semibold tabular-nums ${pnlBadge}`}>
+                    <span data-testid="trade-history-pnl-badge" className={`shrink-0 rounded-xl border px-4 py-3 text-right font-semibold tabular-nums ${pnlBadge}`}>
                       {pnl !== null ? (pnl >= 0 ? `+${pnl.toFixed(2)}` : pnl.toFixed(2)) : "—"}
                       <span className="block text-[10px] uppercase tracking-widest opacity-60">P/L</span>
                     </span>
@@ -184,19 +184,19 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
 
                   {/* ── Card Details ── */}
                   <dl className="mt-5 grid grid-cols-2 gap-3 text-sm md:grid-cols-4">
-                    <div className="rounded-2xl bg-white/[0.04] p-3">
+                    <div className="rounded-xl bg-white/[0.04] p-3">
                       <dt className="text-xs text-slate-500">Setup</dt>
                       <dd className="mt-1 truncate font-medium text-slate-200">{trade.setupName ?? "—"}</dd>
                     </div>
-                    <div className="rounded-2xl bg-white/[0.04] p-3">
+                    <div className="rounded-xl bg-white/[0.04] p-3">
                       <dt className="text-xs text-slate-500">Session</dt>
                       <dd className="mt-1 font-medium text-slate-200">{trade.session ?? "—"}</dd>
                     </div>
-                    <div className="rounded-2xl bg-white/[0.04] p-3">
+                    <div className="rounded-xl bg-white/[0.04] p-3">
                       <dt className="text-xs text-slate-500">R:R</dt>
                       <dd className="mt-1 font-medium tabular-nums text-slate-200">{trade.riskRewardRatio?.toString() ?? "—"}</dd>
                     </div>
-                    <div className="rounded-2xl bg-white/[0.04] p-3">
+                    <div className="rounded-xl bg-white/[0.04] p-3">
                       <dt className="text-xs text-slate-500">Close date</dt>
                       <dd className="mt-1 font-medium text-slate-200">{trade.closeDate?.toISOString().slice(0, 10) ?? <span className="text-goldLight">Open</span>}</dd>
                     </div>

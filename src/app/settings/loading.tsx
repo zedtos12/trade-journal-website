@@ -11,14 +11,14 @@ export default function SettingsLoading() {
             <div className="animate-shimmer h-4 w-24 rounded" />
             <div className="animate-shimmer mt-4 h-8 w-48 rounded" />
             <div className="mt-8 space-y-4">
-              {Array.from({ length: 3 }).map((_, index) => <div key={index} className="animate-shimmer h-12 rounded-2xl" />)}
+              {Array.from({ length: 3 }).map((_, index) => <div key={index} className="animate-shimmer h-12 rounded-xl" />)}
             </div>
           </div>
           <div className="premium-card h-80 rounded-3xl p-6">
             <div className="animate-shimmer h-4 w-24 rounded" />
             <div className="animate-shimmer mt-4 h-8 w-48 rounded" />
             <div className="mt-8 space-y-4">
-              {Array.from({ length: 3 }).map((_, index) => <div key={index} className="animate-shimmer h-12 rounded-2xl" />)}
+              {Array.from({ length: 3 }).map((_, index) => <div key={index} className="animate-shimmer h-12 rounded-xl" />)}
             </div>
           </div>
         </div>

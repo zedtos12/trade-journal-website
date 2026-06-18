@@ -60,7 +60,7 @@ export default function LandingPage() {
               ["Manual", "trade logging"],
               ["Analytics", "performance clarity"],
             ].map(([title, text]) => (
-              <div key={title} className="rounded-2xl border border-white/10 bg-white/[0.035] p-4 backdrop-blur">
+              <div key={title} className="rounded-xl border border-white/10 bg-white/[0.035] p-4 backdrop-blur">
                 <p className="font-semibold text-white">{title}</p>
                 <p className="mt-1 text-xs leading-5 text-slate-400">{text}</p>
               </div>
@@ -85,14 +85,14 @@ export default function LandingPage() {
                 {previewMetrics.map((item, index) => (
                   <div
                     key={item}
-                    className="animate-scale-in rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm text-slate-300 transition hover:border-gold/30 hover:bg-white/[0.07]"
+                    className="animate-scale-in rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm text-slate-300 transition hover:border-gold/30 hover:bg-white/[0.07]"
                     style={{ animationDelay: `${360 + index * 80}ms` }}
                   >
                     {item}
                   </div>
                 ))}
               </div>
-              <div className="mt-5 h-40 rounded-2xl border border-white/10 bg-gradient-to-t from-gold/20 to-transparent p-4">
+              <div className="mt-5 h-40 rounded-xl border border-white/10 bg-gradient-to-t from-gold/20 to-transparent p-4">
                 <div className="flex h-full items-end gap-2">
                   {previewBars.map((height, index) => (
                     <div

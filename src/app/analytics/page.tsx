@@ -27,13 +27,13 @@ function PerformanceTable({ title, rows }: { title: string; rows: { label: strin
         <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">{rows.length} groups</span>
       </div>
       {rows.length === 0 ? (
-        <p className="mt-5 rounded-2xl border border-dashed border-gold/20 bg-gold/[0.03] p-8 text-center text-slate-500">Not enough data</p>
+        <p className="mt-5 rounded-xl border border-dashed border-gold/20 bg-gold/[0.03] p-8 text-center text-slate-500">Not enough data</p>
       ) : (
         <div className="mt-5 space-y-2">
           {rows.map((row) => {
             const pnlTone = row.totalPnL >= 0 ? "text-emerald-300" : "text-rose-300";
             return (
-              <div key={row.label} data-testid="analytics-performance-row" className="group flex flex-col justify-between gap-2 rounded-2xl border border-white/5 bg-slate-950/40 p-4 transition hover:-translate-y-0.5 hover:border-gold/30 hover:bg-slate-900/80 md:flex-row md:items-center">
+              <div key={row.label} data-testid="analytics-performance-row" className="group flex flex-col justify-between gap-2 rounded-xl border border-white/5 bg-slate-950/40 p-4 transition hover:-translate-y-0.5 hover:border-gold/30 hover:bg-slate-900/80 md:flex-row md:items-center">
                 <span className="font-semibold text-white">{row.label}</span>
                 <div className="flex flex-wrap items-center gap-4 text-sm md:justify-end">
                   <span className="text-slate-400"><strong className="text-slate-300">{row.trades}</strong> trades</span>
@@ -50,14 +50,14 @@ function PerformanceTable({ title, rows }: { title: string; rows: { label: strin
 }
 
 function MiniBars({ rows }: { rows: { label: string; totalPnL: number; trades: number }[] }) {
-  if (rows.length === 0) return <div className="flex h-44 items-center justify-center rounded-2xl border border-dashed border-gold/20 bg-gold/[0.03] text-slate-500">Not enough data</div>;
+  if (rows.length === 0) return <div className="flex h-44 items-center justify-center rounded-xl border border-dashed border-gold/20 bg-gold/[0.03] text-slate-500">Not enough data</div>;
   const max = Math.max(...rows.map((row) => Math.abs(row.totalPnL)), 1);
   return (
     <div className="space-y-3">
       {rows.map((row) => {
         const isProfit = row.totalPnL >= 0;
         return (
-          <div key={row.label} className="group relative rounded-2xl border border-white/5 bg-slate-950/40 p-4 transition hover:border-gold/25 hover:bg-slate-900/60">
+          <div key={row.label} className="group relative rounded-xl border border-white/5 bg-slate-950/40 p-4 transition hover:border-gold/25 hover:bg-slate-900/60">
             <div className="mb-2 flex justify-between text-sm">
               <span className="font-medium text-slate-200">{row.label}</span>
               <span className={`font-semibold tabular-nums ${isProfit ? "text-emerald-300" : "text-rose-300"}`}>{isProfit ? `+${row.totalPnL}` : row.totalPnL}</span>
@@ -160,17 +160,17 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Pr
               <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-slate-400">Based on filtered journal data</span>
             </div>
             <div className="relative mt-5 grid gap-3 md:grid-cols-3">
-              <div className="group rounded-2xl border border-white/5 bg-slate-950/55 p-4 transition hover:border-emerald-500/30">
+              <div className="group rounded-xl border border-white/5 bg-slate-950/55 p-4 transition hover:border-emerald-500/30">
                 <p className="text-xs text-slate-400">Best pair</p>
                 <p className="mt-2 text-xl font-semibold text-white group-hover:text-emerald-300 transition-colors">{bestPair?.label ?? "—"}</p>
                 <p className="mt-1 text-sm text-emerald-300 tabular-nums">{bestPair ? `${bestPair.totalPnL >= 0 ? `+${bestPair.totalPnL}` : bestPair.totalPnL} P/L · ${bestPair.winRate}% WR` : "Not enough data"}</p>
               </div>
-              <div className="group rounded-2xl border border-white/5 bg-slate-950/55 p-4 transition hover:border-emerald-500/30">
+              <div className="group rounded-xl border border-white/5 bg-slate-950/55 p-4 transition hover:border-emerald-500/30">
                 <p className="text-xs text-slate-400">Best setup</p>
                 <p className="mt-2 text-xl font-semibold text-white group-hover:text-emerald-300 transition-colors">{bestSetup?.label ?? "—"}</p>
                 <p className="mt-1 text-sm text-emerald-300 tabular-nums">{bestSetup ? `${bestSetup.totalPnL >= 0 ? `+${bestSetup.totalPnL}` : bestSetup.totalPnL} P/L · ${bestSetup.winRate}% WR` : "Not enough data"}</p>
               </div>
-              <div className="group rounded-2xl border border-white/5 bg-slate-950/55 p-4 transition hover:border-emerald-500/30">
+              <div className="group rounded-xl border border-white/5 bg-slate-950/55 p-4 transition hover:border-emerald-500/30">
                 <p className="text-xs text-slate-400">Best session</p>
                 <p className="mt-2 text-xl font-semibold text-white group-hover:text-emerald-300 transition-colors">{bestSession?.label ?? "—"}</p>
                 <p className="mt-1 text-sm text-emerald-300 tabular-nums">{bestSession ? `${bestSession.totalPnL >= 0 ? `+${bestSession.totalPnL}` : bestSession.totalPnL} P/L · ${bestSession.winRate}% WR` : "Not enough data"}</p>
