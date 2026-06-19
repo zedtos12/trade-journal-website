@@ -11,7 +11,7 @@ function SummaryCard({ label, value, tone = "neutral", delay = 0 }: { label: str
   const accentClass = tone === "profit" ? "from-emerald-400/20" : tone === "loss" ? "from-rose-400/20" : "from-gold/15";
   const borderTone = tone === "profit" ? "border-emerald-500/30" : tone === "loss" ? "border-rose-500/30" : "border-gold/20";
   return (
-    <div data-testid="analytics-summary-card" className={`premium-card interactive-card animate-fade-up relative overflow-hidden rounded-3xl border-b-4 ${borderTone} p-5 ${accentClass}`} style={{ animationDelay: `${delay}ms` }}>
+    <div data-testid="analytics-summary-card" className={`premium-card interactive-card animate-fade-up relative overflow-hidden rounded-3xl border-b-4 ${borderTone} p-6 ${accentClass}`} style={{ animationDelay: `${delay}ms` }}>
       <div className={`pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b ${accentClass} to-transparent`} />
       <p className="relative text-sm text-slate-400">{label}</p>
       <p className={`mt-3 text-2xl font-semibold tabular-nums ${toneClass}`}>{value}</p>
@@ -119,7 +119,7 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Pr
 
   return (
     <AppShell>
-      <section data-testid="analytics-command-center" className="premium-card animate-fade-up relative overflow-hidden rounded-[2rem] p-6 sm:p-8">
+      <section data-testid="analytics-command-center" className="premium-card animate-fade-up relative overflow-hidden rounded-3xl p-6 sm:p-8">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_0%,rgba(244,213,141,0.18),transparent_30%),radial-gradient(circle_at_88%_10%,rgba(45,212,191,0.12),transparent_28%)]" />
         <div className="relative flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
           <div>

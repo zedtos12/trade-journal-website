@@ -7,7 +7,7 @@ export default async function SettingsPage() {
 
   return (
     <AppShell>
-      <div data-testid="settings-page-header" className="premium-card animate-fade-up relative overflow-hidden rounded-[2rem] p-6 md:p-8">
+      <div data-testid="settings-page-header" className="premium-card animate-fade-up relative overflow-hidden rounded-3xl p-6 md:p-8">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(244,213,141,0.15),transparent_30%)]" />
         <div className="relative">
           <p className="inline-flex rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-goldLight">Settings</p>

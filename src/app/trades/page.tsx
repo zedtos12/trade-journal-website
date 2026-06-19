@@ -44,7 +44,7 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
   return (
     <AppShell>
       {/* ── Command Center Hero ── */}
-      <section data-testid="trade-history-command-center" className="premium-card animate-fade-up relative overflow-hidden rounded-[2rem] p-6 sm:p-8">
+      <section data-testid="trade-history-command-center" className="premium-card animate-fade-up relative overflow-hidden rounded-3xl p-6 sm:p-8">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(244,213,141,0.18),transparent_30%),radial-gradient(circle_at_90%_12%,rgba(45,212,191,0.10),transparent_28%)]" />
         <div className="relative flex flex-col justify-between gap-6 xl:flex-row xl:items-end">
           <div>

@@ -69,8 +69,8 @@ export default function LandingPage() {
         </div>
 
         <div className="animate-fade-up relative" style={{ animationDelay: "220ms" }}>
-          <div className="absolute -inset-6 rounded-[2.5rem] bg-gradient-to-br from-gold/20 via-blue-500/10 to-emerald-400/10 blur-2xl" />
-          <div data-testid="dashboard-preview" className="premium-card interactive-card animate-float-slow relative rounded-[2rem] p-4">
+          <div className="absolute -inset-6 rounded-[2.5rem] bg-gradient-to-br from-gold/20 via-emerald-400/8 to-transparent blur-2xl" />
+          <div data-testid="dashboard-preview" className="premium-card interactive-card animate-float-slow relative rounded-3xl p-4">
             <div className="rounded-[1.5rem] border border-white/10 bg-slate-950/85 p-5">
               <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <div>
@@ -126,7 +126,7 @@ export default function LandingPage() {
       </section>
 
       <section className="relative z-10 mx-auto max-w-5xl px-6 pb-24 text-center">
-        <div className="premium-card rounded-[2rem] px-6 py-12">
+        <div className="premium-card rounded-3xl px-6 py-12">
           <ShieldCheck className="mx-auto text-gold" size={36} />
           <h2 className="mt-5 text-3xl font-semibold tracking-tight">Why journal trades?</h2>
           <p className="mx-auto mt-4 max-w-2xl text-slate-300">

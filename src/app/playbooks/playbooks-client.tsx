@@ -138,7 +138,7 @@ export function PlaybooksClient({ initialPlaybooks }: { initialPlaybooks: Playbo
         ))}
 
         {playbooks.length === 0 && (
-          <div className="col-span-full flex flex-col items-center justify-center rounded-[2rem] border border-dashed border-white/10 py-20 text-center">
+          <div className="col-span-full flex flex-col items-center justify-center rounded-3xl border border-dashed border-white/10 py-20 text-center">
             <div className="grid h-16 w-16 place-items-center rounded-xl bg-white/5 text-slate-400">
               <Plus size={32} />
             </div>

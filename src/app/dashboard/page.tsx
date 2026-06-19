@@ -10,7 +10,7 @@ function MetricCard({ label, value, tone = "neutral", delay = 0 }: { label: stri
   const accentClass = tone === "profit" ? "from-emerald-400/20" : tone === "loss" ? "from-rose-400/20" : "from-gold/15";
   const borderTone = tone === "profit" ? "border-emerald-500/30" : tone === "loss" ? "border-rose-500/30" : "border-gold/20";
   return (
-    <div data-testid="dashboard-metric-card" className={`premium-card interactive-card animate-fade-up relative overflow-hidden rounded-3xl border-b-4 ${borderTone} p-5 ${accentClass}`} style={{ animationDelay: `${delay}ms` }}>
+    <div data-testid="dashboard-metric-card" className={`premium-card interactive-card animate-fade-up relative overflow-hidden rounded-3xl border-b-4 ${borderTone} p-6 ${accentClass}`} style={{ animationDelay: `${delay}ms` }}>
       <div className={`pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b ${accentClass} to-transparent`} />
       <p className="relative text-sm text-slate-400">{label}</p>
       <p className={`mt-3 text-2xl font-semibold tabular-nums ${toneClass}`}>{value}</p>
@@ -20,7 +20,7 @@ function MetricCard({ label, value, tone = "neutral", delay = 0 }: { label: stri
 
 function InsightCard({ title, row }: { title: string; row: { label: string; totalPnL: number; trades: number } | null }) {
   return (
-    <div className="premium-card interactive-card animate-fade-up relative overflow-hidden rounded-3xl p-5">
+    <div className="premium-card interactive-card animate-fade-up relative overflow-hidden rounded-3xl p-6">
       <div className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-gold/5 blur-2xl" />
       <p className="relative text-sm text-slate-400">{title}</p>
       {row ? (
@@ -120,7 +120,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
   return (
     <AppShell>
-      <section data-testid="dashboard-command-center" className="premium-card animate-fade-up relative overflow-hidden rounded-[2rem] p-6 sm:p-8">
+      <section data-testid="dashboard-command-center" className="premium-card animate-fade-up relative overflow-hidden rounded-3xl p-6 sm:p-8">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_8%,rgba(244,213,141,0.20),transparent_32%),radial-gradient(circle_at_90%_12%,rgba(45,212,191,0.13),transparent_30%)]" />
         <div className="relative grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
           <div>
@@ -192,7 +192,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         <InsightCard title="Worst setup" row={setupSummary.worst} />
       </div>
 
-      <div data-testid="dashboard-recent-trades" className="premium-card animate-fade-up relative mt-8 overflow-hidden rounded-[2rem] p-6 sm:p-8" style={{ animationDelay: "240ms" }}>
+      <div data-testid="dashboard-recent-trades" className="premium-card animate-fade-up relative mt-8 overflow-hidden rounded-3xl p-6 sm:p-8" style={{ animationDelay: "240ms" }}>
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_8%_0%,rgba(244,213,141,0.13),transparent_30%),radial-gradient(circle_at_92%_20%,rgba(45,212,191,0.10),transparent_28%)]" />
         <div className="relative flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>

@@ -51,7 +51,7 @@ export default async function TradeDetailPage({ params }: PageProps) {
         Back to history
       </Link>
 
-      <div data-testid="trade-detail-hero" className={`premium-card interactive-card animate-fade-up relative mt-6 overflow-hidden rounded-[2rem] p-6 md:p-8`}>
+      <div data-testid="trade-detail-hero" className={`premium-card interactive-card animate-fade-up relative mt-6 overflow-hidden rounded-3xl p-6 md:p-8`}>
         <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${pnlGlow} via-transparent to-gold/8`} />
         <div className="relative flex flex-col justify-between gap-6 md:flex-row md:items-start">
           <div className="flex items-start gap-4">
