@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
 import { TradeCalendar } from "@/components/trade-calendar";
+import { PlaybookSwitcher } from "@/components/playbook-switcher";
 import { requireUser } from "@/lib/auth";
 import { buildMonthlyPerformance } from "@/lib/analytics/dashboard-insights";
 import { buildAnalyticsSummary, groupPerformanceByKey } from "@/lib/analytics/performance";
@@ -123,7 +124,10 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Pr
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_0%,rgba(244,213,141,0.18),transparent_30%),radial-gradient(circle_at_88%_10%,rgba(45,212,191,0.12),transparent_28%)]" />
         <div className="relative flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
           <div>
-            <p className="inline-flex rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-goldLight">Pattern lab</p>
+            <div className="flex items-center gap-4 flex-wrap">
+              <p className="inline-flex rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-goldLight">Pattern lab</p>
+              <PlaybookSwitcher />
+            </div>
             <h1 className="mt-5 text-4xl font-semibold tracking-tight sm:text-5xl">Performance analytics</h1>
             <p className="mt-3 max-w-2xl text-slate-300">Baca pola performa berdasarkan pair, setup, timeframe, session, monthly performance, dan kalender trading dalam workspace analytics yang lebih rapi.</p>
           </div>

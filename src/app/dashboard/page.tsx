@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
+import { PlaybookSwitcher } from "@/components/playbook-switcher";
 import { requireUser } from "@/lib/auth";
 import { calculateDashboardMetrics } from "@/lib/analytics/metrics";
 import { buildEquityCurve, buildMonthlyPerformance, summarizePerformanceByKey } from "@/lib/analytics/dashboard-insights";
@@ -128,7 +129,10 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       <section data-testid="dashboard-command-center" className="premium-card animate-fade-up relative overflow-hidden rounded-3xl p-6 sm:p-8">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_8%,rgba(244,213,141,0.20),transparent_32%),radial-gradient(circle_at_90%_12%,rgba(45,212,191,0.13),transparent_30%)]" />
         <div className="relative">
-          <p className="inline-flex rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-goldLight">Good to see you, {user.name}</p>
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <p className="inline-flex rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-goldLight">Good to see you, {user.name}</p>
+            <PlaybookSwitcher />
+          </div>
           <h1 className="mt-5 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">Trading command center</h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-slate-300">Pantau performa, equity curve, pair terbaik, setup terkuat, dan trade terbaru dalam satu workspace premium yang fokus ke keputusan trading.</p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
