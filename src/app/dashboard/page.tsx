@@ -193,26 +193,22 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             <Link href="/trades/new" className="premium-button mt-5 inline-flex rounded-full bg-gold px-5 py-3 font-semibold text-slate-950 hover:bg-goldLight">Add Trade</Link>
           </div>
         ) : (
-          <div className="relative mt-6 grid gap-4 lg:grid-cols-5">
+          <div className="relative mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {recentTrades.map((trade) => {
               const pnl = trade.profitLossAmount?.toNumber() ?? null;
-              const pnlTone = pnl === null ? "text-slate-300" : pnl > 0 ? "text-emerald-300" : pnl < 0 ? "text-rose-300" : "text-slate-200";
               return (
-                <Link key={trade.id} href={`/trades/${trade.id}`} data-testid="dashboard-recent-trade-card" className="interactive-card group rounded-3xl border border-white/10 bg-slate-950/55 p-4 transition hover:-translate-y-1 hover:border-gold/30 hover:bg-white/[0.06]">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <PremiumBadge variant={trade.result as "win" | "loss"}>{trade.result}</PremiumBadge>
-                      <div>
-                        <p className="text-[10px] text-slate-400">{trade.openDate.toISOString().slice(0, 10)} · {trade.timeframe}</p>
-                        <span className="font-semibold text-white">{trade.pair}</span>
-                      </div>
+                <Link key={trade.id} href={`/trades/${trade.id}`} data-testid="dashboard-recent-trade-card" className="interactive-card group flex min-h-36 flex-col justify-between rounded-3xl border border-white/10 bg-slate-950/55 p-4 transition hover:-translate-y-1 hover:border-gold/30 hover:bg-white/[0.06]">
+                  <div className="min-w-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <PremiumBadge variant={trade.result as "win" | "loss"} className="shrink-0">{trade.result}</PremiumBadge>
+                      <span className="truncate text-[10px] text-slate-400">{trade.timeframe ?? "No TF"}</span>
                     </div>
-                    <div className="text-right">
-                      <p className={`font-semibold tabular-nums ${pnl !== null && pnl > 0 ? "text-emerald-300" : pnl !== null && pnl < 0 ? "text-rose-300" : "text-slate-300"}`}>
-                        {pnl !== null ? `${pnl >= 0 ? "+" : ""}${pnl.toFixed(2)}` : "—"}
-                      </p>
-                    </div>
+                    <p className="mt-4 truncate text-xs tabular-nums text-slate-400">{trade.openDate.toISOString().slice(0, 10)}</p>
+                    <p className="mt-1 truncate text-lg font-semibold tracking-tight text-white">{trade.pair}</p>
                   </div>
+                  <p className={`mt-4 text-xl font-semibold tabular-nums ${pnl !== null && pnl > 0 ? "text-emerald-300" : pnl !== null && pnl < 0 ? "text-rose-300" : "text-slate-300"}`}>
+                    {pnl !== null ? `${pnl >= 0 ? "+" : ""}${pnl.toFixed(2)}` : "—"}
+                  </p>
                 </Link>
               );
             })}
