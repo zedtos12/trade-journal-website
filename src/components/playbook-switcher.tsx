@@ -6,6 +6,22 @@ import { ChevronDown } from "lucide-react";
 
 type Playbook = { id: string; name: string; color: string };
 
+const STORAGE_KEY = "activePlaybookId";
+
+function getStoredPlaybookId(): string | null {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem(STORAGE_KEY);
+}
+
+function setStoredPlaybookId(id: string | null) {
+  if (typeof window === "undefined") return;
+  if (id === null || id === "all") {
+    localStorage.removeItem(STORAGE_KEY);
+  } else {
+    localStorage.setItem(STORAGE_KEY, id);
+  }
+}
+
 function parsePlaybookId(raw: string | null): string | undefined {
   return raw && raw !== "all" ? raw : undefined;
 }
@@ -18,11 +34,22 @@ export function PlaybookSwitcher() {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  const activeId = searchParams.get("playbookId") || "all";
+  // Get active ID: URL param takes precedence, fallback to localStorage
+  const urlPlaybookId = searchParams.get("playbookId");
+  const storedPlaybookId = mounted ? getStoredPlaybookId() : null;
+  const activeId = urlPlaybookId || storedPlaybookId || "all";
 
   useEffect(() => {
     setMounted(true);
     fetchPlaybooks();
+    
+    // Sync URL with localStorage on mount
+    const stored = getStoredPlaybookId();
+    if (stored && !urlPlaybookId) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("playbookId", stored);
+      router.replace(`${pathname}?${params.toString()}`);
+    }
   }, []);
 
   function fetchPlaybooks() {
@@ -41,6 +68,10 @@ export function PlaybookSwitcher() {
   }, []);
 
   function selectPlaybook(id: string) {
+    // Update localStorage
+    setStoredPlaybookId(id === "all" ? null : id);
+    
+    // Update URL
     const params = new URLSearchParams(searchParams.toString());
     if (id === "all") {
       params.delete("playbookId");
