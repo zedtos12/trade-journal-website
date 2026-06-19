@@ -85,7 +85,7 @@ export default function LandingPage() {
                 {previewMetrics.map((item, index) => (
                   <div
                     key={item}
-                    className="animate-scale-in rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm text-slate-300 transition hover:border-gold/30 hover:bg-white/[0.07]"
+                    className="animate-scale-in rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm tabular-nums text-slate-300 transition hover:border-gold/30 hover:bg-white/[0.07]"
                     style={{ animationDelay: `${360 + index * 80}ms` }}
                   >
                     {item}
@@ -118,7 +118,7 @@ export default function LandingPage() {
               style={{ animationDelay: `${index * 90}ms` }}
             >
               <feature.icon className="text-gold" />
-              <h3 className="mt-5 font-semibold text-white">{feature.title}</h3>
+              <h3 className="mt-6 font-semibold text-white">{feature.title}</h3>
               <p className="mt-3 text-sm leading-6 text-slate-400">{feature.text}</p>
             </div>
           ))}

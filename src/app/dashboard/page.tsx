@@ -70,7 +70,7 @@ function EquityCurve({ points }: { points: { label: string; value: number }[] })
           <g key={`${point.label}-${index}`} className="group cursor-pointer">
             <circle cx={point.x} cy={point.y} r="10" className="fill-goldLight/20 opacity-0 transition group-hover:opacity-100" />
             <circle cx={point.x} cy={point.y} r="7" className="fill-goldLight stroke-slate-950 transition group-hover:scale-125" strokeWidth="3" />
-            <foreignObject x={Math.max(8, Math.min(width - 128, point.x - 60))} y={Math.max(8, point.y - 60)} width="120" height="48" className="pointer-events-none opacity-0 transition duration-200 group-hover:opacity-100">
+            <foreignObject x={Math.max(8, Math.min(width - 128, point.x - 60))} y={Math.max(8, point.y - 60)} width="120" height="48" className="pointer-events-none opacity-0 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0">
               <div data-testid="dashboard-equity-tooltip" className="rounded-xl border border-gold/30 bg-slate-950/95 px-3 py-2 text-center shadow-xl shadow-black/40">
                 <p className="text-[10px] uppercase tracking-wider text-slate-400">{point.label}</p>
                 <p className="text-xs font-semibold text-goldLight">{point.value} P/L</p>
