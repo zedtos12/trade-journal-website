@@ -68,8 +68,13 @@ function EquityCurve({ points }: { points: { label: string; value: number }[] })
         <polyline points={linePoints} className="fill-none stroke-goldLight" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
         {coordinates.map((point, index) => (
           <g key={`${point.label}-${index}`} className="group">
-            <circle cx={point.x} cy={point.y} r="10" className="fill-goldLight/20 opacity-0 transition group-hover:opacity-100" />
-            <circle cx={point.x} cy={point.y} r="7" className="fill-goldLight stroke-slate-950 transition group-hover:scale-125" strokeWidth="3" />
+            {/* Invisible larger hover target */}
+            <circle cx={point.x} cy={point.y} r="16" className="fill-transparent" />
+            {/* Glow effect */}
+            <circle cx={point.x} cy={point.y} r="10" className="fill-goldLight/20 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
+            {/* Main dot - no scale transform */}
+            <circle cx={point.x} cy={point.y} r="7" className="fill-goldLight stroke-slate-950" strokeWidth="3" />
+            {/* Tooltip */}
             <foreignObject x={point.x - 60} y={point.y - 56} width="120" height="48" className="pointer-events-none opacity-0 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0">
               <div data-testid="dashboard-equity-tooltip" className="rounded-xl border border-gold/30 bg-slate-950/95 px-3 py-2 text-center shadow-xl shadow-black/40">
                 <p className="text-[10px] uppercase tracking-wider text-slate-400">{point.label}</p>
