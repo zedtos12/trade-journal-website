@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { PremiumSelect } from "@/components/ui/premium-select";
 
 type PremiumDateInputProps = {
   name: string;
@@ -12,7 +13,7 @@ type PremiumDateInputProps = {
   className?: string;
 };
 
-const monthFormatter = new Intl.DateTimeFormat("en", { month: "long", year: "numeric" });
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const dayFormatter = new Intl.DateTimeFormat("en", { weekday: "short" });
 
 function parseDateValue(value?: string) {
@@ -53,6 +54,13 @@ export function PremiumDateInput({ name, defaultValue = "", required = false, ar
   const calendarDays = useMemo(() => buildCalendarDays(visibleMonth), [visibleMonth]);
   const weekdays = useMemo(() => buildCalendarDays(new Date(2024, 0, 7)).slice(0, 7), []);
 
+  const currentYear = new Date().getFullYear();
+  const years = useMemo(() => {
+    const min = currentYear - 5;
+    const max = currentYear + 5;
+    return Array.from({ length: max - min + 1 }, (_, i) => min + i);
+  }, [currentYear]);
+
   function moveMonth(delta: number) {
     setVisibleMonth((current) => new Date(current.getFullYear(), current.getMonth() + delta, 1));
   }
@@ -82,17 +90,11 @@ export function PremiumDateInput({ name, defaultValue = "", required = false, ar
           name={name}
           value={value}
           required={required}
-          pattern="\d{4}-\d{2}-\d{2}"
-          inputMode="numeric"
+          readOnly
           aria-label={ariaLabel}
           placeholder={placeholder}
-          onChange={(event) => {
-            const nextValue = event.target.value;
-            setValue(nextValue);
-            const nextDate = parseDateValue(nextValue);
-            if (nextDate) setVisibleMonth(nextDate);
-          }}
-          className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-slate-400"
+          onClick={() => setOpen(true)}
+          className="min-w-0 flex-1 cursor-pointer bg-transparent text-sm text-white outline-none placeholder:text-slate-400"
         />
         <button
           type="button"
@@ -110,10 +112,21 @@ export function PremiumDateInput({ name, defaultValue = "", required = false, ar
 
       {open && (
         <div role="dialog" aria-label={`${ariaLabel ?? name} calendar`} className="absolute left-0 top-full z-[9999] mt-2 w-full min-w-72 rounded-3xl border border-gold/20 bg-slate-950/95 p-3 shadow-2xl shadow-black/50 backdrop-blur-xl">
-          <div className="flex items-center justify-between gap-2">
-            <button type="button" aria-label="Previous month" onMouseDown={(event) => event.preventDefault()} onClick={() => moveMonth(-1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-slate-200 transition hover:border-gold/40 hover:text-gold">‹</button>
-            <p className="text-sm font-semibold text-white">{monthFormatter.format(visibleMonth)}</p>
-            <button type="button" aria-label="Next month" onMouseDown={(event) => event.preventDefault()} onClick={() => moveMonth(1)} className="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-slate-200 transition hover:border-gold/40 hover:text-gold">›</button>
+          <div className="flex items-center gap-2">
+            <button type="button" aria-label="Previous month" onMouseDown={(event) => event.preventDefault()} onClick={() => moveMonth(-1)} className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/10 text-slate-200 transition hover:border-gold/40 hover:text-gold">‹</button>
+            <PremiumSelect
+              value={visibleMonth.getMonth()}
+              onValueChange={(nextMonth) => setVisibleMonth(new Date(visibleMonth.getFullYear(), Number(nextMonth), 1))}
+              options={monthNames.map((month, index) => ({ value: String(index), label: month }))}
+              className="mt-0 flex-1"
+            />
+            <PremiumSelect
+              value={visibleMonth.getFullYear()}
+              onValueChange={(nextYear) => setVisibleMonth(new Date(Number(nextYear), visibleMonth.getMonth(), 1))}
+              options={years.map((year) => ({ value: String(year), label: String(year) }))}
+              className="mt-0 w-28"
+            />
+            <button type="button" aria-label="Next month" onMouseDown={(event) => event.preventDefault()} onClick={() => moveMonth(1)} className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/10 text-slate-200 transition hover:border-gold/40 hover:text-gold">›</button>
           </div>
 
           <div className="mt-3 grid grid-cols-7 gap-1 text-center text-[11px] uppercase tracking-wide text-slate-400">
