@@ -47,7 +47,9 @@ export function PremiumSelect({ name, value, defaultValue = "", options, onValue
         className="group flex w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-gradient-to-b from-slate-950/95 to-slate-900/90 px-4 py-3 text-left text-sm text-white shadow-inner shadow-white/[0.03] outline-none transition hover:border-gold/35 hover:bg-slate-900 focus:border-gold/60 focus:ring-2 focus:ring-gold/30"
       >
         <span className={selected?.value ? "truncate" : "truncate text-slate-400"}>{selected?.label ?? "Select"}</span>
-        <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-gold transition ${open ? "rotate-180 border-gold/30" : "group-hover:border-gold/30"}`}>⌄</span>
+        <svg className={`h-4 w-4 shrink-0 text-gold transition-transform duration-200 ${open ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
       </button>
       {open && (
         <div data-testid="premium-select-menu" role="listbox" aria-labelledby={id} className="premium-select-scrollbar absolute left-0 top-full z-[9999] mt-2 max-h-72 w-full overflow-auto rounded-xl border border-gold/20 bg-slate-950/95 p-1.5 shadow-2xl shadow-black/50 backdrop-blur-xl">
