@@ -82,7 +82,7 @@ export function PremiumDateInput({ name, defaultValue = "", required = false, ar
       className={`relative mt-2 ${open ? "z-[90]" : "z-0"} ${className}`}
       onBlur={() => window.setTimeout(() => setOpen(false), 120)}
     >
-      <div className="group flex w-full items-center gap-2 rounded-xl border border-white/10 bg-gradient-to-b from-slate-950/95 to-slate-900/90 px-3 py-2.5 shadow-inner shadow-white/[0.03] transition hover:border-gold/35 focus-within:border-gold/60 focus-within:ring-2 focus-within:ring-gold/30">
+      <div onClick={() => setOpen(true)} className="group flex w-full cursor-pointer items-center gap-2 rounded-xl border border-white/10 bg-gradient-to-b from-slate-950/95 to-slate-900/90 px-3 py-2.5 shadow-inner shadow-white/[0.03] transition hover:border-gold/35">
         <svg aria-hidden="true" className="h-5 w-5 shrink-0 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
           <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
@@ -94,8 +94,7 @@ export function PremiumDateInput({ name, defaultValue = "", required = false, ar
           tabIndex={-1}
           aria-label={ariaLabel}
           placeholder={placeholder}
-          onClick={() => setOpen(true)}
-          className="min-w-0 flex-1 cursor-pointer bg-transparent text-sm text-white outline-none placeholder:text-slate-400 focus:outline-none focus:ring-0"
+          className="min-w-0 flex-1 cursor-pointer bg-transparent text-sm text-white outline-none placeholder:text-slate-400 pointer-events-none"
         />
         <button
           type="button"
