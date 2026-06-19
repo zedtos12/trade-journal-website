@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
+import { ExportButton } from "@/components/export-button";
 import { PremiumDateInput } from "@/components/ui/premium-date-input";
 import { PremiumSelect } from "@/components/ui/premium-select";
 import { PremiumButton } from "@/components/ui/premium-button";
@@ -121,7 +122,10 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
       {/* ── Pagination meta ── */}
       <div className="mt-4 flex flex-col gap-2 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
         <p>Showing <span className="font-semibold tabular-nums text-slate-300">{trades.length}</span> of <span className="font-semibold tabular-nums text-slate-300">{totalTrades}</span> trades · Page {pagination.page} / {totalPages}</p>
-        {totalTrades > 0 && <p>{pagination.take} trades per page</p>}
+        <div className="flex items-center gap-3">
+          {totalTrades > 0 && <p>{pagination.take} trades per page</p>}
+          <ExportButton searchParams={new URLSearchParams(flatParams as Record<string, string>)} />
+        </div>
       </div>
 
       {/* ── Empty / Card Grid ── */}
