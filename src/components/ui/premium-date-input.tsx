@@ -75,7 +75,9 @@ export function PremiumDateInput({ name, defaultValue = "", required = false, ar
       onBlur={() => window.setTimeout(() => setOpen(false), 120)}
     >
       <div className="group flex w-full items-center gap-2 rounded-xl border border-white/10 bg-gradient-to-b from-slate-950/95 to-slate-900/90 px-3 py-2.5 shadow-inner shadow-white/[0.03] transition hover:border-gold/35 focus-within:border-gold/60 focus-within:ring-2 focus-within:ring-gold/30">
-        <span aria-hidden="true" className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-sm text-gold transition group-hover:border-gold/30">◷</span>
+        <svg aria-hidden="true" className="h-5 w-5 shrink-0 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
         <input
           name={name}
           value={value}
@@ -98,9 +100,11 @@ export function PremiumDateInput({ name, defaultValue = "", required = false, ar
           aria-expanded={open}
           aria-label={`Open ${ariaLabel ?? name} calendar`}
           onClick={() => setOpen((current) => !current)}
-          className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-gold transition hover:border-gold/40 hover:bg-gold/10 ${open ? "rotate-180 border-gold/40 bg-gold/10" : ""}`}
+          className="shrink-0"
         >
-          ⌄
+          <svg className={`h-4 w-4 text-gold transition-transform duration-200 ${open ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
         </button>
       </div>
 
