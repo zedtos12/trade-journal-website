@@ -1,42 +1,63 @@
-import { NextResponse } from "next/server";
-import { requireUser } from "@/lib/auth";
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { prisma } from "@/lib/db";
+import { requireUser } from "@/lib/auth";
 
-import { serializePlaybook } from "@/lib/playbooks/serialize";
+const createPlaybookSchema = z.object({
+  name: z.string().min(1, "Name is required").max(100),
+  description: z.string().max(500).optional().nullable(),
+  color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, "Invalid color format").default("#D9B45E"),
+});
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const user = await requireUser();
+
     const playbooks = await prisma.playbook.findMany({
       where: { userId: user.id },
       orderBy: { createdAt: "desc" },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        color: true,
+        createdAt: true,
+        updatedAt: true,
+        _count: {
+          select: { trades: true },
+        },
+      },
     });
-    return NextResponse.json({ playbooks: playbooks.map(serializePlaybook) });
+
+    return NextResponse.json({ playbooks });
   } catch (error) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    console.error("GET /api/playbooks error:", error);
+    return NextResponse.json({ message: "Failed to fetch playbooks" }, { status: 500 });
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(request: NextRequest) {
   try {
     const user = await requireUser();
-    const { name, description, color } = await req.json();
+    const body = await request.json();
+    const parsed = createPlaybookSchema.safeParse(body);
 
-    if (!name) {
-      return NextResponse.json({ message: "Name is required" }, { status: 400 });
+    if (!parsed.success) {
+      return NextResponse.json({ message: "Invalid input", errors: parsed.error.flatten().fieldErrors }, { status: 400 });
     }
 
     const playbook = await prisma.playbook.create({
       data: {
         userId: user.id,
-        name,
-        description,
-        color: color || "#D9B45E",
+        name: parsed.data.name,
+        description: parsed.data.description ?? null,
+        color: parsed.data.color,
       },
     });
 
-    return NextResponse.json({ playbook: serializePlaybook(playbook) }, { status: 201 });
+    return NextResponse.json({ playbook }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ message: "Error creating playbook" }, { status: 500 });
+    console.error("POST /api/playbooks error:", error);
+    return NextResponse.json({ message: "Failed to create playbook" }, { status: 500 });
   }
 }
