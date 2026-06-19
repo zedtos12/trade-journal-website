@@ -122,29 +122,13 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     <AppShell>
       <section data-testid="dashboard-command-center" className="premium-card animate-fade-up relative overflow-hidden rounded-3xl p-6 sm:p-8">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_8%,rgba(244,213,141,0.20),transparent_32%),radial-gradient(circle_at_90%_12%,rgba(45,212,191,0.13),transparent_30%)]" />
-        <div className="relative grid gap-6 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
-          <div>
-            <p className="inline-flex rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-goldLight">Good to see you, {user.name}</p>
-            <h1 className="mt-5 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">Trading command center</h1>
-            <p className="mt-3 max-w-2xl text-base leading-7 text-slate-300">Pantau performa, equity curve, pair terbaik, setup terkuat, dan trade terbaru dalam satu workspace premium yang fokus ke keputusan trading.</p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Link href="/trades/new" className="premium-button rounded-full bg-gold px-5 py-3 text-center font-semibold text-slate-950 hover:bg-goldLight">Add Trade</Link>
-              <Link href="/trades" className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-center font-semibold text-slate-200 transition hover:border-gold/35 hover:bg-white/[0.08] hover:text-white">Review history</Link>
-            </div>
-          </div>
-
-          <div data-testid="dashboard-kpi-strip" className="rounded-3xl border border-white/10 bg-slate-950/55 p-4 shadow-inner shadow-black/30">
-            <div className="grid grid-cols-3 gap-3 text-center">
-              <div className="rounded-xl bg-white/[0.04] p-3"><p className="text-xs text-slate-400">Trades</p><p className="mt-1 text-xl font-semibold tabular-nums">{metrics.totalTrades}</p></div>
-              <div className="rounded-xl bg-white/[0.04] p-3"><p className="text-xs text-slate-400">Closed</p><p className="mt-1 text-xl font-semibold tabular-nums">{closedTrades}</p></div>
-              <div className="rounded-xl bg-white/[0.04] p-3"><p className="text-xs text-slate-400">P/L</p><p className={totalTone === "profit" ? "mt-1 text-xl font-semibold tabular-nums text-emerald-300" : totalTone === "loss" ? "mt-1 text-xl font-semibold tabular-nums text-rose-300" : "mt-1 text-xl font-semibold tabular-nums text-white"}>{metrics.totalPnL}</p></div>
-            </div>
-            <div className="mt-4">
-              <div className="mb-2 flex items-center justify-between text-xs text-slate-400"><span>Win rate</span><span className="font-semibold tabular-nums text-goldLight">{metrics.winRate}%</span></div>
-              <div data-testid="dashboard-winrate-progress" aria-label={`Win rate ${metrics.winRate}%`} aria-valuetext={`Win rate ${metrics.winRate}%`} className="h-2.5 overflow-hidden rounded-full bg-white/10" role="meter" aria-valuemin={0} aria-valuemax={100} aria-valuenow={winRateWidth}>
-                <div className="h-full rounded-full bg-gradient-to-r from-gold to-emerald-300 shadow-[0_0_24px_rgba(244,213,141,0.26)]" style={{ width: `${winRateWidth}%` }} />
-              </div>
-            </div>
+        <div className="relative">
+          <p className="inline-flex rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-goldLight">Good to see you, {user.name}</p>
+          <h1 className="mt-5 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">Trading command center</h1>
+          <p className="mt-3 max-w-2xl text-base leading-7 text-slate-300">Pantau performa, equity curve, pair terbaik, setup terkuat, dan trade terbaru dalam satu workspace premium yang fokus ke keputusan trading.</p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <Link href="/trades/new" className="premium-button rounded-full bg-gold px-5 py-3 text-center font-semibold text-slate-950 hover:bg-goldLight">Add Trade</Link>
+            <Link href="/trades" className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-center font-semibold text-slate-200 transition hover:border-gold/35 hover:bg-white/[0.08] hover:text-white">Review history</Link>
           </div>
         </div>
       </section>

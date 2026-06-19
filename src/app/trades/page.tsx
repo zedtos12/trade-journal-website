@@ -81,7 +81,7 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
       {/* ── Filter Panel ── */}
       <form data-testid="trade-filter-panel" className="dropdown-layer premium-card interactive-card animate-fade-up mt-8 rounded-3xl p-5" aria-label="Trade filters" style={{ animationDelay: "60ms" }}>
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-goldLight">Filter & Sort</p>
-        <div className="grid gap-3 md:grid-cols-6">
+        <div className="grid gap-3 md:grid-cols-4 lg:grid-cols-6">
           <label className="text-sm text-slate-300 md:col-span-2">
             Search
             <PremiumInput name="search" defaultValue={query.search ?? ""} placeholder="Search pair / setup…" className="mt-2" />
@@ -208,13 +208,13 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
                   {/* ── Actions ── */}
                   <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
                     <div className="flex flex-wrap gap-2 text-sm">
-                      <Link href={`/trades/${trade.id}`} className="inline-flex items-center gap-1.5 rounded-full border border-gold/25 bg-gold/10 px-4 py-2 font-semibold text-goldLight transition hover:border-gold/50 hover:bg-gold/15" aria-label={`View ${trade.pair} trade`}>
+                      <Link href={`/trades/${trade.id}`} className="inline-flex items-center gap-1.5 rounded-full border border-gold/40 bg-gold/15 px-4 py-2 font-semibold text-goldLight transition hover:border-gold/60 hover:bg-gold/25" aria-label={`View ${trade.pair} trade`}>
                         View detail
                         <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden="true">
                           <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
                         </svg>
                       </Link>
-                      <Link href={`/trades/${trade.id}/edit`} className="rounded-full border border-white/10 px-4 py-2 font-semibold text-slate-300 transition hover:border-white/25 hover:text-white" aria-label={`Edit ${trade.pair} trade`}>Edit</Link>
+                      <Link href={`/trades/${trade.id}/edit`} className="rounded-full border border-white/10 px-4 py-2 font-semibold text-slate-400 transition hover:border-white/20 hover:text-slate-300" aria-label={`Edit ${trade.pair} trade`}>Edit</Link>
                     </div>
                     {trade.notes && (
                       <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400" title={trade.notes}>Has notes</span>
