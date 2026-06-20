@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
 import { PlaybookSwitcher } from "@/components/playbook-switcher";
+import { FloatingActionButton } from "@/components/floating-action-button";
 import { requireUser } from "@/lib/auth";
 import { calculateDashboardMetrics } from "@/lib/analytics/metrics";
 import { buildEquityCurve, buildMonthlyPerformance, summarizePerformanceByKey } from "@/lib/analytics/dashboard-insights";
@@ -224,6 +225,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           </div>
         )}
       </div>
+
+      <FloatingActionButton />
     </AppShell>
   );
 }
