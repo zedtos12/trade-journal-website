@@ -5,6 +5,7 @@ import { PlaybookSwitcher } from "@/components/playbook-switcher";
 import { requireUser } from "@/lib/auth";
 import { buildMonthlyPerformance } from "@/lib/analytics/dashboard-insights";
 import { buildAnalyticsSummary, groupPerformanceByKey } from "@/lib/analytics/performance";
+import { calculateStreaks, calculateHourlyPerformance, calculateWeekdayPerformance, calculateRiskMetrics } from "@/lib/analytics/advanced-stats";
 import { prisma } from "@/lib/db";
 
 function SummaryCard({ label, value, tone = "neutral", delay = 0 }: { label: string; value: string | number; tone?: "neutral" | "profit" | "loss"; delay?: number }) {
@@ -118,6 +119,12 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Pr
   const bestSetup = bySetup[0];
   const bestSession = bySession[0];
 
+  // Advanced stats
+  const streaks = calculateStreaks(trades);
+  const hourlyPerf = calculateHourlyPerformance(trades);
+  const weekdayPerf = calculateWeekdayPerformance(trades);
+  const riskMetrics = calculateRiskMetrics(trades);
+
   return (
     <AppShell>
       <section data-testid="analytics-command-center" className="premium-card animate-fade-up relative overflow-hidden rounded-3xl p-6 sm:p-8">
@@ -204,6 +211,120 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Pr
             <PerformanceTable title="Performance by timeframe" rows={byTimeframe} />
             <PerformanceTable title="Performance by session" rows={bySession} />
           </div>
+
+          {/* Advanced Statistics */}
+          <section data-testid="analytics-advanced-stats" className="premium-card interactive-card animate-fade-up mt-8 rounded-3xl p-6" style={{ animationDelay: "240ms" }}>
+            <div className="flex items-center justify-between gap-4 mb-6">
+              <h2 className="text-xl font-semibold tracking-tight">Advanced Statistics</h2>
+              <span className="rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-goldLight">Deep insights</span>
+            </div>
+
+            {/* Streaks */}
+            <div className="mb-8">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-4">Win/Loss Streaks</h3>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
+                  <p className="text-xs text-slate-400">Current Streak</p>
+                  <p className="mt-2 text-2xl font-semibold tabular-nums text-emerald-300">
+                    {streaks.currentStreak} {streaks.currentStreakType === "win" ? "W" : streaks.currentStreakType === "loss" ? "L" : "-"}
+                  </p>
+                </div>
+                <div className="rounded-xl border border-white/10 bg-slate-950/50 p-4">
+                  <p className="text-xs text-slate-400">Max Win Streak</p>
+                  <p className="mt-2 text-2xl font-semibold tabular-nums text-emerald-300">{streaks.maxWinStreak}</p>
+                </div>
+                <div className="rounded-xl border border-white/10 bg-slate-950/50 p-4">
+                  <p className="text-xs text-slate-400">Max Loss Streak</p>
+                  <p className="mt-2 text-2xl font-semibold tabular-nums text-rose-300">{streaks.maxLossStreak}</p>
+                </div>
+                <div className="rounded-xl border border-white/10 bg-slate-950/50 p-4">
+                  <p className="text-xs text-slate-400">Avg Win/Loss Streak</p>
+                  <p className="mt-2 text-2xl font-semibold tabular-nums text-slate-200">
+                    {streaks.avgWinStreak} / {streaks.avgLossStreak}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Risk Metrics */}
+            <div className="mb-8">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-4">Risk & Reward</h3>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="rounded-xl border border-white/10 bg-slate-950/50 p-4">
+                  <p className="text-xs text-slate-400">Avg Holding Time</p>
+                  <p className="mt-2 text-2xl font-semibold tabular-nums text-goldLight">{riskMetrics.avgHoldingTimeHours}h</p>
+                </div>
+                <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
+                  <p className="text-xs text-slate-400">Largest Win</p>
+                  <p className="mt-2 text-2xl font-semibold tabular-nums text-emerald-300">+{riskMetrics.largestWin}</p>
+                </div>
+                <div className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-4">
+                  <p className="text-xs text-slate-400">Largest Loss</p>
+                  <p className="mt-2 text-2xl font-semibold tabular-nums text-rose-300">-{riskMetrics.largestLoss}</p>
+                </div>
+                <div className="rounded-xl border border-white/10 bg-slate-950/50 p-4">
+                  <p className="text-xs text-slate-400">Avg Win Size</p>
+                  <p className="mt-2 text-2xl font-semibold tabular-nums text-emerald-300">+{riskMetrics.avgWinSize}</p>
+                </div>
+                <div className="rounded-xl border border-white/10 bg-slate-950/50 p-4">
+                  <p className="text-xs text-slate-400">Avg Loss Size</p>
+                  <p className="mt-2 text-2xl font-semibold tabular-nums text-rose-300">-{riskMetrics.avgLossSize}</p>
+                </div>
+                <div className="rounded-xl border border-gold/20 bg-gold/5 p-4">
+                  <p className="text-xs text-slate-400">Profit Factor</p>
+                  <p className="mt-2 text-2xl font-semibold tabular-nums text-goldLight">{riskMetrics.profitFactor}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Weekday Performance */}
+            <div className="mb-8">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-4">Performance by Weekday</h3>
+              <div className="space-y-2">
+                {weekdayPerf.filter(d => d.trades > 0).map((day) => {
+                  const isProfit = day.totalPnL >= 0;
+                  return (
+                    <div key={day.day} className="flex items-center justify-between rounded-xl border border-white/5 bg-slate-950/40 p-4">
+                      <span className="font-medium text-slate-200 w-24">{day.day}</span>
+                      <div className="flex items-center gap-4 text-sm">
+                        <span className="text-slate-400">{day.trades} trades</span>
+                        <span className={`font-semibold tabular-nums w-20 text-right ${isProfit ? "text-emerald-300" : "text-rose-300"}`}>
+                          {isProfit ? `+${day.totalPnL}` : day.totalPnL}
+                        </span>
+                        <span className="w-16 text-right tabular-nums text-goldLight">{day.winRate}%</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Hourly Heatmap (Top 5) */}
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-4">Best Trading Hours</h3>
+              <div className="space-y-2">
+                {hourlyPerf
+                  .filter(h => h.trades > 0)
+                  .sort((a, b) => b.totalPnL - a.totalPnL)
+                  .slice(0, 5)
+                  .map((hour) => {
+                    const isProfit = hour.totalPnL >= 0;
+                    return (
+                      <div key={hour.hour} className="flex items-center justify-between rounded-xl border border-white/5 bg-slate-950/40 p-4">
+                        <span className="font-medium text-slate-200 w-24">{String(hour.hour).padStart(2, '0')}:00</span>
+                        <div className="flex items-center gap-4 text-sm">
+                          <span className="text-slate-400">{hour.trades} trades</span>
+                          <span className={`font-semibold tabular-nums w-20 text-right ${isProfit ? "text-emerald-300" : "text-rose-300"}`}>
+                            {isProfit ? `+${hour.totalPnL}` : hour.totalPnL}
+                          </span>
+                          <span className="w-16 text-right tabular-nums text-goldLight">{hour.winRate}%</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          </section>
         </>
       )}
     </AppShell>
