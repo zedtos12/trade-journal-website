@@ -56,6 +56,20 @@ enum EmotionalState {
   impulsive
 }
 
+enum GoalPeriod {
+  weekly
+  monthly
+  quarterly
+  yearly
+}
+
+enum GoalStatus {
+  active
+  completed
+  failed
+  cancelled
+}
+
 model User {
   id                String   @id @default(cuid())
   name              String
@@ -65,9 +79,10 @@ model User {
   createdAt         DateTime @default(now()) @map("created_at")
   updatedAt         DateTime @updatedAt @map("updated_at")
 
-  sessions Session[]
-  trades   Trade[]
+  sessions  Session[]
+  trades    Trade[]
   playbooks Playbook[]
+  goals     Goal[]
 
   @@map("users")
 }
@@ -143,4 +158,24 @@ model Trade {
   @@index([userId, status])
   @@index([userId, setupName])
   @@map("trades")
+}
+
+model Goal {
+  id           String     @id @default(cuid())
+  userId       String     @map("user_id")
+  name         String
+  targetAmount Decimal    @map("target_amount") @db.Decimal(10, 2)
+  period       GoalPeriod
+  status       GoalStatus @default(active)
+  startDate    DateTime   @map("start_date")
+  endDate      DateTime   @map("end_date")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([userId, status])
+  @@index([userId, startDate, endDate])
+  @@map("goals")
 }
