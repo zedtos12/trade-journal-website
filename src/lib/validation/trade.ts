@@ -62,6 +62,8 @@ export const tradeQuerySchema = z.object({
   setup: z.preprocess((value) => (typeof value === "string" ? value.trim() || undefined : undefined), z.string().optional()),
   playbookId: optionalText,
   timeframe: z.preprocess((value) => (value === "" ? undefined : value), z.enum(["M1", "M5", "M15", "M30", "H1", "H4", "D1", "W1"]).optional()),
+  tags: z.preprocess((value) => (typeof value === "string" ? value.trim() || undefined : undefined), z.string().optional()),
+  emotionalState: z.preprocess((value) => (value === "" ? undefined : value), z.enum(["confident", "neutral", "anxious", "fomo", "revenge", "disciplined", "impulsive"]).optional()),
   dateFrom: optionalDate,
   dateTo: optionalDate,
   page: pageNumber,

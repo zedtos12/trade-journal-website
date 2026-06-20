@@ -104,6 +104,27 @@ export default async function TradesPage({ searchParams }: { searchParams: Promi
             <PremiumSelect name="sort" defaultValue={query.sort} options={[{ value: "newest", label: "Newest" }, { value: "oldest", label: "Oldest" }, { value: "highest-profit", label: "Highest profit" }, { value: "biggest-loss", label: "Biggest loss" }]} />
           </label>
           <label className="text-sm text-slate-300 md:col-span-2">
+            Tags
+            <PremiumInput name="tags" defaultValue={query.tags ?? ""} placeholder="fomo, revenge-trade" className="mt-2" />
+          </label>
+          <label className="text-sm text-slate-300 md:col-span-2">
+            Emotional State
+            <PremiumSelect 
+              name="emotionalState" 
+              defaultValue={query.emotionalState ?? ""} 
+              options={[
+                { value: "", label: "All emotions" },
+                { value: "confident", label: "😎 Confident" },
+                { value: "neutral", label: "😐 Neutral" },
+                { value: "anxious", label: "😰 Anxious" },
+                { value: "fomo", label: "😱 FOMO" },
+                { value: "revenge", label: "😡 Revenge" },
+                { value: "disciplined", label: "🎯 Disciplined" },
+                { value: "impulsive", label: "⚡ Impulsive" },
+              ]} 
+            />
+          </label>
+          <label className="text-sm text-slate-300 md:col-span-2">
             Date from
             <PremiumDateInput ariaLabel="Filter date from" name="dateFrom" defaultValue={query.dateFrom ?? ""} />
           </label>

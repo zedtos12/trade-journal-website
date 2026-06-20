@@ -16,6 +16,8 @@ export function buildTradeWhere(userId: string, query: Partial<TradeQuery>): Pri
   if (query.playbookId) where.playbookId = query.playbookId;
   if (query.timeframe) where.timeframe = query.timeframe;
   if (query.setup) where.setupName = { contains: query.setup, mode: "insensitive" };
+  if (query.tags) where.tags = { hasSome: query.tags.split(",").map((tag) => tag.trim()).filter(Boolean) };
+  if (query.emotionalState) where.emotionalState = query.emotionalState;
 
   if (query.dateFrom || query.dateTo) {
     where.openDate = {};
