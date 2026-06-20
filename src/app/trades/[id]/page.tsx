@@ -74,6 +74,38 @@ export default async function TradeDetailPage({ params }: PageProps) {
         </div>
       </div>
 
+      {/* Tags & Emotional State */}
+      {(trade.tags && trade.tags.length > 0) || trade.emotionalState ? (
+        <div className="premium-card interactive-card animate-fade-up mt-6 rounded-3xl p-6">
+          <div className="flex flex-wrap items-center gap-6">
+            {trade.emotionalState && (
+              <div className="flex items-center gap-3">
+                <span className="text-xs uppercase tracking-[0.2em] text-slate-400">Emotional State</span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-sm font-medium text-goldLight">
+                  {trade.emotionalState === "confident" && "😎 Confident"}
+                  {trade.emotionalState === "neutral" && "😐 Neutral"}
+                  {trade.emotionalState === "anxious" && "😰 Anxious"}
+                  {trade.emotionalState === "fomo" && "😱 FOMO"}
+                  {trade.emotionalState === "revenge" && "😡 Revenge"}
+                  {trade.emotionalState === "disciplined" && "🎯 Disciplined"}
+                  {trade.emotionalState === "impulsive" && "⚡ Impulsive"}
+                </span>
+              </div>
+            )}
+            {trade.tags && trade.tags.length > 0 && (
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="text-xs uppercase tracking-[0.2em] text-slate-400">Tags</span>
+                {trade.tags.map((tag, idx) => (
+                  <span key={idx} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-sm text-slate-300">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      ) : null}
+
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
         <section data-testid="trade-detail-section" className="premium-card interactive-card animate-fade-up rounded-3xl p-6">
           <div className="flex items-center justify-between gap-4">
