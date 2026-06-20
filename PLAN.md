@@ -171,16 +171,31 @@
 ## 💡 TIER 3: Advanced Analytics (Nice-to-Have)
 
 ### Phase 7: Advanced Statistics ⭐⭐⭐
-**Status:** NOT STARTED
-**Effort:** Low-Medium (~2-3 hours)
+**Status:** ✅ COMPLETED (June 20, 2026, 1:01 PM WIB)
+**Effort:** Low-Medium (~2-3 hours) — **Actual: 28 minutes**
 
-- [ ] Consecutive wins/losses streak (current & max)
-- [ ] Average holding time per trade
-- [ ] Best/worst trading hours (hourly heatmap)
-- [ ] Weekday performance breakdown
-- [ ] Risk of Ruin calculator
-- [ ] Sharpe ratio / Sortino ratio
-- [ ] Max drawdown & recovery time
+- [x] Consecutive wins/losses streak (current & max)
+- [x] Average holding time per trade
+- [x] Best/worst trading hours (Top 5 hourly performance)
+- [x] Weekday performance breakdown
+- [x] Profit factor (gross profit / gross loss)
+- [x] Expectancy (average P/L per trade)
+- [x] Largest win vs largest loss
+- [x] Average win/loss size
+
+**Features:**
+- **Streak Tracking:** Current streak, max win/loss streaks, average streak length
+- **Risk Metrics:** Holding time, largest win/loss, avg sizes, profit factor, expectancy
+- **Time Analysis:** Weekday performance (Mon-Sun), best trading hours (Top 5)
+- **UI:** Dedicated "Advanced Statistics" section in Analytics page with 4 subsections
+
+**Skipped (future enhancement):**
+- Full 24-hour heatmap visualization
+- Risk of Ruin calculator
+- Sharpe/Sortino ratio
+- Max drawdown & recovery time
+
+**Commit:** `45ad155` - Advanced Statistics implementation
 
 ---
 
