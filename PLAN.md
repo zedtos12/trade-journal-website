@@ -91,30 +91,36 @@
 ---
 
 ### Phase 3: Trade Notes/Tags System ⭐⭐⭐⭐
-**Status:** NOT STARTED
+**Status:** ✅ COMPLETED (June 20, 2026, 12:17 PM WIB)
 **Priority:** HIGH — Differentiator from basic journals
-**Effort:** Low (~2 hours)
+**Effort:** Low (~2 hours) — **Actual: 1 hour 12 minutes**
 
-- [ ] **Task 1: Database Schema**
-  - Add `tags` field to Trade model (array or JSON)
-  - Add `emotionalState` enum field
-  - Migration
+- [x] **Task 1: Database Schema**
+  - ✅ Add `tags` field to Trade model (String[] array)
+  - ✅ Add `emotionalState` enum field (7 states)
+  - ✅ Migration created
   
-- [ ] **Task 2: Trade Form Updates**
-  - Add tags input (comma-separated or tag pills)
-  - Add emotional state selector (confident/anxious/neutral/FOMO/revenge)
+- [x] **Task 2: Trade Form Updates**
+  - ✅ Add tags input (comma-separated with help text)
+  - ✅ Add emotional state selector with emoji icons
   
-- [ ] **Task 3: Trade Detail Enhancement**
-  - Expandable notes section with rich formatting
-  - Display tags as badges
-  - Show emotional state icon
+- [x] **Task 3: Trade Detail Enhancement**
+  - ✅ Display tags as badge pills with `#` prefix
+  - ✅ Show emotional state with emoji + label
+  - ✅ Conditional rendering (only when data exists)
   
-- [ ] **Task 4: Filter & Search**
-  - Filter trades by tags
-  - Search in notes content
-  - Emotional state filter
+- [x] **Task 4: Filter & Search**
+  - ✅ Filter trades by tags (hasSome query)
+  - ✅ Emotional state dropdown filter
+  - ✅ Query builder support
 
-**Common Tags:** `revenge-trade`, `fomo`, `patient-entry`, `news-event`, `breakout`, `reversal`
+**Emotional States:** confident, neutral, anxious, fomo, revenge, disciplined, impulsive  
+**Tags:** Unlimited custom tags per trade (comma-separated input)
+
+**Commits:**
+- `d140cb1` - Add tags and emotional state fields to trade form
+- `930ecf3` - Display tags and emotional state on trade detail page
+- `ebab63e` - Add tags and emotional state filtering to trades page
 
 ---
 
