@@ -100,6 +100,33 @@ export function TradeForm({ mode, trade }: TradeFormProps) {
           <label className={labelClass}>Setup / strategy<PremiumInput name="setupName" defaultValue={trade?.setupName ?? ""} className="mt-2" placeholder="London breakout" /></label>
           <label className={labelClass}>Timeframe<PremiumSelect name="timeframe" defaultValue={trade?.timeframe ?? ""} options={[{ value: "", label: "Select" }, ...["M1","M5","M15","M30","H1","H4","D1","W1"].map((item) => ({ value: item, label: item }))]} /></label>
           <label className={labelClass}>Session<PremiumSelect name="session" defaultValue={trade?.session ?? ""} options={[{ value: "", label: "Select" }, { value: "Asia", label: "Asia" }, { value: "London", label: "London" }, { value: "NewYork", label: "New York" }]} /></label>
+          <label className={labelClass}>
+            Tags
+            <PremiumInput 
+              name="tags" 
+              defaultValue={trade?.tags?.join(", ") ?? ""} 
+              className="mt-2" 
+              placeholder="fomo, revenge-trade, patient-entry (comma-separated)" 
+            />
+            <p className="mt-1 text-xs text-slate-500">Pisahkan dengan koma untuk multiple tags</p>
+          </label>
+          <label className={labelClass}>
+            Emotional State
+            <PremiumSelect 
+              name="emotionalState" 
+              defaultValue={trade?.emotionalState ?? ""} 
+              options={[
+                { value: "", label: "Select" },
+                { value: "confident", label: "😎 Confident" },
+                { value: "neutral", label: "😐 Neutral" },
+                { value: "anxious", label: "😰 Anxious" },
+                { value: "fomo", label: "😱 FOMO" },
+                { value: "revenge", label: "😡 Revenge" },
+                { value: "disciplined", label: "🎯 Disciplined" },
+                { value: "impulsive", label: "⚡ Impulsive" },
+              ]} 
+            />
+          </label>
           <label className={labelClass}>Emotion before<PremiumInput name="emotionBefore" defaultValue={trade?.emotionBefore ?? ""} className="mt-2" /></label>
           <label className={labelClass}>Emotion after<PremiumInput name="emotionAfter" defaultValue={trade?.emotionAfter ?? ""} className="mt-2" /></label>
         </div>

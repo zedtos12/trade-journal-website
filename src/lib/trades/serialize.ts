@@ -18,6 +18,8 @@ export function serializeTrade(trade: Trade) {
     setupName: trade.setupName,
     timeframe: trade.timeframe,
     session: trade.session,
+    tags: trade.tags,
+    emotionalState: trade.emotionalState,
     emotionBefore: trade.emotionBefore,
     emotionAfter: trade.emotionAfter,
     entryReason: trade.entryReason,

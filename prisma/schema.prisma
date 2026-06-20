@@ -46,6 +46,16 @@ enum TradingSession {
   NewYork
 }
 
+enum EmotionalState {
+  confident
+  neutral
+  anxious
+  fomo
+  revenge
+  disciplined
+  impulsive
+}
+
 model User {
   id                String   @id @default(cuid())
   name              String
@@ -111,6 +121,8 @@ model Trade {
   setupName            String?         @map("setup_name")
   timeframe            Timeframe?
   session              TradingSession?
+  tags                 String[]        @default([])
+  emotionalState       EmotionalState? @map("emotional_state")
   emotionBefore        String?         @map("emotion_before")
   emotionAfter         String?         @map("emotion_after")
   entryReason          String?         @map("entry_reason")

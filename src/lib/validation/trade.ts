@@ -32,6 +32,13 @@ export const tradeSchema = z
     playbookId: optionalText,
     timeframe: z.preprocess((value) => (value === "" ? undefined : value), z.enum(["M1", "M5", "M15", "M30", "H1", "H4", "D1", "W1"]).optional()),
     session: z.preprocess((value) => (value === "" ? undefined : value), z.enum(["Asia", "London", "NewYork"]).optional()),
+    tags: z.preprocess((value) => {
+      if (!value || value === "") return [];
+      if (typeof value === "string") return value.split(",").map((tag) => tag.trim()).filter(Boolean);
+      if (Array.isArray(value)) return value;
+      return [];
+    }, z.array(z.string()).default([])),
+    emotionalState: z.preprocess((value) => (value === "" ? undefined : value), z.enum(["confident", "neutral", "anxious", "fomo", "revenge", "disciplined", "impulsive"]).optional()),
     emotionBefore: optionalText,
     emotionAfter: optionalText,
     entryReason: optionalText,
