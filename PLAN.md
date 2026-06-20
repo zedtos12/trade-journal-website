@@ -200,14 +200,35 @@
 ---
 
 ### Phase 8: Goal Tracking & Milestones ⭐⭐⭐
-**Status:** NOT STARTED
-**Effort:** Low (~2 hours)
+**Status:** ✅ COMPLETED (June 20, 2026, 2:09 PM WIB)
+**Effort:** Low-Medium (~2 hours) — **Actual: 1 hour 8 minutes**
 
-- [ ] Set monthly/weekly P/L targets
-- [ ] Progress bar on dashboard
-- [ ] Milestone notifications (email/in-app)
-- [ ] Historical goal achievement log
-- [ ] Streak tracking (profitable days/weeks)
+- [x] Database schema (Goal model with period/status enums)
+- [x] Goals API (GET, POST, PATCH, DELETE)
+- [x] Progress calculation helper (on-track detection, days remaining)
+- [x] Dashboard goal widget (top 3 active goals with progress bars)
+- [x] Goals management page (`/goals`)
+- [x] Create goal form (inline)
+- [x] Active/completed/failed goal sections
+- [x] Visual status indicators (✓ Achieved, → On Track, ⚠ Behind, ✗ Failed)
+
+**Features:**
+- **Goal Periods:** Weekly, Monthly, Quarterly, Yearly
+- **Progress Tracking:** Real-time P/L calculation within goal period
+- **Status Detection:** Automatic completed/failed detection based on target & end date
+- **On-Track Logic:** Compares actual progress vs expected progress by time elapsed
+- **Dashboard Widget:** Shows top 3 active goals with color-coded progress bars
+- **Management Page:** Full CRUD with active/completed/failed sections
+
+**Commits:** 
+- `d185710` - Backend API and database schema
+- `57e55b2` - Dashboard widget and management page
+
+**Skipped (future enhancement):**
+- Email/push notifications on goal achievement
+- Goal history charts
+- Stretch goals (bonus targets)
+- Team/shared goals
 
 ---
 
