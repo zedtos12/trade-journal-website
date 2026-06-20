@@ -5,6 +5,7 @@ import { FloatingActionButton } from "@/components/floating-action-button";
 import { requireUser } from "@/lib/auth";
 import { calculateDashboardMetrics } from "@/lib/analytics/metrics";
 import { buildEquityCurve, buildMonthlyPerformance, summarizePerformanceByKey } from "@/lib/analytics/dashboard-insights";
+import { calculateGoalProgress, formatPeriod } from "@/lib/goals/progress";
 import { prisma } from "@/lib/db";
 
 function MetricCard({ label, value, tone = "neutral", delay = 0 }: { label: string; value: string | number; tone?: "neutral" | "profit" | "loss"; delay?: number }) {
@@ -103,6 +104,14 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     orderBy: { openDate: "desc" } 
   });
   const recentTrades = allTrades.slice(0, 5);
+
+  // Get active goals
+  const activeGoals = await prisma.goal.findMany({
+    where: { userId: user.id, status: "active" },
+    orderBy: { createdAt: "desc" },
+    take: 3,
+  });
+
   const metricTrades = allTrades.map((trade) => ({
     status: trade.status,
     result: trade.result,
@@ -117,6 +126,18 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   }));
 
   const metrics = calculateDashboardMetrics(metricTrades);
+  
+  // Calculate goal progress
+  const goalsWithProgress = activeGoals.map((goal) => {
+    // Calculate P/L within goal period
+    const goalTrades = allTrades.filter((t) => {
+      const tradeDate = new Date(t.openDate);
+      return tradeDate >= goal.startDate && tradeDate <= goal.endDate;
+    });
+    const currentAmount = goalTrades.reduce((sum, t) => sum + (t.profitLossAmount?.toNumber() ?? 0), 0);
+    return calculateGoalProgress(goal, currentAmount);
+  });
+
   const equityCurve = buildEquityCurve(insightTrades);
   const pairSummary = summarizePerformanceByKey(insightTrades, "pair");
   const setupSummary = summarizePerformanceByKey(insightTrades, "setupName");
@@ -177,6 +198,66 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             ))}
           </div>
         </section>
+
+        {/* Goals Widget */}
+        {goalsWithProgress.length > 0 && (
+          <section className="premium-card interactive-card animate-fade-up rounded-3xl p-6" style={{ animationDelay: "200ms" }}>
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-2xl font-semibold">Active Goals</h2>
+              <Link href="/goals" className="text-sm text-gold hover:text-goldLight transition">View all</Link>
+            </div>
+            <div className="space-y-4">
+              {goalsWithProgress.map((goal) => {
+                const statusColor = goal.isCompleted 
+                  ? "text-emerald-300" 
+                  : goal.isFailed 
+                  ? "text-rose-300" 
+                  : goal.isOnTrack 
+                  ? "text-gold" 
+                  : "text-orange-300";
+                const statusLabel = goal.isCompleted 
+                  ? "✓ Achieved" 
+                  : goal.isFailed 
+                  ? "✗ Failed" 
+                  : goal.isOnTrack 
+                  ? "→ On Track" 
+                  : "⚠ Behind";
+                
+                return (
+                  <div key={goal.id} className="rounded-xl border border-white/10 bg-slate-950/50 p-4">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <p className="font-semibold text-white">{goal.name}</p>
+                        <p className="text-xs text-slate-400 mt-1">{formatPeriod(goal.period)} · {goal.daysRemaining} days left</p>
+                      </div>
+                      <span className={`text-xs font-semibold ${statusColor}`}>{statusLabel}</span>
+                    </div>
+                    
+                    {/* Progress Bar */}
+                    <div className="mb-2">
+                      <div className="flex items-center justify-between text-sm mb-1">
+                        <span className="text-slate-400">{goal.currentAmount.toFixed(2)} / {parseFloat(goal.targetAmount.toString()).toFixed(2)}</span>
+                        <span className="font-semibold text-goldLight">{goal.progressPercentage}%</span>
+                      </div>
+                      <div className="h-2 rounded-full bg-slate-900 overflow-hidden">
+                        <div 
+                          className={`h-full transition-all duration-500 ${
+                            goal.isCompleted 
+                              ? "bg-emerald-400" 
+                              : goal.isOnTrack 
+                              ? "bg-gradient-to-r from-gold to-goldLight" 
+                              : "bg-gradient-to-r from-orange-400 to-rose-400"
+                          }`}
+                          style={{ width: `${Math.min(100, goal.progressPercentage)}%` }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
       </div>
 
       <div className="mt-6 grid gap-4 md:grid-cols-4">
